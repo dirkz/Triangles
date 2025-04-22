@@ -11,7 +11,7 @@ Triangles::Triangles()
     int width = mode->w / 2;
     int height = mode->h / 2;
     m_window = sdl::CreateWindow("Triangles", width, height, 0);
-    sdl::SetWindowPosition(m_window, mode->w / 4, 50);
+    sdl::SetWindowPosition(m_window, mode->w / 4, 100);
 }
 
 void Triangles::AppIterate()
