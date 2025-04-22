@@ -21,7 +21,9 @@ Triangles::Triangles()
     bool debugMode = false;
 #endif
 
-    m_device = sdl::CreateGPUDevice(SDL_GPU_SHADERFORMAT_DXIL, true, nullptr);
+    m_device = sdl::CreateGPUDevice(SDL_GPU_SHADERFORMAT_DXIL | SDL_GPU_SHADERFORMAT_SPIRV |
+                                        SDL_GPU_SHADERFORMAT_MSL,
+                                    true, nullptr);
     sdl::ClaimWindowForGPUDevice(m_device, m_window);
 }
 
