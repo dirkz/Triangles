@@ -26,7 +26,7 @@ Triangles::Triangles()
                                     true, nullptr);
     sdl::ClaimWindowForGPUDevice(m_device, m_window);
 
-    SDL_GPUShaderFormat shaderFormats = sdl::GetGPUShaderFormats(m_device);
+    m_supportedShaderFormats = sdl::GetGPUShaderFormats(m_device);
 }
 
 Triangles::~Triangles()

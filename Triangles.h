@@ -18,6 +18,7 @@ struct Triangles
   private:
     SDL_Window *m_window;
     SDL_GPUDevice *m_device;
+    SDL_GPUShaderFormat m_supportedShaderFormats;
 };
 
 } // namespace triangles
