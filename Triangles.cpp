@@ -135,6 +135,9 @@ SDL_GPUShader *Triangles::LoadShader(const std::string &filenameBase, SDL_GPUSha
     size_t numBytes = 0;
     void *shaderContents = sdl::LoadFile(filepathString.c_str(), &numBytes);
     sdl::Void p{shaderContents};
+    Uint8 *pShaderContents = static_cast<Uint8 *>(p.get());
+
+    SDL_GPUShaderCreateInfo createInfo{.code_size = numBytes, .code = pShaderContents};
 
     return nullptr;
 }
