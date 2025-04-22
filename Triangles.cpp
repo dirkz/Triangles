@@ -71,9 +71,25 @@ std::string Triangles::ShaderStageString(SDL_GPUShaderStage stage) const
     }
 }
 
-std::string Triangles::ShaderFormatString() const
+SDL_GPUShaderFormat Triangles::PreferredShaderFormat() const
 {
-    switch (m_supportedShaderFormats)
+    if (m_supportedShaderFormats & SDL_GPU_SHADERFORMAT_MSL)
+    {
+        return SDL_GPU_SHADERFORMAT_MSL;
+    }
+    if (m_supportedShaderFormats & SDL_GPU_SHADERFORMAT_DXIL)
+    {
+        return SDL_GPU_SHADERFORMAT_DXIL;
+    }
+    if (m_supportedShaderFormats & SDL_GPU_SHADERFORMAT_SPIRV)
+    {
+        return SDL_GPU_SHADERFORMAT_SPIRV;
+    }
+}
+
+std::string Triangles::PreferredShaderFormatString() const
+{
+    switch (PreferredShaderFormat())
     {
     case SDL_GPU_SHADERFORMAT_DXIL:
         return "dxil";
@@ -107,8 +123,10 @@ SDL_GPUShader *Triangles::LoadShader(const std::string &filenameBase, SDL_GPUSha
                                      Uint32 numStorageBuffers, Uint32 numStorageTextures) const
 {
     std::string stageString = ShaderStageString(stage);
-    std::string shaderFormat = ShaderFormatString();
-    std::string filename = std::format("{}.{}.{}", filenameBase, stageString, shaderFormat);
+    std::string shaderFormatString = PreferredShaderFormatString();
+    std::string filename = std::format("{}.{}.{}", filenameBase, stageString, shaderFormatString);
+
+    SDL_GPUShaderFormat shaderFormat = PreferredShaderFormat();
 
     std::filesystem::path basePath{m_basePath};
     std::filesystem::path filepath = basePath / "shaders" / filename;
