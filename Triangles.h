@@ -19,6 +19,7 @@ struct Triangles
     SDL_Window *m_window;
     SDL_GPUDevice *m_device;
     SDL_GPUShaderFormat m_supportedShaderFormats;
+    std::string m_basePath;
 };
 
 } // namespace triangles

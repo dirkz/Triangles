@@ -27,6 +27,8 @@ Triangles::Triangles()
     sdl::ClaimWindowForGPUDevice(m_device, m_window);
 
     m_supportedShaderFormats = sdl::GetGPUShaderFormats(m_device);
+    m_basePath = sdl::GetBasePath();
+    SDL_Log("*** base path %s", m_basePath.c_str());
 }
 
 Triangles::~Triangles()
