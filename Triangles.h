@@ -21,10 +21,13 @@ struct Triangles
                               Uint32 numUniformBuffers = 0, Uint32 numSamplers = 0,
                               Uint32 numStorageBuffers = 0, Uint32 numStorageTextures = 0) const;
 
-    SDL_Window *m_window;
-    SDL_GPUDevice *m_device;
+    SDL_Window *m_window = nullptr;
+    SDL_GPUDevice *m_device = nullptr;
     SDL_GPUShaderFormat m_supportedShaderFormats;
     std::string m_basePath;
+
+    SDL_GPUShader *m_vertexShader = nullptr;
+    SDL_GPUShader *m_fragmentShader = nullptr;
 };
 
 } // namespace triangles

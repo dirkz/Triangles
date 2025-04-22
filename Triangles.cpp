@@ -31,14 +31,36 @@ Triangles::Triangles()
     SDL_Log("*** base path %s", m_basePath.c_str());
 
     const char *basicTriangle = "basic_triangle.hlsl";
-    SDL_GPUShader *vertexShader = LoadShader(basicTriangle, SDL_GPU_SHADERSTAGE_VERTEX);
-    SDL_GPUShader *fragmentShader = LoadShader(basicTriangle, SDL_GPU_SHADERSTAGE_FRAGMENT);
+    m_vertexShader = LoadShader(basicTriangle, SDL_GPU_SHADERSTAGE_VERTEX);
+    m_fragmentShader = LoadShader(basicTriangle, SDL_GPU_SHADERSTAGE_FRAGMENT);
 }
 
 Triangles::~Triangles()
 {
-    sdl::ReleaseWindowFromGPUDevice(m_device, m_window);
-    sdl::DestroyGPUDevice(m_device);
+    if (m_device)
+    {
+        if (m_vertexShader)
+        {
+            sdl::ReleaseGPUShader(m_device, m_vertexShader);
+        }
+
+        if (m_fragmentShader)
+        {
+            sdl::ReleaseGPUShader(m_device, m_fragmentShader);
+        }
+
+        if (m_window)
+        {
+            sdl::ReleaseWindowFromGPUDevice(m_device, m_window);
+        }
+
+        sdl::DestroyGPUDevice(m_device);
+    }
+
+    if (m_window)
+    {
+        sdl::DestroyWindow(m_window);
+    }
 }
 
 void Triangles::AppIterate()
@@ -130,20 +152,30 @@ SDL_GPUShader *Triangles::LoadShader(const std::string &filenameBase, SDL_GPUSha
     std::string shaderFormatString = PreferredShaderFormatString();
     std::string filename = std::format("{}.{}.{}", filenameBase, stageString, shaderFormatString);
 
-    SDL_GPUShaderFormat shaderFormat = PreferredShaderFormat();
-
     std::filesystem::path basePath{m_basePath};
     std::filesystem::path filepath = basePath / "shaders" / filename;
 
     std::string filepathString = filepath.string();
     size_t numBytes = 0;
-    void *shaderContents = sdl::LoadFile(filepathString.c_str(), &numBytes);
-    sdl::Void p{shaderContents};
-    Uint8 *pShaderContents = static_cast<Uint8 *>(p.get());
+    void *contents = sdl::LoadFile(filepathString.c_str(), &numBytes);
+    sdl::Void p{contents};
+    Uint8 *pContents = static_cast<Uint8 *>(p.get());
 
-    SDL_GPUShaderCreateInfo createInfo{.code_size = numBytes, .code = pShaderContents};
+    SDL_GPUShaderFormat format = PreferredShaderFormat();
+    std::string entryPoint = ShaderEntryPoint(stage);
+    SDL_GPUShaderCreateInfo createInfo{.code_size = numBytes,
+                                       .code = pContents,
+                                       .entrypoint = entryPoint.c_str(),
+                                       .format = format,
+                                       .stage = stage,
+                                       .num_samplers = numSamplers,
+                                       .num_storage_textures = numStorageTextures,
+                                       .num_storage_buffers = numStorageBuffers,
+                                       .num_uniform_buffers = numUniformBuffers};
 
-    return nullptr;
+    SDL_GPUShader *shader = sdl::CreateGPUShader(m_device, &createInfo);
+
+    return shader;
 }
 
 } // namespace triangles
