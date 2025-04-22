@@ -12,7 +12,7 @@ endif()
 project ("Triangles")
 
 # Add source to this project's executable.
-add_executable (${CMAKE_PROJECT_NAME} "main.cpp" )
+add_executable (${CMAKE_PROJECT_NAME} "main.cpp")
 
 option(SDL_STATIC "Build SDL statically, so you don't have to install" ON)
 
