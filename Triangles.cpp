@@ -53,10 +53,22 @@ bool Triangles::AppEvent(SDL_Event *event)
     }
 }
 
+std::string Triangles::ShaderStageString(SDL_GPUShaderStage stage) const
+{
+    switch (stage)
+    {
+    case SDL_GPU_SHADERSTAGE_FRAGMENT:
+        return "fragment";
+    case SDL_GPU_SHADERSTAGE_VERTEX:
+        return "vertex";
+    }
+}
+
 SDL_GPUShader *Triangles::LoadShader(const std::string &filenameBase, SDL_GPUShaderStage stage,
                                      Uint32 numUniformBuffers, Uint32 numSamplers,
-                                     Uint32 numStorageBuffers, Uint32 numStorageTextures)
+                                     Uint32 numStorageBuffers, Uint32 numStorageTextures) const
 {
+    std::string stageString = ShaderStageString(stage);
     return nullptr;
 }
 
