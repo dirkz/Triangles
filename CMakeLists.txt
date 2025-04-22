@@ -12,7 +12,7 @@ endif()
 project ("Triangles")
 
 if(WIN32)
-	add_executable (${CMAKE_PROJECT_NAME} WIN32 "main.cpp")
+	add_executable (${CMAKE_PROJECT_NAME} WIN32 "main.cpp" "Triangles.h" "Triangles.cpp")
 else()
 	add_executable (${CMAKE_PROJECT_NAME} "main.cpp")
 endif()
