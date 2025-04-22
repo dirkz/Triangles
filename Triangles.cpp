@@ -88,13 +88,19 @@ std::string Triangles::ShaderFormatString() const
     }
 }
 
-struct Free
+std::string Triangles::ShaderEntryPoint(SDL_GPUShaderStage stage) const
 {
-    void operator()(void *p)
+    switch (stage)
     {
-        SDL_free(p);
+    case SDL_GPU_SHADERSTAGE_FRAGMENT:
+        return "PS";
+    case SDL_GPU_SHADERSTAGE_VERTEX:
+        return "VS";
+    default:
+        std::string errorMsg = std::format("unsupported shader stage: {}", static_cast<int>(stage));
+        throw std::runtime_error{errorMsg};
     }
-};
+}
 
 SDL_GPUShader *Triangles::LoadShader(const std::string &filenameBase, SDL_GPUShaderStage stage,
                                      Uint32 numUniformBuffers, Uint32 numSamplers,
@@ -110,7 +116,7 @@ SDL_GPUShader *Triangles::LoadShader(const std::string &filenameBase, SDL_GPUSha
     std::string filepathString = filepath.string();
     size_t numBytes = 0;
     void *shaderContents = sdl::LoadFile(filepathString.c_str(), &numBytes);
-    std::unique_ptr<void, Free> p{shaderContents};
+    sdl::Void p{shaderContents};
 
     return nullptr;
 }
