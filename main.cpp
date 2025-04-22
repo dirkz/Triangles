@@ -1,9 +1,21 @@
-﻿#include <iostream>
+﻿#define SDL_MAIN_USE_CALLBACKS
+#include <SDL3/SDL_main.h>
 
-using namespace std;
-
-int main()
+SDL_AppResult SDL_AppInit(void **appstate, int argc, char **argv)
 {
-    cout << "Hello CMake." << endl;
-    return 0;
+    return SDL_APP_CONTINUE;
+}
+
+SDL_AppResult SDL_AppIterate(void *appstate)
+{
+    return SDL_APP_CONTINUE;
+}
+
+SDL_AppResult SDL_AppEvent(void *appstate, SDL_Event *event)
+{
+    return SDL_APP_CONTINUE;
+}
+
+void SDL_AppQuit(void *appstate, SDL_AppResult result)
+{
 }
