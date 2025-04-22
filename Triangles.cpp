@@ -18,8 +18,16 @@ void Triangles::AppIterate()
 {
 }
 
-void Triangles::AppEvent(SDL_Event *event)
+bool Triangles::AppEvent(SDL_Event *event)
 {
+    switch (event->type)
+    {
+    case SDL_EVENT_QUIT:
+    case SDL_EVENT_KEY_DOWN:
+        return true;
+    default:
+        return false;
+    }
 }
 
 } // namespace triangles

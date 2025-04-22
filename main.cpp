@@ -40,7 +40,11 @@ SDL_AppResult SDL_AppEvent(void *appstate, SDL_Event *event)
     try
     {
         Triangles *triangles = static_cast<Triangles *>(appstate);
-        triangles->AppEvent(event);
+        bool shouldQuit = triangles->AppEvent(event);
+        if (shouldQuit)
+        {
+            return SDL_APP_SUCCESS;
+        }
     }
     catch (...)
     {
