@@ -25,6 +25,8 @@ Triangles::Triangles()
                                         SDL_GPU_SHADERFORMAT_MSL,
                                     true, nullptr);
     sdl::ClaimWindowForGPUDevice(m_device, m_window);
+
+    SDL_GPUShaderFormat shaderFormats = sdl::GetGPUShaderFormats(m_device);
 }
 
 Triangles::~Triangles()
@@ -47,6 +49,13 @@ bool Triangles::AppEvent(SDL_Event *event)
     default:
         return false;
     }
+}
+
+SDL_GPUShader *Triangles::LoadShader(const std::string &filenameBase, SDL_GPUShaderStage stage,
+                                     Uint32 numUniformBuffers, Uint32 numSamplers,
+                                     Uint32 numStorageBuffers, Uint32 numStorageTextures)
+{
+    return nullptr;
 }
 
 } // namespace triangles
