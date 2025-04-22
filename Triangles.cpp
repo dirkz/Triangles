@@ -31,8 +31,9 @@ Triangles::Triangles()
 
     const char *basicTriangle = "basic_triangle.hlsl";
     SDL_GPUShader *vertexShader = LoadShader(basicTriangle, SDL_GPU_SHADERSTAGE_VERTEX);
-    sdl::DeviceOwned vertex{m_device, vertexShader};
+    sdl::DeviceOwned vertexDestructor{m_device, vertexShader};
     SDL_GPUShader *fragmentShader = LoadShader(basicTriangle, SDL_GPU_SHADERSTAGE_FRAGMENT);
+    sdl::DeviceOwned fragmentDestructor{m_device, fragmentShader};
 }
 
 Triangles::~Triangles()
