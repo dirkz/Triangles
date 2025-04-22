@@ -28,7 +28,6 @@ Triangles::Triangles()
 
     m_supportedShaderFormats = sdl::GetGPUShaderFormats(m_device);
     m_basePath = sdl::GetBasePath();
-    SDL_Log("*** base path %s", m_basePath.c_str());
 
     const char *basicTriangle = "basic_triangle.hlsl";
     m_vertexShader = LoadShader(basicTriangle, SDL_GPU_SHADERSTAGE_VERTEX);
