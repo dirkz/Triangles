@@ -1,6 +1,4 @@
-﻿#include <SDL.hpp>
-
-#include <iostream>
+﻿#include <iostream>
 
 using namespace std;
 
