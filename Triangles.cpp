@@ -85,6 +85,10 @@ SDL_GPUShaderFormat Triangles::PreferredShaderFormat() const
     {
         return SDL_GPU_SHADERFORMAT_SPIRV;
     }
+
+    std::string errorMsg =
+        std::format("unsupported shader format: {}", static_cast<int>(m_supportedShaderFormats));
+    throw std::runtime_error{errorMsg};
 }
 
 std::string Triangles::PreferredShaderFormatString() const
