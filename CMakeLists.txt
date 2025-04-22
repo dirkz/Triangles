@@ -14,6 +14,11 @@ project ("Triangles")
 # Add source to this project's executable.
 add_executable (${CMAKE_PROJECT_NAME} "main.cpp" )
 
+option(SDL_STATIC "Build SDL statically, so you don't have to install" ON)
+
+add_subdirectory(SDL-Hpp)
+target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE SDL-Hpp)
+
 if (CMAKE_VERSION VERSION_GREATER 3.12)
   set_property(TARGET ${CMAKE_PROJECT_NAME} PROPERTY CXX_STANDARD 20)
 endif()
