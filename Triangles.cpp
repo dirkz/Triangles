@@ -30,24 +30,15 @@ Triangles::Triangles()
     m_basePath = sdl::GetBasePath();
 
     const char *basicTriangle = "basic_triangle.hlsl";
-    m_vertexShader = LoadShader(basicTriangle, SDL_GPU_SHADERSTAGE_VERTEX);
-    m_fragmentShader = LoadShader(basicTriangle, SDL_GPU_SHADERSTAGE_FRAGMENT);
+    SDL_GPUShader *vertexShader = LoadShader(basicTriangle, SDL_GPU_SHADERSTAGE_VERTEX);
+    sdl::DeviceOwned vertex{m_device, vertexShader};
+    SDL_GPUShader *fragmentShader = LoadShader(basicTriangle, SDL_GPU_SHADERSTAGE_FRAGMENT);
 }
 
 Triangles::~Triangles()
 {
     if (m_device)
     {
-        if (m_vertexShader)
-        {
-            sdl::ReleaseGPUShader(m_device, m_vertexShader);
-        }
-
-        if (m_fragmentShader)
-        {
-            sdl::ReleaseGPUShader(m_device, m_fragmentShader);
-        }
-
         if (m_window)
         {
             sdl::ReleaseWindowFromGPUDevice(m_device, m_window);

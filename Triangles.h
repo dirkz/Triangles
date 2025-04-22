@@ -25,9 +25,6 @@ struct Triangles
     SDL_GPUDevice *m_device = nullptr;
     SDL_GPUShaderFormat m_supportedShaderFormats;
     std::string m_basePath;
-
-    SDL_GPUShader *m_vertexShader = nullptr;
-    SDL_GPUShader *m_fragmentShader = nullptr;
 };
 
 } // namespace triangles
