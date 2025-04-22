@@ -1,33 +1,40 @@
-set (SHADERS basic_triangle.hlsl)
+set(SHADERS basic_triangle.hlsl)
 
 add_custom_target(shaders)
 
+function(create_shader source stage target)
+	string(TOLOWER ${TARGET} target_lc)
+
+	message(STATUS "shader: ${stage} ${target_lc}")
+
+	set(SHADER_SRC ${CMAKE_CURRENT_SOURCE_DIR}/${source})
+	set(SHADER_OUTPUT_FILENAME ${SHADER}.${stage}.${target_lc})
+	set(SHADER_TARGET ${CMAKE_CURRENT_BINARY_DIR}/${SHADER_OUTPUT_FILENAME})
+
+	if(${stage} STREQUAL "vertex")
+		set (ENTRY "VS")
+	elseif(${stage} STREQUAL "fragment")
+		set (ENTRY "PS")
+	else()
+		set (ENTRY "CS")
+	endif()
+
+	add_custom_command(
+		OUTPUT ${SHADER_TARGET}
+		DEPENDS ${source}
+		COMMAND shadercross -s HLSL -d ${target} -t ${stage} -e ${ENTRY} ${SHADER_SRC} -o ${SHADER_TARGET} 
+	)
+
+	target_sources(shaders PRIVATE ${SHADER_TARGET})
+endfunction()
+
+set(STAGES vertex fragment)
+set(TARGETS DXIL SPIRV MSL)
+
 foreach(SHADER ${SHADERS})
-	set (SHADER_SRC ${CMAKE_CURRENT_SOURCE_DIR}/${SHADER})
-	set (SHADER_OUTPUT_FILENAME_DXIL ${SHADER}.dxil)
-	set (SHADER_OUTPUT_FILENAME_SPV ${SHADER}.spv)
-	set (SHADER_OUTPUT_FILENAME_MSL ${SHADER}.msl)
-	set (SHADER_TARGET_DXIL ${CMAKE_CURRENT_BINARY_DIR}/${SHADER_OUTPUT_FILENAME_DXIL})
-	set (SHADER_TARGET_SPV ${CMAKE_CURRENT_BINARY_DIR}/${SHADER_OUTPUT_FILENAME_SPV})
-	set (SHADER_TARGET_MSL ${CMAKE_CURRENT_BINARY_DIR}/${SHADER_OUTPUT_FILENAME_MSL})
-
-	add_custom_command(
-		OUTPUT ${SHADER_TARGET_DXIL}
-		DEPENDS ${SHADER_SRC}
-		COMMAND shadercross ${SHADER_SRC} -o ${SHADER_TARGET_DXIL} 
-	)
-
-	add_custom_command(
-		OUTPUT ${SHADER_TARGET_SPV}
-		DEPENDS ${SHADER_SRC}
-		COMMAND shadercross ${SHADER_SRC} -o ${SHADER_TARGET_SPV} 
-	)
-
-	add_custom_command(
-		OUTPUT ${SHADER_TARGET_MSL}
-		DEPENDS ${SHADER_SRC}
-		COMMAND shadercross ${SHADER_SRC} -o ${SHADER_TARGET_MSL} 
-	)
-
-	target_sources(shaders PRIVATE ${SHADER_TARGET_DXIL} ${SHADER_TARGET_SPV} ${SHADER_TARGET_MSL})
+	foreach(STAGE ${STAGES})
+		foreach(TARGET ${TARGETS})
+			create_shader(${SHADER} ${STAGE} ${TARGET})
+		endforeach()
+	endforeach()
 endforeach()
