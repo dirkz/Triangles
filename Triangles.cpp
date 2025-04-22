@@ -29,6 +29,10 @@ Triangles::Triangles()
     m_supportedShaderFormats = sdl::GetGPUShaderFormats(m_device);
     m_basePath = sdl::GetBasePath();
     SDL_Log("*** base path %s", m_basePath.c_str());
+
+    const char *basicTriangle = "basic_triangle.hlsl";
+    SDL_GPUShader *vertexShader = LoadShader(basicTriangle, SDL_GPU_SHADERSTAGE_VERTEX);
+    SDL_GPUShader *fragmentShader = LoadShader(basicTriangle, SDL_GPU_SHADERSTAGE_FRAGMENT);
 }
 
 Triangles::~Triangles()
@@ -61,14 +65,53 @@ std::string Triangles::ShaderStageString(SDL_GPUShaderStage stage) const
         return "fragment";
     case SDL_GPU_SHADERSTAGE_VERTEX:
         return "vertex";
+    default:
+        std::string errorMsg = std::format("unsupported shader stage: {}", static_cast<int>(stage));
+        throw std::runtime_error{errorMsg};
     }
 }
+
+std::string Triangles::ShaderFormatString() const
+{
+    switch (m_supportedShaderFormats)
+    {
+    case SDL_GPU_SHADERFORMAT_DXIL:
+        return "dxil";
+    case SDL_GPU_SHADERFORMAT_SPIRV:
+        return "spirv";
+    case SDL_GPU_SHADERFORMAT_MSL:
+        return "msl";
+    default:
+        std::string errorMsg = std::format("unsupported shader format: {}",
+                                           static_cast<int>(m_supportedShaderFormats));
+        throw std::runtime_error{errorMsg};
+    }
+}
+
+struct Free
+{
+    void operator()(void *p)
+    {
+        SDL_free(p);
+    }
+};
 
 SDL_GPUShader *Triangles::LoadShader(const std::string &filenameBase, SDL_GPUShaderStage stage,
                                      Uint32 numUniformBuffers, Uint32 numSamplers,
                                      Uint32 numStorageBuffers, Uint32 numStorageTextures) const
 {
     std::string stageString = ShaderStageString(stage);
+    std::string shaderFormat = ShaderFormatString();
+    std::string filename = std::format("{}.{}.{}", filenameBase, stageString, shaderFormat);
+
+    std::filesystem::path basePath{m_basePath};
+    std::filesystem::path filepath = basePath / "shaders" / filename;
+
+    std::string filepathString = filepath.string();
+    size_t numBytes = 0;
+    void *shaderContents = sdl::LoadFile(filepathString.c_str(), &numBytes);
+    std::unique_ptr<void, Free> p{shaderContents};
+
     return nullptr;
 }
 

@@ -13,6 +13,7 @@ struct Triangles
 
   private:
     std::string ShaderStageString(SDL_GPUShaderStage stage) const;
+    std::string ShaderFormatString() const;
 
     SDL_GPUShader *LoadShader(const std::string &filenameBase, SDL_GPUShaderStage stage,
                               Uint32 numUniformBuffers = 0, Uint32 numSamplers = 0,
