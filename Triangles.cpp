@@ -23,7 +23,7 @@ Triangles::Triangles()
 
     m_device = sdl::CreateGPUDevice(SDL_GPU_SHADERFORMAT_DXIL | SDL_GPU_SHADERFORMAT_SPIRV |
                                         SDL_GPU_SHADERFORMAT_MSL,
-                                    true, nullptr);
+                                    debugMode, nullptr);
     sdl::ClaimWindowForGPUDevice(m_device, m_window);
 
     m_supportedShaderFormats = sdl::GetGPUShaderFormats(m_device);
