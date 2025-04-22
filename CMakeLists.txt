@@ -28,4 +28,7 @@ if (CMAKE_VERSION VERSION_GREATER 3.12)
   set_property(TARGET ${CMAKE_PROJECT_NAME} PROPERTY CXX_STANDARD 20)
 endif()
 
+add_subdirectory(shaders)
+add_dependencies(${CMAKE_PROJECT_NAME} shaders)
+
 # TODO: Add tests and install targets if needed.
