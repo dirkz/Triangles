@@ -20,7 +20,7 @@ Pixel VS(Vertex v)
 {
     Pixel p;
 
-    p.Position = mul(float4(v.Position, 1), ViewProjection);
+    p.Position = mul(ViewProjection, float4(v.Position, 1));
     p.Color = v.Color;
     
     return p;
