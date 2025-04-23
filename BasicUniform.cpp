@@ -115,9 +115,9 @@ void BasicUniform::CreateGraphicsPipeline()
 
     const char *basicTriangle = "basic_triangle.hlsl";
     sdl::DeviceOwned vertexShader{
-        m_device, shaderLoader.LoadShader(basicTriangle, SDL_GPU_SHADERSTAGE_VERTEX, 0, 0, 0, 0)};
+        m_device, shaderLoader.Load(basicTriangle, SDL_GPU_SHADERSTAGE_VERTEX, 0, 0, 0, 0)};
     sdl::DeviceOwned fragmentShader{
-        m_device, shaderLoader.LoadShader(basicTriangle, SDL_GPU_SHADERSTAGE_FRAGMENT, 0, 0, 0, 0)};
+        m_device, shaderLoader.Load(basicTriangle, SDL_GPU_SHADERSTAGE_FRAGMENT, 0, 0, 0, 0)};
 
     SDL_GPUColorTargetDescription colorTargetDescription{
         .format = sdl::GetGPUSwapchainTextureFormat(m_device, m_window)};

@@ -74,7 +74,7 @@ std::string ShaderLoader::ShaderStageString(SDL_GPUShaderStage stage) const
     }
 }
 
-SDL_GPUShader *ShaderLoader::LoadShader(const std::string &filenameBase, SDL_GPUShaderStage stage,
+SDL_GPUShader *ShaderLoader::Load(const std::string &filenameBase, SDL_GPUShaderStage stage,
                                         Uint32 numUniformBuffers, Uint32 numSamplers,
                                         Uint32 numStorageBuffers, Uint32 numStorageTextures) const
 {
