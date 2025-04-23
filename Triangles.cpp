@@ -250,6 +250,14 @@ void Triangles::UploadBuffers()
 
     SDL_GPUTransferBufferCreateInfo vertexBufferTransferInfo{
         .usage = SDL_GPU_TRANSFERBUFFERUSAGE_UPLOAD, .size = sizeVertices};
+
+    sdl::DeviceOwned transferBuffer{
+        m_device, sdl::CreateGPUTransferBuffer(m_device, &vertexBufferTransferInfo)};
+
+    PositionColorVertex *pVertices = static_cast<PositionColorVertex *>(
+        sdl::MapGPUTransferBuffer(m_device, transferBuffer.Get(), false));
+    sdl::memcpy(pVertices, vertices.data(), sizeVertices);
+    sdl::UnmapGPUTransferBuffer(m_device, transferBuffer.Get());
 }
 
 } // namespace triangles
