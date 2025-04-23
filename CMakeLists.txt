@@ -19,27 +19,27 @@ add_library(triangles OBJECT
 )
 
 if(WIN32)
-	add_executable(main WIN32 "main.cpp")
+	add_executable(BasicTriangleMain WIN32 "BasicTriangleMain.cpp")
 else()
-	add_executable(main "main.cpp")
+	add_executable(BasicTriangleMain "BasicTriangle.cpp")
 endif()
 
-target_link_libraries(main PRIVATE triangles)
+target_link_libraries(BasicTriangleMain PRIVATE triangles)
 
 option(SDL_STATIC "Build SDL statically, so you don't have to install" ON)
 
 add_subdirectory(SDL-Hpp EXCLUDE_FROM_ALL)
-target_link_libraries(main PRIVATE SDL-Hpp)
+target_link_libraries(BasicTriangleMain PRIVATE SDL-Hpp)
 target_link_libraries(triangles PRIVATE SDL-Hpp)
 
 add_subdirectory(glm EXCLUDE_FROM_ALL)
-target_link_libraries(main PRIVATE glm::glm)
+target_link_libraries(BasicTriangleMain PRIVATE glm::glm)
 target_link_libraries(triangles PRIVATE glm::glm)
 
 target_precompile_headers(triangles PRIVATE stdafx.h)
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)
-  set_property(TARGET main PROPERTY CXX_STANDARD 20)
+  set_property(TARGET BasicTriangleMain PROPERTY CXX_STANDARD 20)
   set_property(TARGET triangles PROPERTY CXX_STANDARD 20)
 endif()
 
