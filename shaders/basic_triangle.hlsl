@@ -1,7 +1,6 @@
 struct Vertex
 {
     float3 Position : TEXCOORD0;
-    float padding : PADDING0;
     float4 Color : TEXCOORD1;
 };
 
