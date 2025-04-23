@@ -42,8 +42,9 @@ target_link_libraries(triangles PUBLIC glm::glm)
 target_precompile_headers(triangles PRIVATE stdafx.h)
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)
-  set_property(TARGET BasicTriangleMain PROPERTY CXX_STANDARD 20)
   set_property(TARGET triangles PROPERTY CXX_STANDARD 20)
+  set_property(TARGET BasicTriangleMain PROPERTY CXX_STANDARD 20)
+  set_property(TARGET BasicUniformMain PROPERTY CXX_STANDARD 20)
 endif()
 
 add_subdirectory(shaders)
