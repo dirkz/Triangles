@@ -169,7 +169,7 @@ void BasicUniform::UploadBuffers()
                                               PositionColorVertex{0.5, -0.5, 0, green},
                                               PositionColorVertex{0, 0.5, 0, blue}};
 
-    Uint32 sizeVertices = static_cast<Uint32>(vertices.size() * sizeof(PositionColorVertex));
+    size_t sizeVertices = vertices.size() * sizeof(PositionColorVertex);
 
     Uploader uploader{m_device};
     m_vertexBuffer =

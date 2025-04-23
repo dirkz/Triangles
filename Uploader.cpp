@@ -17,13 +17,15 @@ Uploader::~Uploader()
     }
 }
 
-SDL_GPUBuffer *Uploader::UploadBuffer(SDL_GPUBufferUsageFlags usage, void *contents, Uint32 size)
+SDL_GPUBuffer *Uploader::UploadBuffer(SDL_GPUBufferUsageFlags usage, void *contents, size_t size)
 {
-    SDL_GPUBufferCreateInfo vertexBufferCreateInfo{.usage = usage, .size = size};
+    Uint32 sizeUint32 = static_cast<Uint32>(size);
+
+    SDL_GPUBufferCreateInfo vertexBufferCreateInfo{.usage = usage, .size = sizeUint32};
     SDL_GPUBuffer *vertexBuffer = sdl::CreateGPUBuffer(m_device, &vertexBufferCreateInfo);
 
     SDL_GPUTransferBufferCreateInfo vertexBufferTransferInfo{
-        .usage = SDL_GPU_TRANSFERBUFFERUSAGE_UPLOAD, .size = size};
+        .usage = SDL_GPU_TRANSFERBUFFERUSAGE_UPLOAD, .size = sizeUint32};
 
     SDL_GPUTransferBuffer *transferBuffer =
         sdl::CreateGPUTransferBuffer(m_device, &vertexBufferTransferInfo);
@@ -36,7 +38,7 @@ SDL_GPUBuffer *Uploader::UploadBuffer(SDL_GPUBufferUsageFlags usage, void *conte
     SDL_GPUTransferBufferLocation transferBufferLocation{.transfer_buffer = transferBuffer,
                                                          .offset = 0};
 
-    SDL_GPUBufferRegion gpuBufferRegion{.buffer = vertexBuffer, .offset = 0, .size = size};
+    SDL_GPUBufferRegion gpuBufferRegion{.buffer = vertexBuffer, .offset = 0, .size = sizeUint32};
 
     sdl::UploadToGPUBuffer(m_copyPass, &transferBufferLocation, &gpuBufferRegion, false);
 

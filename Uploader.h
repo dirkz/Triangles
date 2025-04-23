@@ -10,7 +10,7 @@ struct Uploader
     Uploader(SDL_GPUDevice *device);
     ~Uploader();
 
-    SDL_GPUBuffer *UploadBuffer(SDL_GPUBufferUsageFlags usage, void *contents, Uint32 size);
+    SDL_GPUBuffer *UploadBuffer(SDL_GPUBufferUsageFlags usage, void *contents, size_t size);
 
     void Finish();
 
