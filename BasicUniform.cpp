@@ -2,6 +2,7 @@
 
 #include "PositionColorVertex.h"
 #include "ShaderLoader.h"
+#include "Uploader.h"
 
 namespace triangles
 {
@@ -170,33 +171,11 @@ void BasicUniform::UploadBuffers()
 
     Uint32 sizeVertices = static_cast<Uint32>(vertices.size() * sizeof(PositionColorVertex));
 
-    SDL_GPUBufferCreateInfo vertexBufferCreateInfo{.usage = SDL_GPU_BUFFERUSAGE_VERTEX,
-                                                   .size = sizeVertices};
-    m_vertexBuffer = sdl::CreateGPUBuffer(m_device, &vertexBufferCreateInfo);
+    Uploader uploader{m_device};
+    m_vertexBuffer =
+        uploader.UploadBuffer(SDL_GPU_BUFFERUSAGE_VERTEX, vertices.data(), sizeVertices);
 
-    SDL_GPUTransferBufferCreateInfo vertexBufferTransferInfo{
-        .usage = SDL_GPU_TRANSFERBUFFERUSAGE_UPLOAD, .size = sizeVertices};
-
-    sdl::DeviceOwned transferBuffer{
-        m_device, sdl::CreateGPUTransferBuffer(m_device, &vertexBufferTransferInfo)};
-
-    void *pVertices = sdl::MapGPUTransferBuffer(m_device, transferBuffer.Get(), false);
-    sdl::memcpy(pVertices, vertices.data(), sizeVertices);
-    sdl::UnmapGPUTransferBuffer(m_device, transferBuffer.Get());
-
-    SDL_GPUTransferBufferLocation transferBufferLocation{.transfer_buffer = transferBuffer.Get(),
-                                                         .offset = 0};
-
-    SDL_GPUBufferRegion gpuBufferRegion{
-        .buffer = m_vertexBuffer, .offset = 0, .size = sizeVertices};
-
-    SDL_GPUCommandBuffer *uploadCmdBuf = sdl::AcquireGPUCommandBuffer(m_device);
-    SDL_GPUCopyPass *copyPass = sdl::BeginGPUCopyPass(uploadCmdBuf);
-
-    sdl::UploadToGPUBuffer(copyPass, &transferBufferLocation, &gpuBufferRegion, false);
-
-    sdl::EndGPUCopyPass(copyPass);
-    sdl::SubmitGPUCommandBuffer(uploadCmdBuf);
+    uploader.Finish();
 }
 
 } // namespace triangles
