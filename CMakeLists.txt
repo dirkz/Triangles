@@ -20,7 +20,8 @@ add_library(triangles OBJECT
 	"PositionColorVertex.cpp"
 	"ShaderLoader.h"
 	"ShaderLoader.cpp"
-)
+	"Uploader.h"
+	"Uploader.cpp")
 
 if(WIN32)
 	add_executable(BasicTriangleMain WIN32 "BasicTriangleMain.cpp")
