@@ -271,7 +271,7 @@ void Triangles::UploadBuffers()
                                               PositionColorVertex{0.5, -0.5, 0, green},
                                               PositionColorVertex{0, 0.5, 0, blue}};
 
-    Uint32 sizeVertices = static_cast<Uint32>(vertices.end() - vertices.begin());
+    Uint32 sizeVertices = static_cast<Uint32>(vertices.size() * sizeof(PositionColorVertex));
 
     SDL_GPUBufferCreateInfo vertexBufferCreateInfo{.usage = SDL_GPU_BUFFERUSAGE_VERTEX,
                                                    .size = sizeVertices};
