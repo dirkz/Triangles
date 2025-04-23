@@ -258,6 +258,20 @@ void Triangles::UploadBuffers()
         sdl::MapGPUTransferBuffer(m_device, transferBuffer.Get(), false));
     sdl::memcpy(pVertices, vertices.data(), sizeVertices);
     sdl::UnmapGPUTransferBuffer(m_device, transferBuffer.Get());
+
+    SDL_GPUTransferBufferLocation transferBufferLocation{.transfer_buffer = transferBuffer.Get(),
+                                                         .offset = 0};
+
+    SDL_GPUBufferRegion gpuBufferRegion{
+        .buffer = m_vertexBuffer, .offset = 0, .size = sizeVertices};
+
+    SDL_GPUCommandBuffer *uploadCmdBuf = sdl::AcquireGPUCommandBuffer(m_device);
+    SDL_GPUCopyPass *copyPass = sdl::BeginGPUCopyPass(uploadCmdBuf);
+
+    sdl::UploadToGPUBuffer(copyPass, &transferBufferLocation, &gpuBufferRegion, false);
+
+    sdl::EndGPUCopyPass(copyPass);
+    sdl::SubmitGPUCommandBuffer(uploadCmdBuf);
 }
 
 } // namespace triangles
