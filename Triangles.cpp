@@ -32,6 +32,7 @@ Triangles::Triangles()
     m_basePath = sdl::GetBasePath();
 
     CreateGraphicsPipeline();
+    UploadBuffers();
 }
 
 Triangles::~Triangles()
@@ -219,6 +220,13 @@ void Triangles::CreateGraphicsPipeline()
         PipelineCreateInfo(vertexShader.Get(), fragmentShader.Get());
 
     m_pipeline = sdl::CreateGPUGraphicsPipeline(m_device, &pipelineCreateInfo);
+}
+
+void Triangles::UploadBuffers()
+{
+    SDL_GPUBufferCreateInfo vertexBufferCreateInfo{.usage = SDL_GPU_BUFFERUSAGE_VERTEX,
+                                                   .size = sizeof(PositionColorVertex)};
+    m_vertexBuffer = sdl::CreateGPUBuffer(m_device, &vertexBufferCreateInfo);
 }
 
 } // namespace triangles
