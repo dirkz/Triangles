@@ -3,12 +3,10 @@ set(SHADERS basic_triangle.hlsl)
 add_custom_target(shaders)
 
 function(create_shader source stage target)
-	string(TOLOWER ${TARGET} target_lc)
-
-	message(STATUS "shader: ${stage} ${target_lc}")
+	string(TOLOWER ${target} target_lc)
 
 	set(SHADER_SRC ${CMAKE_CURRENT_SOURCE_DIR}/${source})
-	set(SHADER_OUTPUT_FILENAME ${SHADER}.${stage}.${target_lc})
+	set(SHADER_OUTPUT_FILENAME ${source}.${stage}.${target_lc})
 	set(SHADER_TARGET ${CMAKE_CURRENT_BINARY_DIR}/${SHADER_OUTPUT_FILENAME})
 
 	if(${stage} STREQUAL "vertex")
