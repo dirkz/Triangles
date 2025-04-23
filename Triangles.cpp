@@ -65,6 +65,34 @@ Triangles::~Triangles()
 
 void Triangles::AppIterate()
 {
+    SDL_GPUCommandBuffer *commandBuffer = sdl::AcquireGPUCommandBuffer(m_device);
+
+    SDL_GPUTexture *swapchainTexture;
+    Uint32 width, height;
+    sdl::WaitAndAcquireGPUSwapchainTexture(commandBuffer, m_window, &swapchainTexture, &width,
+                                           &height);
+
+    if (swapchainTexture)
+    {
+        SDL_GPUColorTargetInfo colorTargetInfo{};
+        colorTargetInfo.texture = swapchainTexture;
+        colorTargetInfo.clear_color = SDL_FColor{0.0f, 0.0f, 0.0f, 1.0f};
+        colorTargetInfo.load_op = SDL_GPU_LOADOP_CLEAR;
+        colorTargetInfo.store_op = SDL_GPU_STOREOP_STORE;
+
+        SDL_GPURenderPass *renderPass =
+            sdl::BeginGPURenderPass(commandBuffer, &colorTargetInfo, 1, nullptr);
+
+        SDL_GPUBufferBinding bufferBinding{.buffer = m_vertexBuffer, .offset = 0};
+
+        sdl::BindGPUGraphicsPipeline(renderPass, m_pipeline);
+        sdl::BindGPUVertexBuffers(renderPass, 0, &bufferBinding, 1);
+        sdl::DrawGPUPrimitives(renderPass, 3, 1, 0, 0);
+
+        sdl::EndGPURenderPass(renderPass);
+    }
+
+    sdl::SubmitGPUCommandBuffer(commandBuffer);
 }
 
 bool Triangles::AppEvent(SDL_Event *event)
