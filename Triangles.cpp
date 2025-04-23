@@ -134,6 +134,21 @@ std::string Triangles::ShaderEntryPoint(SDL_GPUShaderStage stage) const
     }
 }
 
+SDL_GPUGraphicsPipelineCreateInfo Triangles::PipelineCreateInfo() const
+{
+    SDL_GPUColorTargetDescription colorTargetDescription{
+        .format = sdl::GetGPUSwapchainTextureFormat(m_device, m_window)};
+
+    SDL_GPUVertexBufferDescription vertexBufferDescription{
+        .slot = 0,
+        .pitch = 1,
+        .input_rate = SDL_GPU_VERTEXINPUTRATE_VERTEX,
+        .instance_step_rate = 0,
+    };
+
+    return SDL_GPUGraphicsPipelineCreateInfo();
+}
+
 SDL_GPUShader *Triangles::LoadShader(const std::string &filenameBase, SDL_GPUShaderStage stage,
                                      Uint32 numUniformBuffers, Uint32 numSamplers,
                                      Uint32 numStorageBuffers, Uint32 numStorageTextures) const
