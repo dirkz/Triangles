@@ -18,6 +18,8 @@ add_library(triangles OBJECT
 	"BasicUniform.cpp"
 	"PositionColorVertex.h"
 	"PositionColorVertex.cpp"
+	"ShaderLoader.h"
+	"ShaderLoader.cpp"
 )
 
 if(WIN32)
