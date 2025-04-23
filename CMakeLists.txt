@@ -29,12 +29,10 @@ target_link_libraries(BasicTriangleMain PRIVATE triangles)
 option(SDL_STATIC "Build SDL statically, so you don't have to install" ON)
 
 add_subdirectory(SDL-Hpp EXCLUDE_FROM_ALL)
-target_link_libraries(BasicTriangleMain PRIVATE SDL-Hpp)
-target_link_libraries(triangles PRIVATE SDL-Hpp)
+target_link_libraries(triangles PUBLIC SDL-Hpp)
 
 add_subdirectory(glm EXCLUDE_FROM_ALL)
-target_link_libraries(BasicTriangleMain PRIVATE glm::glm)
-target_link_libraries(triangles PRIVATE glm::glm)
+target_link_libraries(triangles PUBLIC glm::glm)
 
 target_precompile_headers(triangles PRIVATE stdafx.h)
 
