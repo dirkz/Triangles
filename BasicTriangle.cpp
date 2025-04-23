@@ -206,9 +206,13 @@ SDL_GPUShader *BasicTriangle::LoadShader(const std::string &filenameBase, SDL_GP
     return shader;
 }
 
-SDL_GPUGraphicsPipelineCreateInfo BasicTriangle::PipelineCreateInfo(
-    SDL_GPUShader *vertexShader, SDL_GPUShader *fragmentShader) const
+void BasicTriangle::CreateGraphicsPipeline()
 {
+    const char *basicTriangle = "basic_triangle.hlsl";
+    sdl::DeviceOwned vertexShader{m_device, LoadShader(basicTriangle, SDL_GPU_SHADERSTAGE_VERTEX)};
+    sdl::DeviceOwned fragmentShader{m_device,
+                                    LoadShader(basicTriangle, SDL_GPU_SHADERSTAGE_FRAGMENT)};
+
     SDL_GPUColorTargetDescription colorTargetDescription{
         .format = sdl::GetGPUSwapchainTextureFormat(m_device, m_window)};
 
@@ -237,26 +241,13 @@ SDL_GPUGraphicsPipelineCreateInfo BasicTriangle::PipelineCreateInfo(
                                              .num_vertex_attributes =
                                                  static_cast<Uint32>(attributes.size())};
 
-    SDL_GPUGraphicsPipelineCreateInfo createInfo{
-        .vertex_shader = vertexShader,
-        .fragment_shader = fragmentShader,
+    SDL_GPUGraphicsPipelineCreateInfo pipelineCreateInfo{
+        .vertex_shader = vertexShader.Get(),
+        .fragment_shader = fragmentShader.Get(),
         .vertex_input_state = vertexInputState,
         .primitive_type = SDL_GPU_PRIMITIVETYPE_TRIANGLELIST,
         .target_info = {.color_target_descriptions = &colorTargetDescription,
                         .num_color_targets = 1}};
-
-    return createInfo;
-}
-
-void BasicTriangle::CreateGraphicsPipeline()
-{
-    const char *basicTriangle = "basic_triangle.hlsl";
-    sdl::DeviceOwned vertexShader{m_device, LoadShader(basicTriangle, SDL_GPU_SHADERSTAGE_VERTEX)};
-    sdl::DeviceOwned fragmentShader{m_device,
-                                    LoadShader(basicTriangle, SDL_GPU_SHADERSTAGE_FRAGMENT)};
-
-    SDL_GPUGraphicsPipelineCreateInfo pipelineCreateInfo =
-        PipelineCreateInfo(vertexShader.Get(), fragmentShader.Get());
 
     m_pipeline = sdl::CreateGPUGraphicsPipeline(m_device, &pipelineCreateInfo);
 }
