@@ -39,6 +39,16 @@ Triangles::~Triangles()
 {
     if (m_device)
     {
+        if (m_pipeline)
+        {
+            sdl::ReleaseGPUGraphicsPipeline(m_device, m_pipeline);
+        }
+
+        if (m_vertexBuffer)
+        {
+            sdl::ReleaseGPUBuffer(m_device, m_vertexBuffer);
+        }
+
         if (m_window)
         {
             sdl::ReleaseWindowFromGPUDevice(m_device, m_window);
