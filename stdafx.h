@@ -2,6 +2,7 @@
 #include <filesystem>
 #include <format>
 #include <iostream>
+#include <numbers>
 #include <span>
 #include <stdexcept>
 #include <string>
