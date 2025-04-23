@@ -87,6 +87,9 @@ void BasicUniform::AppIterate()
 
         sdl::BindGPUGraphicsPipeline(renderPass, m_pipeline);
 
+        glm::mat4x4 m;
+        sdl::PushGPUVertexUniformData(commandBuffer, 0, &m, sizeof(m));
+
         SDL_GPUBufferBinding bufferBinding{.buffer = m_vertexBuffer, .offset = 0};
         sdl::BindGPUVertexBuffers(renderPass, 0, &bufferBinding, 1);
 
@@ -116,7 +119,7 @@ void BasicUniform::CreateGraphicsPipeline()
 
     const char *basicTriangle = "basic_triangle_uniform.hlsl";
     sdl::DeviceOwned vertexShader{
-        m_device, shaderLoader.Load(basicTriangle, SDL_GPU_SHADERSTAGE_VERTEX, 0, 0, 0, 0)};
+        m_device, shaderLoader.Load(basicTriangle, SDL_GPU_SHADERSTAGE_VERTEX, 1, 0, 0, 0)};
     sdl::DeviceOwned fragmentShader{
         m_device, shaderLoader.Load(basicTriangle, SDL_GPU_SHADERSTAGE_FRAGMENT, 0, 0, 0, 0)};
 
