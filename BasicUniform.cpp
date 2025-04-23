@@ -1,6 +1,7 @@
 #include "BasicUniform.h"
 
 #include "PositionColorVertex.h"
+#include "ShaderLoader.h"
 
 namespace triangles
 {
@@ -108,110 +109,15 @@ bool BasicUniform::AppEvent(SDL_Event *event)
     }
 }
 
-std::string BasicUniform::ShaderStageString(SDL_GPUShaderStage stage) const
-{
-    switch (stage)
-    {
-    case SDL_GPU_SHADERSTAGE_FRAGMENT:
-        return "fragment";
-    case SDL_GPU_SHADERSTAGE_VERTEX:
-        return "vertex";
-    default:
-        std::string errorMsg = std::format("unsupported shader stage: {}", static_cast<int>(stage));
-        throw std::runtime_error{errorMsg};
-    }
-}
-
-SDL_GPUShaderFormat BasicUniform::PreferredShaderFormat() const
-{
-    if (m_supportedShaderFormats & SDL_GPU_SHADERFORMAT_MSL)
-    {
-        return SDL_GPU_SHADERFORMAT_MSL;
-    }
-    if (m_supportedShaderFormats & SDL_GPU_SHADERFORMAT_DXIL)
-    {
-        return SDL_GPU_SHADERFORMAT_DXIL;
-    }
-    if (m_supportedShaderFormats & SDL_GPU_SHADERFORMAT_SPIRV)
-    {
-        return SDL_GPU_SHADERFORMAT_SPIRV;
-    }
-
-    std::string errorMsg =
-        std::format("unsupported shader format: {}", static_cast<int>(m_supportedShaderFormats));
-    throw std::runtime_error{errorMsg};
-}
-
-std::string BasicUniform::PreferredShaderFormatString() const
-{
-    switch (PreferredShaderFormat())
-    {
-    case SDL_GPU_SHADERFORMAT_DXIL:
-        return "dxil";
-    case SDL_GPU_SHADERFORMAT_SPIRV:
-        return "spirv";
-    case SDL_GPU_SHADERFORMAT_MSL:
-        return "msl";
-    default:
-        std::string errorMsg = std::format("unsupported shader format: {}",
-                                           static_cast<int>(m_supportedShaderFormats));
-        throw std::runtime_error{errorMsg};
-    }
-}
-
-std::string BasicUniform::ShaderEntryPoint(SDL_GPUShaderStage stage) const
-{
-    switch (stage)
-    {
-    case SDL_GPU_SHADERSTAGE_FRAGMENT:
-        return "PS";
-    case SDL_GPU_SHADERSTAGE_VERTEX:
-        return "VS";
-    default:
-        std::string errorMsg = std::format("unsupported shader stage: {}", static_cast<int>(stage));
-        throw std::runtime_error{errorMsg};
-    }
-}
-
-SDL_GPUShader *BasicUniform::LoadShader(const std::string &filenameBase, SDL_GPUShaderStage stage,
-                                        Uint32 numUniformBuffers, Uint32 numSamplers,
-                                        Uint32 numStorageBuffers, Uint32 numStorageTextures) const
-{
-    std::string stageString = ShaderStageString(stage);
-    std::string shaderFormatString = PreferredShaderFormatString();
-    std::string filename = std::format("{}.{}.{}", filenameBase, stageString, shaderFormatString);
-
-    std::filesystem::path basePath{m_basePath};
-    std::filesystem::path filepath = basePath / "shaders" / filename;
-
-    std::string filepathString = filepath.string();
-    size_t numBytes = 0;
-    sdl::Void p{sdl::LoadFile(filepathString.c_str(), &numBytes)};
-    Uint8 *pContents = static_cast<Uint8 *>(p.get());
-
-    SDL_GPUShaderFormat format = PreferredShaderFormat();
-    std::string entryPoint = ShaderEntryPoint(stage);
-    SDL_GPUShaderCreateInfo createInfo{.code_size = numBytes,
-                                       .code = pContents,
-                                       .entrypoint = entryPoint.c_str(),
-                                       .format = format,
-                                       .stage = stage,
-                                       .num_samplers = numSamplers,
-                                       .num_storage_textures = numStorageTextures,
-                                       .num_storage_buffers = numStorageBuffers,
-                                       .num_uniform_buffers = numUniformBuffers};
-
-    SDL_GPUShader *shader = sdl::CreateGPUShader(m_device, &createInfo);
-
-    return shader;
-}
-
 void BasicUniform::CreateGraphicsPipeline()
 {
+    ShaderLoader shaderLoader{m_device};
+
     const char *basicTriangle = "basic_triangle.hlsl";
-    sdl::DeviceOwned vertexShader{m_device, LoadShader(basicTriangle, SDL_GPU_SHADERSTAGE_VERTEX)};
-    sdl::DeviceOwned fragmentShader{m_device,
-                                    LoadShader(basicTriangle, SDL_GPU_SHADERSTAGE_FRAGMENT)};
+    sdl::DeviceOwned vertexShader{
+        m_device, shaderLoader.LoadShader(basicTriangle, SDL_GPU_SHADERSTAGE_VERTEX, 0, 0, 0, 0)};
+    sdl::DeviceOwned fragmentShader{
+        m_device, shaderLoader.LoadShader(basicTriangle, SDL_GPU_SHADERSTAGE_FRAGMENT, 0, 0, 0, 0)};
 
     SDL_GPUColorTargetDescription colorTargetDescription{
         .format = sdl::GetGPUSwapchainTextureFormat(m_device, m_window)};
