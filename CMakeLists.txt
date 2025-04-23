@@ -9,34 +9,41 @@ if (POLICY CMP0141)
   set(CMAKE_MSVC_DEBUG_INFORMATION_FORMAT "$<IF:$<AND:$<C_COMPILER_ID:MSVC>,$<CXX_COMPILER_ID:MSVC>>,$<$<CONFIG:Debug,RelWithDebInfo>:EditAndContinue>,$<$<CONFIG:Debug,RelWithDebInfo>:ProgramDatabase>>")
 endif()
 
-project ("Triangles")
+project("Triangles")
+
+add_library(triangles OBJECT
+	"BasicTriangle.h"
+	"BasicTriangle.cpp"
+	"PositionColorVertex.h"
+	"PositionColorVertex.cpp"
+)
 
 if(WIN32)
-	add_executable(${CMAKE_PROJECT_NAME} WIN32
-		"main.cpp"
-		"BasicTriangle.h"
-		"BasicTriangle.cpp"
-		"PositionColorVertex.h"
-		"PositionColorVertex.cpp")
+	add_executable(main WIN32 "main.cpp")
 else()
-	add_executable(${CMAKE_PROJECT_NAME} "main.cpp")
+	add_executable(main "main.cpp")
 endif()
+
+target_link_libraries(main PRIVATE triangles)
 
 option(SDL_STATIC "Build SDL statically, so you don't have to install" ON)
 
-add_subdirectory(SDL-Hpp)
-target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE SDL-Hpp)
+add_subdirectory(SDL-Hpp EXCLUDE_FROM_ALL)
+target_link_libraries(main PRIVATE SDL-Hpp)
+target_link_libraries(triangles PRIVATE SDL-Hpp)
 
-add_subdirectory(glm)
-target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE glm::glm)
+add_subdirectory(glm EXCLUDE_FROM_ALL)
+target_link_libraries(main PRIVATE glm::glm)
+target_link_libraries(triangles PRIVATE glm::glm)
 
-target_precompile_headers(${CMAKE_PROJECT_NAME} PRIVATE stdafx.h)
+target_precompile_headers(triangles PRIVATE stdafx.h)
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)
-  set_property(TARGET ${CMAKE_PROJECT_NAME} PROPERTY CXX_STANDARD 20)
+  set_property(TARGET main PROPERTY CXX_STANDARD 20)
+  set_property(TARGET triangles PROPERTY CXX_STANDARD 20)
 endif()
 
 add_subdirectory(shaders)
-add_dependencies(${CMAKE_PROJECT_NAME} shaders)
+add_dependencies(triangles shaders)
 
 # TODO: Add tests and install targets if needed.
