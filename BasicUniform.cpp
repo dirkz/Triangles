@@ -87,7 +87,7 @@ void BasicUniform::AppIterate()
 
         sdl::BindGPUGraphicsPipeline(renderPass, m_pipeline);
 
-        glm::mat4x4 m;
+        glm::mat4x4 m{1};
         sdl::PushGPUVertexUniformData(commandBuffer, 0, &m, sizeof(m));
 
         SDL_GPUBufferBinding bufferBinding{.buffer = m_vertexBuffer, .offset = 0};
