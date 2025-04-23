@@ -31,15 +31,7 @@ Triangles::Triangles()
     m_supportedShaderFormats = sdl::GetGPUShaderFormats(m_device);
     m_basePath = sdl::GetBasePath();
 
-    const char *basicTriangle = "basic_triangle.hlsl";
-    sdl::DeviceOwned vertexShader{m_device, LoadShader(basicTriangle, SDL_GPU_SHADERSTAGE_VERTEX)};
-    sdl::DeviceOwned fragmentShader{m_device,
-                                    LoadShader(basicTriangle, SDL_GPU_SHADERSTAGE_FRAGMENT)};
-
-    SDL_GPUGraphicsPipelineCreateInfo pipelineCreateInfo =
-        PipelineCreateInfo(vertexShader.Get(), fragmentShader.Get());
-
-    m_pipeline = sdl::CreateGPUGraphicsPipeline(m_device, &pipelineCreateInfo);
+    CreateGraphicsPipeline();
 }
 
 Triangles::~Triangles()
@@ -214,6 +206,19 @@ SDL_GPUGraphicsPipelineCreateInfo Triangles::PipelineCreateInfo(SDL_GPUShader *v
                         .num_color_targets = 1}};
 
     return createInfo;
+}
+
+void Triangles::CreateGraphicsPipeline()
+{
+    const char *basicTriangle = "basic_triangle.hlsl";
+    sdl::DeviceOwned vertexShader{m_device, LoadShader(basicTriangle, SDL_GPU_SHADERSTAGE_VERTEX)};
+    sdl::DeviceOwned fragmentShader{m_device,
+                                    LoadShader(basicTriangle, SDL_GPU_SHADERSTAGE_FRAGMENT)};
+
+    SDL_GPUGraphicsPipelineCreateInfo pipelineCreateInfo =
+        PipelineCreateInfo(vertexShader.Get(), fragmentShader.Get());
+
+    m_pipeline = sdl::CreateGPUGraphicsPipeline(m_device, &pipelineCreateInfo);
 }
 
 } // namespace triangles

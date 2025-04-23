@@ -26,6 +26,8 @@ struct Triangles
     SDL_GPUGraphicsPipelineCreateInfo PipelineCreateInfo(SDL_GPUShader *vertexShader,
                                                          SDL_GPUShader *fragmentShader) const;
 
+    void CreateGraphicsPipeline();
+
     SDL_Window *m_window = nullptr;
     SDL_GPUDevice *m_device = nullptr;
     SDL_GPUShaderFormat m_supportedShaderFormats;
