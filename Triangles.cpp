@@ -148,6 +148,18 @@ SDL_GPUGraphicsPipelineCreateInfo Triangles::PipelineCreateInfo() const
         .instance_step_rate = 0,
     };
 
+    SDL_GPUVertexAttribute attributePosition{.location = 0,
+                                             .buffer_slot = 0,
+                                             .format = SDL_GPU_VERTEXELEMENTFORMAT_FLOAT3,
+                                             .offset = offsetof(PositionColorVertex, Position)};
+
+    SDL_GPUVertexAttribute attributeColor{.location = 1,
+                                          .buffer_slot = 0,
+                                          .format = SDL_GPU_VERTEXELEMENTFORMAT_FLOAT4,
+                                          .offset = offsetof(PositionColorVertex, Color)};
+
+    std::array<SDL_GPUVertexAttribute, 2> attributes{attributePosition, attributeColor};
+
     return SDL_GPUGraphicsPipelineCreateInfo();
 }
 
