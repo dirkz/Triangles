@@ -202,7 +202,8 @@ SDL_GPUGraphicsPipelineCreateInfo Triangles::PipelineCreateInfo(SDL_GPUShader *v
     SDL_GPUVertexInputState vertexInputState{.vertex_buffer_descriptions = &vertexBufferDescription,
                                              .num_vertex_buffers = 1,
                                              .vertex_attributes = attributes.data(),
-                                             .num_vertex_attributes = attributes.size()};
+                                             .num_vertex_attributes =
+                                                 static_cast<Uint32>(attributes.size())};
 
     SDL_GPUGraphicsPipelineCreateInfo createInfo{
         .vertex_shader = vertexShader,
