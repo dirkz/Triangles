@@ -234,9 +234,22 @@ void Triangles::CreateGraphicsPipeline()
 
 void Triangles::UploadBuffers()
 {
+    glm::vec4 red{1, 0, 0, 1};
+    glm::vec4 green{0, 1, 0, 1};
+    glm::vec4 blue{0, 0, 1, 1};
+
+    std::vector<PositionColorVertex> vertices{PositionColorVertex{glm::vec3{-0.5, -0.5, 0}, red},
+                                              PositionColorVertex{glm::vec3{0.5, -0.5, 0}, green},
+                                              PositionColorVertex{glm::vec3{0, 0.5, 0}, blue}};
+
+    Uint32 sizeVertices = static_cast<Uint32>(vertices.end() - vertices.begin());
+
     SDL_GPUBufferCreateInfo vertexBufferCreateInfo{.usage = SDL_GPU_BUFFERUSAGE_VERTEX,
-                                                   .size = sizeof(PositionColorVertex)};
+                                                   .size = sizeVertices};
     m_vertexBuffer = sdl::CreateGPUBuffer(m_device, &vertexBufferCreateInfo);
+
+    SDL_GPUTransferBufferCreateInfo vertexBufferTransferInfo{
+        .usage = SDL_GPU_TRANSFERBUFFERUSAGE_UPLOAD, .size = sizeVertices};
 }
 
 } // namespace triangles
