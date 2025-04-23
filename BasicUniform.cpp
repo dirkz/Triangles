@@ -169,11 +169,8 @@ void BasicUniform::UploadBuffers()
                                               PositionColorVertex{0.5, -0.5, 0, green},
                                               PositionColorVertex{0, 0.5, 0, blue}};
 
-    size_t sizeVertices = vertices.size() * sizeof(PositionColorVertex);
-
     Uploader uploader{m_device};
-    m_vertexBuffer =
-        uploader.UploadBuffer(SDL_GPU_BUFFERUSAGE_VERTEX, vertices.data(), sizeVertices);
+    m_vertexBuffer = uploader.UploadBuffer(SDL_GPU_BUFFERUSAGE_VERTEX, std::span{vertices});
 
     uploader.Finish();
 }

@@ -12,6 +12,13 @@ struct Uploader
 
     SDL_GPUBuffer *UploadBuffer(SDL_GPUBufferUsageFlags usage, void *contents, size_t size);
 
+    template <class T>
+    SDL_GPUBuffer *UploadBuffer(SDL_GPUBufferUsageFlags usage, std::span<T> contents)
+    {
+        size_t size = sizeof(T) * contents.size();
+        return UploadBuffer(usage, contents.data(), size);
+    }
+
     void Finish();
 
   private:

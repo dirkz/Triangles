@@ -2,6 +2,7 @@
 #include <filesystem>
 #include <format>
 #include <iostream>
+#include <span>
 #include <stdexcept>
 #include <string>
 #include <vector>
