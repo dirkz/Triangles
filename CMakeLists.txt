@@ -14,17 +14,22 @@ project("Triangles")
 add_library(triangles OBJECT
 	"BasicTriangle.h"
 	"BasicTriangle.cpp"
+	"BasicUniform.h"
+	"BasicUniform.cpp"
 	"PositionColorVertex.h"
 	"PositionColorVertex.cpp"
 )
 
 if(WIN32)
 	add_executable(BasicTriangleMain WIN32 "BasicTriangleMain.cpp")
+	add_executable(BasicUniformMain WIN32 "BasicUniformMain.cpp")
 else()
-	add_executable(BasicTriangleMain "BasicTriangle.cpp")
+	add_executable(BasicTriangleMain "BasicTriangleMain.cpp")
+	add_executable(BasicUniformMain "BasicUniformMain.cpp")
 endif()
 
 target_link_libraries(BasicTriangleMain PRIVATE triangles)
+target_link_libraries(BasicUniformMain PRIVATE triangles)
 
 option(SDL_STATIC "Build SDL statically, so you don't have to install" ON)
 
