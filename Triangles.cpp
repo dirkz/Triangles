@@ -30,10 +30,9 @@ Triangles::Triangles()
     m_basePath = sdl::GetBasePath();
 
     const char *basicTriangle = "basic_triangle.hlsl";
-    SDL_GPUShader *vertexShader = LoadShader(basicTriangle, SDL_GPU_SHADERSTAGE_VERTEX);
-    sdl::DeviceOwned vertexDestructor{m_device, vertexShader};
-    SDL_GPUShader *fragmentShader = LoadShader(basicTriangle, SDL_GPU_SHADERSTAGE_FRAGMENT);
-    sdl::DeviceOwned fragmentDestructor{m_device, fragmentShader};
+    sdl::DeviceOwned vertexShader{m_device, LoadShader(basicTriangle, SDL_GPU_SHADERSTAGE_VERTEX)};
+    sdl::DeviceOwned fragmentShader{m_device,
+                                    LoadShader(basicTriangle, SDL_GPU_SHADERSTAGE_FRAGMENT)};
 }
 
 Triangles::~Triangles()
@@ -148,8 +147,7 @@ SDL_GPUShader *Triangles::LoadShader(const std::string &filenameBase, SDL_GPUSha
 
     std::string filepathString = filepath.string();
     size_t numBytes = 0;
-    void *contents = sdl::LoadFile(filepathString.c_str(), &numBytes);
-    sdl::Void p{contents};
+    sdl::Void p{sdl::LoadFile(filepathString.c_str(), &numBytes)};
     Uint8 *pContents = static_cast<Uint8 *>(p.get());
 
     SDL_GPUShaderFormat format = PreferredShaderFormat();
