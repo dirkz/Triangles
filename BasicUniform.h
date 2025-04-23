@@ -23,8 +23,6 @@ struct BasicUniform
                               Uint32 numUniformBuffers = 0, Uint32 numSamplers = 0,
                               Uint32 numStorageBuffers = 0, Uint32 numStorageTextures = 0) const;
 
-    SDL_GPUGraphicsPipelineCreateInfo PipelineCreateInfo(SDL_GPUShader *vertexShader,
-                                                         SDL_GPUShader *fragmentShader) const;
     void CreateGraphicsPipeline();
 
     void UploadBuffers();
