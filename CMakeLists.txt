@@ -22,6 +22,9 @@ option(SDL_STATIC "Build SDL statically, so you don't have to install" ON)
 add_subdirectory(SDL-Hpp)
 target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE SDL-Hpp)
 
+add_subdirectory(glm)
+target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE glm::glm)
+
 target_precompile_headers(${CMAKE_PROJECT_NAME} PRIVATE stdafx.h)
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)
