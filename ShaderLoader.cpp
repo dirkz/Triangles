@@ -60,4 +60,50 @@ std::string ShaderLoader::ShaderEntryPoint(SDL_GPUShaderStage stage) const
     }
 }
 
+std::string ShaderLoader::ShaderStageString(SDL_GPUShaderStage stage) const
+{
+    switch (stage)
+    {
+    case SDL_GPU_SHADERSTAGE_FRAGMENT:
+        return "fragment";
+    case SDL_GPU_SHADERSTAGE_VERTEX:
+        return "vertex";
+    default:
+        std::string errorMsg = std::format("unsupported shader stage: {}", static_cast<int>(stage));
+        throw std::runtime_error{errorMsg};
+    }
+}
+
+SDL_GPUShader *ShaderLoader::LoadShader(const std::string &filenameBase, SDL_GPUShaderStage stage,
+                                        Uint32 numUniformBuffers, Uint32 numSamplers,
+                                        Uint32 numStorageBuffers, Uint32 numStorageTextures) const
+{
+    std::string stageString = ShaderStageString(stage);
+    std::string shaderFormatString = PreferredShaderFormatString();
+    std::string filename = std::format("{}.{}.{}", filenameBase, stageString, shaderFormatString);
+
+    std::filesystem::path filepath = m_basePath / filename;
+
+    std::string filepathString = filepath.string();
+    size_t numBytes = 0;
+    sdl::Void p{sdl::LoadFile(filepathString.c_str(), &numBytes)};
+    Uint8 *pContents = static_cast<Uint8 *>(p.get());
+
+    SDL_GPUShaderFormat format = PreferredShaderFormat();
+    std::string entryPoint = ShaderEntryPoint(stage);
+    SDL_GPUShaderCreateInfo createInfo{.code_size = numBytes,
+                                       .code = pContents,
+                                       .entrypoint = entryPoint.c_str(),
+                                       .format = format,
+                                       .stage = stage,
+                                       .num_samplers = numSamplers,
+                                       .num_storage_textures = numStorageTextures,
+                                       .num_storage_buffers = numStorageBuffers,
+                                       .num_uniform_buffers = numUniformBuffers};
+
+    SDL_GPUShader *shader = sdl::CreateGPUShader(m_device, &createInfo);
+
+    return shader;
+}
+
 } // namespace triangles

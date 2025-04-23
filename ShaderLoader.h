@@ -12,6 +12,11 @@ struct ShaderLoader
     SDL_GPUShaderFormat PreferredShaderFormat() const;
     std::string PreferredShaderFormatString() const;
     std::string ShaderEntryPoint(SDL_GPUShaderStage stage) const;
+    std::string ShaderStageString(SDL_GPUShaderStage stage) const;
+
+    SDL_GPUShader *LoadShader(const std::string &filenameBase, SDL_GPUShaderStage stage,
+                              Uint32 numUniformBuffers, Uint32 numSamplers,
+                              Uint32 numStorageBuffers, Uint32 numStorageTextures) const;
 
   private:
     SDL_GPUDevice *m_device;
