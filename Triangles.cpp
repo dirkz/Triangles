@@ -83,10 +83,11 @@ void Triangles::AppIterate()
         SDL_GPURenderPass *renderPass =
             sdl::BeginGPURenderPass(commandBuffer, &colorTargetInfo, 1, nullptr);
 
-        SDL_GPUBufferBinding bufferBinding{.buffer = m_vertexBuffer, .offset = 0};
-
         sdl::BindGPUGraphicsPipeline(renderPass, m_pipeline);
+
+        SDL_GPUBufferBinding bufferBinding{.buffer = m_vertexBuffer, .offset = 0};
         sdl::BindGPUVertexBuffers(renderPass, 0, &bufferBinding, 1);
+
         sdl::DrawGPUPrimitives(renderPass, 3, 1, 0, 0);
 
         sdl::EndGPURenderPass(renderPass);
