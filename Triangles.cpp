@@ -1,5 +1,7 @@
 #include "Triangles.h"
 
+#include "PositionColorVertex.h"
+
 namespace triangles
 {
 
@@ -141,7 +143,7 @@ SDL_GPUGraphicsPipelineCreateInfo Triangles::PipelineCreateInfo() const
 
     SDL_GPUVertexBufferDescription vertexBufferDescription{
         .slot = 0,
-        .pitch = 1,
+        .pitch = sizeof(PositionColorVertex),
         .input_rate = SDL_GPU_VERTEXINPUTRATE_VERTEX,
         .instance_step_rate = 0,
     };
