@@ -114,7 +114,7 @@ void BasicUniform::CreateGraphicsPipeline()
 {
     ShaderLoader shaderLoader{m_device};
 
-    const char *basicTriangle = "basic_triangle.hlsl";
+    const char *basicTriangle = "basic_triangle_uniform.hlsl";
     sdl::DeviceOwned vertexShader{
         m_device, shaderLoader.Load(basicTriangle, SDL_GPU_SHADERSTAGE_VERTEX, 0, 0, 0, 0)};
     sdl::DeviceOwned fragmentShader{

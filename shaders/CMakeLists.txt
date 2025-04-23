@@ -1,4 +1,4 @@
-set(SHADERS basic_triangle.hlsl)
+set(SHADERS basic_triangle.hlsl basic_triangle_uniform.hlsl)
 
 add_custom_target(shaders)
 
