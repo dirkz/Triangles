@@ -1,4 +1,4 @@
-cbuffer UBO : register(b0, space2)
+cbuffer UBO : register(b0, space1)
 {
     float4x4 ViewProjection : packoffset(c0);
 };
@@ -20,7 +20,7 @@ Pixel VS(Vertex v)
 {
     Pixel p;
 
-    p.Position = float4(v.Position, 1);
+    p.Position = mul(float4(v.Position, 1), ViewProjection);
     p.Color = v.Color;
     
     return p;
