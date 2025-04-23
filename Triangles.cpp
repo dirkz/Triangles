@@ -35,6 +35,11 @@ Triangles::Triangles()
     sdl::DeviceOwned vertexShader{m_device, LoadShader(basicTriangle, SDL_GPU_SHADERSTAGE_VERTEX)};
     sdl::DeviceOwned fragmentShader{m_device,
                                     LoadShader(basicTriangle, SDL_GPU_SHADERSTAGE_FRAGMENT)};
+
+    SDL_GPUGraphicsPipelineCreateInfo pipelineCreateInfo =
+        PipelineCreateInfo(vertexShader.Get(), fragmentShader.Get());
+
+    m_pipeline = sdl::CreateGPUGraphicsPipeline(m_device, &pipelineCreateInfo);
 }
 
 Triangles::~Triangles()
@@ -136,7 +141,8 @@ std::string Triangles::ShaderEntryPoint(SDL_GPUShaderStage stage) const
     }
 }
 
-SDL_GPUGraphicsPipelineCreateInfo Triangles::PipelineCreateInfo() const
+SDL_GPUGraphicsPipelineCreateInfo Triangles::PipelineCreateInfo(SDL_GPUShader *vertexShader,
+                                                                SDL_GPUShader *fragmentShader) const
 {
     SDL_GPUColorTargetDescription colorTargetDescription{
         .format = sdl::GetGPUSwapchainTextureFormat(m_device, m_window)};
@@ -160,7 +166,20 @@ SDL_GPUGraphicsPipelineCreateInfo Triangles::PipelineCreateInfo() const
 
     std::array<SDL_GPUVertexAttribute, 2> attributes{attributePosition, attributeColor};
 
-    return SDL_GPUGraphicsPipelineCreateInfo();
+    SDL_GPUVertexInputState vertexInputState{.vertex_buffer_descriptions = &vertexBufferDescription,
+                                             .num_vertex_buffers = 1,
+                                             .vertex_attributes = attributes.data(),
+                                             .num_vertex_attributes = attributes.size()};
+
+    SDL_GPUGraphicsPipelineCreateInfo createInfo{
+        .vertex_shader = vertexShader,
+        .fragment_shader = fragmentShader,
+        .vertex_input_state = vertexInputState,
+        .primitive_type = SDL_GPU_PRIMITIVETYPE_TRIANGLELIST,
+        .target_info = {.color_target_descriptions = &colorTargetDescription,
+                        .num_color_targets = 1}};
+
+    return createInfo;
 }
 
 SDL_GPUShader *Triangles::LoadShader(const std::string &filenameBase, SDL_GPUShaderStage stage,
