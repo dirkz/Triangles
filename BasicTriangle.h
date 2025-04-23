@@ -5,10 +5,10 @@
 namespace triangles
 {
 
-struct Triangles
+struct BasicTriangle
 {
-    Triangles();
-    ~Triangles();
+    BasicTriangle();
+    ~BasicTriangle();
 
     void AppIterate();
     bool AppEvent(SDL_Event *event);

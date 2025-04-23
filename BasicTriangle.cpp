@@ -1,11 +1,11 @@
-#include "Triangles.h"
+#include "BasicTriangle.h"
 
 #include "PositionColorVertex.h"
 
 namespace triangles
 {
 
-Triangles::Triangles()
+BasicTriangle::BasicTriangle()
 {
     sdl::Init(SDL_INIT_VIDEO);
 
@@ -35,7 +35,7 @@ Triangles::Triangles()
     UploadBuffers();
 }
 
-Triangles::~Triangles()
+BasicTriangle::~BasicTriangle()
 {
     if (m_device)
     {
@@ -63,7 +63,7 @@ Triangles::~Triangles()
     }
 }
 
-void Triangles::AppIterate()
+void BasicTriangle::AppIterate()
 {
     SDL_GPUCommandBuffer *commandBuffer = sdl::AcquireGPUCommandBuffer(m_device);
 
@@ -96,7 +96,7 @@ void Triangles::AppIterate()
     sdl::SubmitGPUCommandBuffer(commandBuffer);
 }
 
-bool Triangles::AppEvent(SDL_Event *event)
+bool BasicTriangle::AppEvent(SDL_Event *event)
 {
     switch (event->type)
     {
@@ -108,7 +108,7 @@ bool Triangles::AppEvent(SDL_Event *event)
     }
 }
 
-std::string Triangles::ShaderStageString(SDL_GPUShaderStage stage) const
+std::string BasicTriangle::ShaderStageString(SDL_GPUShaderStage stage) const
 {
     switch (stage)
     {
@@ -122,7 +122,7 @@ std::string Triangles::ShaderStageString(SDL_GPUShaderStage stage) const
     }
 }
 
-SDL_GPUShaderFormat Triangles::PreferredShaderFormat() const
+SDL_GPUShaderFormat BasicTriangle::PreferredShaderFormat() const
 {
     if (m_supportedShaderFormats & SDL_GPU_SHADERFORMAT_MSL)
     {
@@ -142,7 +142,7 @@ SDL_GPUShaderFormat Triangles::PreferredShaderFormat() const
     throw std::runtime_error{errorMsg};
 }
 
-std::string Triangles::PreferredShaderFormatString() const
+std::string BasicTriangle::PreferredShaderFormatString() const
 {
     switch (PreferredShaderFormat())
     {
@@ -159,7 +159,7 @@ std::string Triangles::PreferredShaderFormatString() const
     }
 }
 
-std::string Triangles::ShaderEntryPoint(SDL_GPUShaderStage stage) const
+std::string BasicTriangle::ShaderEntryPoint(SDL_GPUShaderStage stage) const
 {
     switch (stage)
     {
@@ -173,9 +173,9 @@ std::string Triangles::ShaderEntryPoint(SDL_GPUShaderStage stage) const
     }
 }
 
-SDL_GPUShader *Triangles::LoadShader(const std::string &filenameBase, SDL_GPUShaderStage stage,
-                                     Uint32 numUniformBuffers, Uint32 numSamplers,
-                                     Uint32 numStorageBuffers, Uint32 numStorageTextures) const
+SDL_GPUShader *BasicTriangle::LoadShader(const std::string &filenameBase, SDL_GPUShaderStage stage,
+                                         Uint32 numUniformBuffers, Uint32 numSamplers,
+                                         Uint32 numStorageBuffers, Uint32 numStorageTextures) const
 {
     std::string stageString = ShaderStageString(stage);
     std::string shaderFormatString = PreferredShaderFormatString();
@@ -206,8 +206,8 @@ SDL_GPUShader *Triangles::LoadShader(const std::string &filenameBase, SDL_GPUSha
     return shader;
 }
 
-SDL_GPUGraphicsPipelineCreateInfo Triangles::PipelineCreateInfo(SDL_GPUShader *vertexShader,
-                                                                SDL_GPUShader *fragmentShader) const
+SDL_GPUGraphicsPipelineCreateInfo BasicTriangle::PipelineCreateInfo(
+    SDL_GPUShader *vertexShader, SDL_GPUShader *fragmentShader) const
 {
     SDL_GPUColorTargetDescription colorTargetDescription{
         .format = sdl::GetGPUSwapchainTextureFormat(m_device, m_window)};
@@ -248,7 +248,7 @@ SDL_GPUGraphicsPipelineCreateInfo Triangles::PipelineCreateInfo(SDL_GPUShader *v
     return createInfo;
 }
 
-void Triangles::CreateGraphicsPipeline()
+void BasicTriangle::CreateGraphicsPipeline()
 {
     const char *basicTriangle = "basic_triangle.hlsl";
     sdl::DeviceOwned vertexShader{m_device, LoadShader(basicTriangle, SDL_GPU_SHADERSTAGE_VERTEX)};
@@ -261,7 +261,7 @@ void Triangles::CreateGraphicsPipeline()
     m_pipeline = sdl::CreateGPUGraphicsPipeline(m_device, &pipelineCreateInfo);
 }
 
-void Triangles::UploadBuffers()
+void BasicTriangle::UploadBuffers()
 {
     glm::vec4 red{1, 0, 0, 1};
     glm::vec4 green{0, 1, 0, 1};

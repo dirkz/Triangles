@@ -14,8 +14,8 @@ project ("Triangles")
 if(WIN32)
 	add_executable(${CMAKE_PROJECT_NAME} WIN32
 		"main.cpp"
-		"Triangles.h"
-		"Triangles.cpp"
+		"BasicTriangle.h"
+		"BasicTriangle.cpp"
 		"PositionColorVertex.h"
 		"PositionColorVertex.cpp")
 else()

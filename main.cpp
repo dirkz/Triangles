@@ -3,7 +3,7 @@
 #define SDL_MAIN_USE_CALLBACKS
 #include <SDL3/SDL_main.h>
 
-#include "Triangles.h"
+#include "BasicTriangle.h"
 
 using namespace triangles;
 
@@ -11,8 +11,8 @@ static SDL_AppResult SDL_AppInit(void **appstate, int argc, char **argv)
 {
     try
     {
-        Triangles *triangles = new Triangles{};
-        *appstate = triangles;
+        BasicTriangle *app = new BasicTriangle{};
+        *appstate = app;
     }
     catch (...)
     {
@@ -26,8 +26,8 @@ SDL_AppResult SDL_AppIterate(void *appstate)
 {
     try
     {
-        Triangles *triangles = static_cast<Triangles *>(appstate);
-        triangles->AppIterate();
+        BasicTriangle *app = static_cast<BasicTriangle *>(appstate);
+        app->AppIterate();
     }
     catch (...)
     {
@@ -41,8 +41,8 @@ SDL_AppResult SDL_AppEvent(void *appstate, SDL_Event *event)
 {
     try
     {
-        Triangles *triangles = static_cast<Triangles *>(appstate);
-        bool shouldQuit = triangles->AppEvent(event);
+        BasicTriangle *app = static_cast<BasicTriangle *>(appstate);
+        bool shouldQuit = app->AppEvent(event);
         if (shouldQuit)
         {
             return SDL_APP_SUCCESS;
@@ -58,6 +58,6 @@ SDL_AppResult SDL_AppEvent(void *appstate, SDL_Event *event)
 
 void SDL_AppQuit(void *appstate, SDL_AppResult result)
 {
-    Triangles *triangles = static_cast<Triangles *>(appstate);
-    delete triangles;
+    BasicTriangle *app = static_cast<BasicTriangle *>(appstate);
+    delete app;
 }
