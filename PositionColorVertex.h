@@ -7,8 +7,11 @@ namespace triangles
 
 struct PositionColorVertex
 {
-    glm::vec3 Position;
-    glm::vec4 Color;
+    PositionColorVertex(float x, float y, float z, glm::vec4 color);
+
+    glm::vec3 m_position;
+    float m_padding = 0;
+    glm::vec4 m_color;
 };
 
 } // namespace triangles

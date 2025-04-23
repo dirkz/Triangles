@@ -222,12 +222,12 @@ SDL_GPUGraphicsPipelineCreateInfo Triangles::PipelineCreateInfo(SDL_GPUShader *v
     SDL_GPUVertexAttribute attributePosition{.location = 0,
                                              .buffer_slot = 0,
                                              .format = SDL_GPU_VERTEXELEMENTFORMAT_FLOAT3,
-                                             .offset = offsetof(PositionColorVertex, Position)};
+                                             .offset = offsetof(PositionColorVertex, m_position)};
 
     SDL_GPUVertexAttribute attributeColor{.location = 1,
                                           .buffer_slot = 0,
                                           .format = SDL_GPU_VERTEXELEMENTFORMAT_FLOAT4,
-                                          .offset = offsetof(PositionColorVertex, Color)};
+                                          .offset = offsetof(PositionColorVertex, m_color)};
 
     std::array<SDL_GPUVertexAttribute, 2> attributes{attributePosition, attributeColor};
 
@@ -267,9 +267,9 @@ void Triangles::UploadBuffers()
     glm::vec4 green{0, 1, 0, 1};
     glm::vec4 blue{0, 0, 1, 1};
 
-    std::vector<PositionColorVertex> vertices{PositionColorVertex{glm::vec3{-0.5, -0.5, 0}, red},
-                                              PositionColorVertex{glm::vec3{0.5, -0.5, 0}, green},
-                                              PositionColorVertex{glm::vec3{0, 0.5, 0}, blue}};
+    std::vector<PositionColorVertex> vertices{PositionColorVertex{-0.5, -0.5, 0, red},
+                                              PositionColorVertex{0.5, -0.5, 0, green},
+                                              PositionColorVertex{0, 0.5, 0, blue}};
 
     Uint32 sizeVertices = static_cast<Uint32>(vertices.end() - vertices.begin());
 
