@@ -87,10 +87,7 @@ void BasicUniform::AppIterate()
 
         sdl::BindGPUGraphicsPipeline(renderPass, m_pipeline);
 
-        constexpr double pi = std::numbers::pi_v<double>;
-        double ticks = static_cast<double>(sdl::GetTicks());
-        double rotation = ticks * std::sin(pi * 2);
-        glm::mat4x4 m = glm::rotate(glm::mat4x4{1}, static_cast<float>(pi), glm::vec3{0, 0, 1});
+        glm::mat4x4 m = glm::scale(glm::mat4x4{1.f}, glm::vec3{1.5f, 1.f, 1.f});
         sdl::PushGPUVertexUniformData(commandBuffer, 0, &m, sizeof(m));
 
         SDL_GPUBufferBinding bufferBinding{.buffer = m_vertexBuffer, .offset = 0};
