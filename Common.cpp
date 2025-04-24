@@ -18,4 +18,20 @@ SDL_Window *CreateWindow(const char *title)
     return window;
 }
 
+SDL_GPUDevice *CreateDevice(SDL_Window *window)
+{
+#ifdef _DEBUG
+    bool debugMode = true;
+#else
+    bool debugMode = false;
+#endif
+
+    SDL_GPUDevice *device = sdl::CreateGPUDevice(
+        SDL_GPU_SHADERFORMAT_DXIL | SDL_GPU_SHADERFORMAT_SPIRV | SDL_GPU_SHADERFORMAT_MSL,
+        debugMode, nullptr);
+    sdl::ClaimWindowForGPUDevice(device, window);
+
+    return device;
+}
+
 } // namespace triangles

@@ -11,18 +11,7 @@ namespace triangles
 BasicUniform::BasicUniform()
 {
     m_window = CreateWindow("BasicUniform");
-
-#ifdef _DEBUG
-    bool debugMode = true;
-#else
-    bool debugMode = false;
-#endif
-
-    m_device = sdl::CreateGPUDevice(SDL_GPU_SHADERFORMAT_DXIL | SDL_GPU_SHADERFORMAT_SPIRV |
-                                        SDL_GPU_SHADERFORMAT_MSL,
-                                    debugMode, nullptr);
-    sdl::ClaimWindowForGPUDevice(m_device, m_window);
-
+    m_device = CreateDevice(m_window);
     CreateGraphicsPipeline();
     UploadBuffers();
 }
