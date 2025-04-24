@@ -112,10 +112,9 @@ void BasicUniform::AppIterate()
         double factor = static_cast<double>(mod) / static_cast<double>(cycle);
         float angle = static_cast<float>(factor * range);
 
-        std::array<float, 16> matrixOwn = RotationZ(angle);
-        glm::mat4x4 identity{1.f};
-        glm::mat4x4 matrixGlm = glm::rotate(identity, angle, glm::vec3{0, 0, -1});
-        sdl::PushGPUVertexUniformData(commandBuffer, 0, &matrixGlm, sizeof(matrixGlm));
+        glm::mat4x4 rotation{1.f};
+        rotation = glm::rotate(rotation, angle, glm::vec3{0, 0, 1});
+        sdl::PushGPUVertexUniformData(commandBuffer, 0, &rotation, sizeof(rotation));
 
         SDL_GPUBufferBinding bufferBinding{.buffer = m_vertexBuffer, .offset = 0};
         sdl::BindGPUVertexBuffers(renderPass, 0, &bufferBinding, 1);
