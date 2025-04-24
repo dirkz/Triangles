@@ -180,6 +180,7 @@ void TexturedQuad::CreateSurfaceTexture()
         {
             int blockX = x / TextureBlockSize % 2;
             int blockY = y / TextureBlockSize % 2;
+
             Uint32 color;
             if (!(x == 0) != !(y == 0))
             {
@@ -189,6 +190,7 @@ void TexturedQuad::CreateSurfaceTexture()
             {
                 color = TextureColor2;
             }
+
             m_surface.SetPixel(x, y, color);
         }
     }
