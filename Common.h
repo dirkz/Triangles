@@ -19,6 +19,6 @@ SDL_GPUGraphicsPipeline *CreateGraphicsPipeline(
     const std::span<SDL_GPUVertexBufferDescription> &vertexBufferDescriptions,
     const std::span<SDL_GPUVertexAttribute> &attributes);
 
-double Elapsed(Uint64 numberOfTicksPerCycle, Uint32 now = sdl::GetTicks());
+double Elapsed(Uint64 numberOfTicksPerCycle, Uint64 now = sdl::GetTicks());
 
 } // namespace triangles

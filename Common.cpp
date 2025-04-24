@@ -62,7 +62,7 @@ SDL_GPUGraphicsPipeline *CreateGraphicsPipeline(
     return pipeline;
 }
 
-double Elapsed(Uint64 numberOfTicksPerCycle, Uint32 now)
+double Elapsed(Uint64 numberOfTicksPerCycle, Uint64 now)
 {
     Uint64 mod = now % numberOfTicksPerCycle;
     double factor = static_cast<double>(mod) / static_cast<double>(numberOfTicksPerCycle);
