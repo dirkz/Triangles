@@ -66,12 +66,11 @@ void BasicUniform::AppIterate()
 
         sdl::BindGPUGraphicsPipeline(renderPass, m_pipeline);
 
-        Uint64 now = sdl::GetTicks(); // ms
-        Uint64 cycle = 6000;          // ms
-        double range = std::numbers::pi_v<double> * 2.0;
+        Uint64 now = sdl::GetTicks();  // ms
+        constexpr Uint64 cycle = 6000; // ms
+        double factor = Elapsed(cycle, now);
 
-        Uint64 mod = now % cycle;
-        double factor = static_cast<double>(mod) / static_cast<double>(cycle);
+        double range = std::numbers::pi_v<double> * 2.0;
         float angle = static_cast<float>(factor * range);
 
         float s = std::sin(angle);

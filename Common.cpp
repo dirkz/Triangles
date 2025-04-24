@@ -62,4 +62,11 @@ SDL_GPUGraphicsPipeline *CreateGraphicsPipeline(
     return pipeline;
 }
 
+double Elapsed(Uint64 numberOfTicksPerCycle, Uint32 now)
+{
+    Uint64 mod = now % numberOfTicksPerCycle;
+    double factor = static_cast<double>(mod) / static_cast<double>(numberOfTicksPerCycle);
+    return factor;
+}
+
 } // namespace triangles
