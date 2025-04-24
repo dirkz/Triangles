@@ -65,6 +65,22 @@ BasicUniform::~BasicUniform()
     }
 }
 
+/// <summary>
+/// A row-major rotation matrix (left-handed coordinate system).
+/// </summary>
+/// <param name="angle"></param>
+/// <returns></returns>
+static std::array<float, 16> RotationZ(float angle)
+{
+    float c = std::cos(angle);
+    float s = std::sin(angle);
+
+    return {
+        c, -s, 0, 0 /* row 1 */, s, c, 0, 0 /* row 2 */,
+        0, 0,  1, 0 /* row 3 */, 0, 0, 0, 1 /* row 4 */
+    };
+}
+
 void BasicUniform::AppIterate()
 {
     SDL_GPUCommandBuffer *commandBuffer = sdl::AcquireGPUCommandBuffer(m_device);
@@ -95,8 +111,8 @@ void BasicUniform::AppIterate()
         double factor = static_cast<double>(mod) / static_cast<double>(cycle);
         float angle = static_cast<float>(factor * range);
 
-        glm::mat4x4 m = glm::rotate(glm::mat4x4{1.f}, angle, glm::vec3{0.f, 0.f, -1.f});
-        sdl::PushGPUVertexUniformData(commandBuffer, 0, &m, sizeof(m));
+        std::array<float, 16> m = RotationZ(angle);
+        sdl::PushGPUVertexUniformData(commandBuffer, 0, m.data(), m.size());
 
         SDL_GPUBufferBinding bufferBinding{.buffer = m_vertexBuffer, .offset = 0};
         sdl::BindGPUVertexBuffers(renderPass, 0, &bufferBinding, 1);
