@@ -98,7 +98,7 @@ void BasicUniform::AppIterate()
         float s = std::sin(angle);
         float c = std::cos(angle);
 
-        // Official counterclockwise rotation in a right-handed coordinate system::
+        // Official counterclockwise rotation in a right-handed coordinate system:
         // https://en.wikipedia.org/wiki/Rotation_matrix#Basic_3D_rotations
         glm::mat4x4 rotation{
             c, -s, 0, 0, // row 1
@@ -106,6 +106,12 @@ void BasicUniform::AppIterate()
             0, 0,  1, 0, // row 3
             0, 0,  0, 1  // row 4
         };
+
+        // But, GLM adheres to the GLSLang spec, so it expects matrices
+        // to be constructed in column-major mode (page 84):
+        // https://registry.khronos.org/OpenGL/specs/gl/GLSLangSpec.4.20.pdf
+        // So we have to transpose. Awkward.
+        rotation = glm::transpose(rotation);
 
         sdl::PushGPUVertexUniformData(commandBuffer, 0, &rotation, sizeof(rotation));
 
