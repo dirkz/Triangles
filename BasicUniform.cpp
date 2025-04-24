@@ -66,7 +66,8 @@ BasicUniform::~BasicUniform()
 }
 
 /// <summary>
-/// A row-major rotation matrix (left-handed coordinate system).
+/// A row-major counterclockwise rotation matrix around the z-axis
+/// (right-handed coordinate system).
 /// </summary>
 /// <param name="angle"></param>
 /// <returns></returns>
@@ -111,10 +112,10 @@ void BasicUniform::AppIterate()
         double factor = static_cast<double>(mod) / static_cast<double>(cycle);
         float angle = static_cast<float>(factor * range);
 
-        std::array<float, 16> m = RotationZ(angle);
+        std::array<float, 16> matrixOwn = RotationZ(angle);
         glm::mat4x4 identity{1.f};
-        glm::mat4x4 m2 = glm::rotate(identity, angle, glm::vec3{0, 0, -1});
-        sdl::PushGPUVertexUniformData(commandBuffer, 0, m.data(), static_cast<Uint32>(m.size()));
+        glm::mat4x4 matrixGlm = glm::rotate(identity, angle, glm::vec3{0, 0, -1});
+        sdl::PushGPUVertexUniformData(commandBuffer, 0, &matrixGlm, sizeof(matrixGlm));
 
         SDL_GPUBufferBinding bufferBinding{.buffer = m_vertexBuffer, .offset = 0};
         sdl::BindGPUVertexBuffers(renderPass, 0, &bufferBinding, 1);
