@@ -154,12 +154,15 @@ void IndexedQuad::CreateGraphicsPipeline()
 
 void IndexedQuad::UploadBuffers()
 {
-    std::vector<PositionColorVertex> vertices{PositionColorVertex{-0.5, -0.5, 0, Red},
-                                              PositionColorVertex{0.5, -0.5, 0, Green},
-                                              PositionColorVertex{0, 0.5, 0, Blue}};
+    std::vector<PositionColorVertex> vertices{
+        PositionColorVertex{-0.5, -0.5, 0, Red}, PositionColorVertex{0.5, -0.5, 0, Green},
+        PositionColorVertex{0.5, 0.5, 0, Blue}, PositionColorVertex{-0.5, 0.5, 0, Yellow}};
+
+    std::vector<Uint16> indices{0, 1, 2, 0, 2, 3};
 
     Uploader uploader{m_device};
     m_vertexBuffer = uploader.UploadBuffer(SDL_GPU_BUFFERUSAGE_VERTEX, std::span{vertices});
+    m_indexBuffer = uploader.UploadBuffer(SDL_GPU_BUFFERUSAGE_INDEX, std::span{indices});
 
     uploader.Finish();
 }
