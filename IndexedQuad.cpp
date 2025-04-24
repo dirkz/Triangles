@@ -93,10 +93,13 @@ void IndexedQuad::AppIterate()
 
         sdl::PushGPUVertexUniformData(commandBuffer, 0, &transformation, sizeof(transformation));
 
-        SDL_GPUBufferBinding bufferBinding{.buffer = m_vertexBuffer, .offset = 0};
-        sdl::BindGPUVertexBuffers(renderPass, 0, &bufferBinding, 1);
+        SDL_GPUBufferBinding vertexBufferBinding{.buffer = m_vertexBuffer, .offset = 0};
+        sdl::BindGPUVertexBuffers(renderPass, 0, &vertexBufferBinding, 1);
 
-        sdl::DrawGPUPrimitives(renderPass, 3, 1, 0, 0);
+        SDL_GPUBufferBinding indexBufferBinding{.buffer = m_indexBuffer, .offset = 0};
+        sdl::BindGPUIndexBuffer(renderPass, &indexBufferBinding, SDL_GPU_INDEXELEMENTSIZE_16BIT);
+
+        sdl::DrawGPUIndexedPrimitives(renderPass, m_numIndices, 1, 0, 0, 0);
 
         sdl::EndGPURenderPass(renderPass);
     }
@@ -165,6 +168,8 @@ void IndexedQuad::UploadBuffers()
     m_indexBuffer = uploader.UploadBuffer(SDL_GPU_BUFFERUSAGE_INDEX, std::span{indices});
 
     uploader.Finish();
+
+    m_numIndices = static_cast<Uint32>(indices.size());
 }
 
 } // namespace triangles

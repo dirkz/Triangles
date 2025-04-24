@@ -23,6 +23,7 @@ struct IndexedQuad
     SDL_GPUGraphicsPipeline *m_pipeline = nullptr;
     SDL_GPUBuffer *m_vertexBuffer = nullptr;
     SDL_GPUBuffer *m_indexBuffer = nullptr;
+    Uint32 m_numIndices = 0;
 };
 
 } // namespace triangles
