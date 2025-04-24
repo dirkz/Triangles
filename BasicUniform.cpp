@@ -127,15 +127,14 @@ void BasicUniform::CreateGraphicsPipeline()
     sdl::DeviceOwned fragmentShader{
         m_device, shaderLoader.Load(basicTriangle, SDL_GPU_SHADERSTAGE_FRAGMENT, 0, 0, 0, 0)};
 
-    SDL_GPUColorTargetDescription colorTargetDescription{
-        .format = sdl::GetGPUSwapchainTextureFormat(m_device, m_window)};
-
     SDL_GPUVertexBufferDescription vertexBufferDescription{
         .slot = 0,
         .pitch = sizeof(PositionColorVertex),
         .input_rate = SDL_GPU_VERTEXINPUTRATE_VERTEX,
         .instance_step_rate = 0,
     };
+
+    std::vector<SDL_GPUVertexBufferDescription> vertexBufferDescriptions{vertexBufferDescription};
 
     SDL_GPUVertexAttribute attributePosition{.location = 0,
                                              .buffer_slot = 0,
@@ -147,23 +146,11 @@ void BasicUniform::CreateGraphicsPipeline()
                                           .format = SDL_GPU_VERTEXELEMENTFORMAT_FLOAT4,
                                           .offset = offsetof(PositionColorVertex, m_color)};
 
-    std::array<SDL_GPUVertexAttribute, 2> attributes{attributePosition, attributeColor};
+    std::vector<SDL_GPUVertexAttribute> attributes{attributePosition, attributeColor};
 
-    SDL_GPUVertexInputState vertexInputState{.vertex_buffer_descriptions = &vertexBufferDescription,
-                                             .num_vertex_buffers = 1,
-                                             .vertex_attributes = attributes.data(),
-                                             .num_vertex_attributes =
-                                                 static_cast<Uint32>(attributes.size())};
-
-    SDL_GPUGraphicsPipelineCreateInfo pipelineCreateInfo{
-        .vertex_shader = vertexShader.Get(),
-        .fragment_shader = fragmentShader.Get(),
-        .vertex_input_state = vertexInputState,
-        .primitive_type = SDL_GPU_PRIMITIVETYPE_TRIANGLELIST,
-        .target_info = {.color_target_descriptions = &colorTargetDescription,
-                        .num_color_targets = 1}};
-
-    m_pipeline = sdl::CreateGPUGraphicsPipeline(m_device, &pipelineCreateInfo);
+    m_pipeline = triangles::CreateGraphicsPipeline(
+        m_window, m_device, vertexShader.Get(), fragmentShader.Get(),
+        std::span{vertexBufferDescriptions}, std::span{attributes});
 }
 
 void BasicUniform::UploadBuffers()
