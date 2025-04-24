@@ -112,7 +112,7 @@ void BasicUniform::AppIterate()
         float angle = static_cast<float>(factor * range);
 
         std::array<float, 16> m = RotationZ(angle);
-        sdl::PushGPUVertexUniformData(commandBuffer, 0, m.data(), m.size());
+        sdl::PushGPUVertexUniformData(commandBuffer, 0, m.data(), static_cast<Uint32>(m.size()));
 
         SDL_GPUBufferBinding bufferBinding{.buffer = m_vertexBuffer, .offset = 0};
         sdl::BindGPUVertexBuffers(renderPass, 0, &bufferBinding, 1);
