@@ -108,9 +108,9 @@ void BasicUniform::AppIterate()
         // to be constructed in column-major order (e.g. see here, page 84):
         // https://registry.khronos.org/OpenGL/specs/gl/GLSLangSpec.4.20.pdf
         // So we have to transpose. Awkward.
-        rotation = glm::transpose(rotation);
+        glm::mat4x4 transformation = glm::transpose(rotation);
 
-        sdl::PushGPUVertexUniformData(commandBuffer, 0, &rotation, sizeof(rotation));
+        sdl::PushGPUVertexUniformData(commandBuffer, 0, &transformation, sizeof(transformation));
 
         SDL_GPUBufferBinding bufferBinding{.buffer = m_vertexBuffer, .offset = 0};
         sdl::BindGPUVertexBuffers(renderPass, 0, &bufferBinding, 1);
