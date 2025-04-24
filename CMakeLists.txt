@@ -21,7 +21,9 @@ add_library(triangles OBJECT
 	"ShaderLoader.h"
 	"ShaderLoader.cpp"
 	"Uploader.h"
-	"Uploader.cpp")
+	"Uploader.cpp"
+	"Common.h"
+	"Common.cpp")
 
 if(WIN32)
 	add_executable(BasicTriangleMain WIN32 "BasicTriangleMain.cpp")
