@@ -23,18 +23,23 @@ add_library(triangles OBJECT
 	"Uploader.h"
 	"Uploader.cpp"
 	"Common.h"
-	"Common.cpp")
+	"Common.cpp"
+	"IndexedQuad.h"
+	"IndexedQuad.cpp")
 
 if(WIN32)
 	add_executable(BasicTriangleMain WIN32 "BasicTriangleMain.cpp")
 	add_executable(BasicUniformMain WIN32 "BasicUniformMain.cpp")
+	add_executable(IndexedQuadMain WIN32 "IndexedQuadMain.cpp")
 else()
 	add_executable(BasicTriangleMain "BasicTriangleMain.cpp")
 	add_executable(BasicUniformMain "BasicUniformMain.cpp")
+	add_executable(IndexedQuadMain "IndexedQuadMain.cpp")
 endif()
 
 target_link_libraries(BasicTriangleMain PRIVATE triangles)
 target_link_libraries(BasicUniformMain PRIVATE triangles)
+target_link_libraries(IndexedQuadMain PRIVATE triangles)
 
 option(SDL_STATIC "Build SDL statically, so you don't have to install" ON)
 
@@ -50,6 +55,7 @@ if (CMAKE_VERSION VERSION_GREATER 3.12)
   set_property(TARGET triangles PROPERTY CXX_STANDARD 20)
   set_property(TARGET BasicTriangleMain PROPERTY CXX_STANDARD 20)
   set_property(TARGET BasicUniformMain PROPERTY CXX_STANDARD 20)
+  set_property(TARGET IndexedQuadMain PROPERTY CXX_STANDARD 20)
 endif()
 
 add_subdirectory(shaders)
