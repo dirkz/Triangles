@@ -11,6 +11,9 @@ namespace triangles
 constexpr int TextureSize = 512;
 constexpr int TextureBlockSize = 64;
 
+constexpr Uint32 TextureColor1 = RGB(0, 0, 0);
+constexpr Uint32 TextureColor2 = RGB(255, 255, 255);
+
 TexturedQuad::TexturedQuad()
     : m_window{CreateWindow("TexturedQuad")}, m_device{CreateDevice(m_window)},
       m_surface{TextureSize, TextureSize}
@@ -175,6 +178,18 @@ void TexturedQuad::CreateSurfaceTexture()
     {
         for (int y = 0; y < m_surface.Height(); ++y)
         {
+            int blockX = x / TextureBlockSize % 2;
+            int blockY = y / TextureBlockSize % 2;
+            Uint32 color;
+            if (!(x == 0) != !(y == 0))
+            {
+                color = TextureColor1;
+            }
+            else
+            {
+                color = TextureColor2;
+            }
+            m_surface.SetPixel(x, y, color);
         }
     }
 }
