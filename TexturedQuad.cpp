@@ -8,11 +8,12 @@
 namespace triangles
 {
 
-TexturedQuad::TexturedQuad()
+TexturedQuad::TexturedQuad() : m_surface{512, 512}
 {
     m_window = CreateWindow("TexturedQuad");
     m_device = CreateDevice(m_window);
     CreateGraphicsPipeline();
+    CreateSurfaceTexture();
     UploadBuffers();
 }
 
@@ -163,6 +164,16 @@ void TexturedQuad::CreateGraphicsPipeline()
     m_pipeline = triangles::CreateGraphicsPipeline(
         m_window, m_device, vertexShader.Get(), fragmentShader.Get(),
         std::span{vertexBufferDescriptions}, std::span{attributes});
+}
+
+void TexturedQuad::CreateSurfaceTexture()
+{
+    for (int x = 0; x < m_surface.Width(); ++x)
+    {
+        for (int y = 0; y < m_surface.Height(); ++y)
+        {
+        }
+    }
 }
 
 void TexturedQuad::UploadBuffers()

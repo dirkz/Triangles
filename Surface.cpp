@@ -12,7 +12,10 @@ Surface::Surface(int width, int height)
 
 Surface::~Surface()
 {
-    SDL_DestroySurface(m_surface);
+    if (m_surface)
+    {
+        SDL_DestroySurface(m_surface);
+    }
 }
 
 void Surface::SetPixel(int x, int y, Uint8 r, Uint8 g, Uint8 b, Uint8 a)

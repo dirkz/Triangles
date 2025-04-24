@@ -2,6 +2,8 @@
 
 #include "stdafx.h"
 
+#include "Surface.h"
+
 namespace triangles
 {
 
@@ -15,6 +17,7 @@ struct TexturedQuad
 
   private:
     void CreateGraphicsPipeline();
+    void CreateSurfaceTexture();
 
     void UploadBuffers();
 
@@ -24,6 +27,7 @@ struct TexturedQuad
     SDL_GPUBuffer *m_vertexBuffer = nullptr;
     SDL_GPUBuffer *m_indexBuffer = nullptr;
     Uint32 m_numIndices = 0;
+    Surface m_surface;
 };
 
 } // namespace triangles
