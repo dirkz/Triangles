@@ -30,6 +30,11 @@ IndexedQuad::~IndexedQuad()
             sdl::ReleaseGPUBuffer(m_device, m_vertexBuffer);
         }
 
+        if (m_indexBuffer)
+        {
+            sdl::ReleaseGPUBuffer(m_device, m_indexBuffer);
+        }
+
         if (m_window)
         {
             sdl::ReleaseWindowFromGPUDevice(m_device, m_window);
