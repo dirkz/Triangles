@@ -8,10 +8,8 @@
 namespace triangles
 {
 
-IndexedQuad::IndexedQuad()
+IndexedQuad::IndexedQuad() : m_window{CreateWindow("IndexedQuad")}, m_device{CreateDevice(m_window)}
 {
-    m_window = CreateWindow("IndexedQuad");
-    m_device = CreateDevice(m_window);
     CreateGraphicsPipeline();
     UploadBuffers();
 }

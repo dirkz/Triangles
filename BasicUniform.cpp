@@ -9,9 +9,8 @@ namespace triangles
 {
 
 BasicUniform::BasicUniform()
+    : m_window{CreateWindow("BasicUniform")}, m_device{CreateDevice(m_window)}
 {
-    m_window = CreateWindow("BasicUniform");
-    m_device = CreateDevice(m_window);
     CreateGraphicsPipeline();
     UploadBuffers();
 }

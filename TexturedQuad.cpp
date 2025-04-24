@@ -8,10 +8,13 @@
 namespace triangles
 {
 
-TexturedQuad::TexturedQuad() : m_surface{512, 512}
+constexpr int TextureSize = 512;
+constexpr int TextureBlockSize = 64;
+
+TexturedQuad::TexturedQuad()
+    : m_window{CreateWindow("TexturedQuad")}, m_device{CreateDevice(m_window)},
+      m_surface{TextureSize, TextureSize}
 {
-    m_window = CreateWindow("TexturedQuad");
-    m_device = CreateDevice(m_window);
     CreateGraphicsPipeline();
     CreateSurfaceTexture();
     UploadBuffers();
