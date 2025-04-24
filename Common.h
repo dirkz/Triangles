@@ -22,4 +22,9 @@ SDL_GPUGraphicsPipeline *CreateGraphicsPipeline(
 
 double Elapsed(Uint64 numberOfTicksPerCycle, Uint64 now = sdl::GetTicks());
 
+constexpr inline Uint32 RGB(Uint8 r, Uint8 g, Uint8 b, Uint8 a)
+{
+    return r + (g << 8) + (b << 16) + (a << 24);
+}
+
 } // namespace triangles
