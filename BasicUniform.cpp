@@ -65,23 +65,6 @@ BasicUniform::~BasicUniform()
     }
 }
 
-/// <summary>
-/// A row-major counterclockwise rotation matrix around the z-axis
-/// (right-handed coordinate system).
-/// </summary>
-/// <param name="angle"></param>
-/// <returns></returns>
-static std::array<float, 16> RotationZ(float angle)
-{
-    float c = std::cos(angle);
-    float s = std::sin(angle);
-
-    return {
-        c, -s, 0, 0 /* row 1 */, s, c, 0, 0 /* row 2 */,
-        0, 0,  1, 0 /* row 3 */, 0, 0, 0, 1 /* row 4 */
-    };
-}
-
 void BasicUniform::AppIterate()
 {
     SDL_GPUCommandBuffer *commandBuffer = sdl::AcquireGPUCommandBuffer(m_device);
@@ -112,8 +95,18 @@ void BasicUniform::AppIterate()
         double factor = static_cast<double>(mod) / static_cast<double>(cycle);
         float angle = static_cast<float>(factor * range);
 
-        glm::mat4x4 rotation{1.f};
-        rotation = glm::rotate(rotation, angle, glm::vec3{0, 0, 1});
+        float s = std::sin(angle);
+        float c = std::cos(angle);
+
+        // Official counterclockwise rotation in a right-handed coordinate system::
+        // https://en.wikipedia.org/wiki/Rotation_matrix#Basic_3D_rotations
+        glm::mat4x4 rotation{
+            c, -s, 0, 0, // row 1
+            s, c,  0, 0, // row 2
+            0, 0,  1, 0, // row 3
+            0, 0,  0, 1  // row 4
+        };
+
         sdl::PushGPUVertexUniformData(commandBuffer, 0, &rotation, sizeof(rotation));
 
         SDL_GPUBufferBinding bufferBinding{.buffer = m_vertexBuffer, .offset = 0};
