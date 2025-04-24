@@ -154,13 +154,9 @@ void BasicUniform::CreateGraphicsPipeline()
 
 void BasicUniform::UploadBuffers()
 {
-    glm::vec4 red{1, 0, 0, 1};
-    glm::vec4 green{0, 1, 0, 1};
-    glm::vec4 blue{0, 0, 1, 1};
-
-    std::vector<PositionColorVertex> vertices{PositionColorVertex{-0.5, -0.5, 0, red},
-                                              PositionColorVertex{0.5, -0.5, 0, green},
-                                              PositionColorVertex{0, 0.5, 0, blue}};
+    std::vector<PositionColorVertex> vertices{PositionColorVertex{-0.5, -0.5, 0, Red},
+                                              PositionColorVertex{0.5, -0.5, 0, Green},
+                                              PositionColorVertex{0, 0.5, 0, Blue}};
 
     Uploader uploader{m_device};
     m_vertexBuffer = uploader.UploadBuffer(SDL_GPU_BUFFERUSAGE_VERTEX, std::span{vertices});
