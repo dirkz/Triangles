@@ -31,7 +31,6 @@ BasicUniform::BasicUniform()
     sdl::ClaimWindowForGPUDevice(m_device, m_window);
 
     m_supportedShaderFormats = sdl::GetGPUShaderFormats(m_device);
-    m_basePath = sdl::GetBasePath();
 
     CreateGraphicsPipeline();
     UploadBuffers();
