@@ -42,7 +42,8 @@ Noise::Noise()
 {
     std::random_device dev;
     std::mt19937 rng{dev()};
-    std::uniform_int_distribution<std::mt19937::result_type> dist(0, Gradients.size() - 1);
+    std::uniform_int_distribution<std::mt19937::result_type> dist(
+        0, static_cast<int>(Gradients.size() - 1));
 
     for (int i = 0; i < NumGradients; ++i)
     {
