@@ -214,7 +214,7 @@ void TexturedQuad::CreateSurfaceTexture()
         {
             double u = static_cast<double>(x) / 10.f;
             double v = static_cast<double>(y) / 10.f;
-            double n = noise(u, v);
+            double n = noise(u, v, 0);
             Uint8 c = static_cast<Uint8>(std::clamp(static_cast<int>(255.f * n), 0, 255));
             Uint32 color = RGB(c, c, c);
             m_surface.SetPixel(x, y, color);

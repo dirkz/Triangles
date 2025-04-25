@@ -22,7 +22,7 @@ Noise::Noise()
 {
 }
 
-double Noise::operator()(double x, double y)
+double Noise::operator()(double x, double y, double z)
 {
     return 0;
 }
