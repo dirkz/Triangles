@@ -10,6 +10,7 @@ struct Vertex
 {
     float3 Position : TEXCOORD0;
     float4 Color : TEXCOORD1;
+    float2 Texture : TEXCOORD2;
 };
 
 struct Pixel

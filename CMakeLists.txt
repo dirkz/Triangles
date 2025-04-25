@@ -29,7 +29,7 @@ add_library(triangles OBJECT
 	"TexturedQuad.h"
 	"TexturedQuad.cpp"
 	"Surface.h"
-	"Surface.cpp")
+	"Surface.cpp" "PositionColorTextureVertex.h" "PositionColorTextureVertex.cpp")
 
 if(WIN32)
 	add_executable(BasicTriangleMain WIN32 "BasicTriangleMain.cpp")

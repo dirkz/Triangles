@@ -1,7 +1,7 @@
 #include "TexturedQuad.h"
 
 #include "Common.h"
-#include "PositionColorVertex.h"
+#include "PositionColorTextureVertex.h"
 #include "ShaderLoader.h"
 #include "Uploader.h"
 
@@ -171,7 +171,7 @@ void TexturedQuad::CreateGraphicsPipeline()
 
     SDL_GPUVertexBufferDescription vertexBufferDescription{
         .slot = 0,
-        .pitch = sizeof(PositionColorVertex),
+        .pitch = sizeof(PositionColorTextureVertex),
         .input_rate = SDL_GPU_VERTEXINPUTRATE_VERTEX,
         .instance_step_rate = 0,
     };
@@ -181,14 +181,22 @@ void TexturedQuad::CreateGraphicsPipeline()
     SDL_GPUVertexAttribute attributePosition{.location = 0,
                                              .buffer_slot = 0,
                                              .format = SDL_GPU_VERTEXELEMENTFORMAT_FLOAT3,
-                                             .offset = offsetof(PositionColorVertex, m_position)};
+                                             .offset =
+                                                 offsetof(PositionColorTextureVertex, m_position)};
 
     SDL_GPUVertexAttribute attributeColor{.location = 1,
                                           .buffer_slot = 0,
                                           .format = SDL_GPU_VERTEXELEMENTFORMAT_FLOAT4,
-                                          .offset = offsetof(PositionColorVertex, m_color)};
+                                          .offset = offsetof(PositionColorTextureVertex, m_color)};
 
-    std::vector<SDL_GPUVertexAttribute> attributes{attributePosition, attributeColor};
+    SDL_GPUVertexAttribute attributeTexture{.location = 2,
+                                            .buffer_slot = 0,
+                                            .format = SDL_GPU_VERTEXELEMENTFORMAT_FLOAT2,
+                                            .offset =
+                                                offsetof(PositionColorTextureVertex, m_texture)};
+
+    std::vector<SDL_GPUVertexAttribute> attributes{attributePosition, attributeColor,
+                                                   attributeTexture};
 
     m_pipeline = triangles::CreateGraphicsPipeline(
         m_window, m_device, vertexShader.Get(), fragmentShader.Get(),
@@ -223,9 +231,11 @@ void TexturedQuad::CreateSurfaceTexture()
 
 void TexturedQuad::UploadBuffers()
 {
-    std::vector<PositionColorVertex> vertices{
-        PositionColorVertex{-0.5, -0.5, 0, Red}, PositionColorVertex{0.5, -0.5, 0, Green},
-        PositionColorVertex{0.5, 0.5, 0, Blue}, PositionColorVertex{-0.5, 0.5, 0, Yellow}};
+    std::vector<PositionColorTextureVertex> vertices{
+        PositionColorTextureVertex{-0.5, -0.5, 0, Red, 0, 1},
+        PositionColorTextureVertex{0.5, -0.5, 0, Green, 1, 1},
+        PositionColorTextureVertex{0.5, 0.5, 0, Blue, 1, 0},
+        PositionColorTextureVertex{-0.5, 0.5, 0, Yellow, 0, 0}};
 
     std::vector<Uint16> indices{0, 1, 2, 0, 2, 3};
 
