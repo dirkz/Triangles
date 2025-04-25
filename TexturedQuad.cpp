@@ -10,7 +10,6 @@ namespace triangles
 {
 
 constexpr int TextureSize = 512;
-constexpr int TextureBlockSize = 64;
 
 constexpr Uint32 TextureColor1 = RGB(0, 0, 0);
 constexpr Uint32 TextureColor2 = RGB(255, 255, 255);
