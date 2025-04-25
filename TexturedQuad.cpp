@@ -20,8 +20,17 @@ TexturedQuad::TexturedQuad()
 {
     CreateGraphicsPipeline();
     CreateSurfaceTexture();
-    CreateTexture();
     UploadBuffers();
+
+    SDL_GPUSamplerCreateInfo samplerCreateInfo{
+        .min_filter = SDL_GPU_FILTER_NEAREST,
+        .mag_filter = SDL_GPU_FILTER_NEAREST,
+        .mipmap_mode = SDL_GPU_SAMPLERMIPMAPMODE_NEAREST,
+        .address_mode_u = SDL_GPU_SAMPLERADDRESSMODE_CLAMP_TO_EDGE,
+        .address_mode_v = SDL_GPU_SAMPLERADDRESSMODE_CLAMP_TO_EDGE,
+        .address_mode_w = SDL_GPU_SAMPLERADDRESSMODE_CLAMP_TO_EDGE};
+
+    m_sampler = sdl::CreateGPUSampler(m_device, &samplerCreateInfo);
 }
 
 TexturedQuad::~TexturedQuad()
@@ -209,29 +218,6 @@ void TexturedQuad::CreateSurfaceTexture()
     }
 }
 
-void TexturedQuad::CreateTexture()
-{
-    SDL_GPUTextureCreateInfo textureCreateInfo{.type = SDL_GPU_TEXTURETYPE_2D,
-                                               .format = SDL_GPU_TEXTUREFORMAT_R8G8B8A8_UNORM,
-                                               .usage = SDL_GPU_TEXTUREUSAGE_SAMPLER,
-                                               .width = static_cast<Uint32>(m_surface.Width()),
-                                               .height = static_cast<Uint32>(m_surface.Height()),
-                                               .layer_count_or_depth = 1,
-                                               .num_levels = 1};
-
-    m_texture = sdl::CreateGPUTexture(m_device, &textureCreateInfo);
-
-    SDL_GPUSamplerCreateInfo samplerCreateInfo{
-        .min_filter = SDL_GPU_FILTER_NEAREST,
-        .mag_filter = SDL_GPU_FILTER_NEAREST,
-        .mipmap_mode = SDL_GPU_SAMPLERMIPMAPMODE_NEAREST,
-        .address_mode_u = SDL_GPU_SAMPLERADDRESSMODE_CLAMP_TO_EDGE,
-        .address_mode_v = SDL_GPU_SAMPLERADDRESSMODE_CLAMP_TO_EDGE,
-        .address_mode_w = SDL_GPU_SAMPLERADDRESSMODE_CLAMP_TO_EDGE};
-
-    m_sampler = sdl::CreateGPUSampler(m_device, &samplerCreateInfo);
-}
-
 void TexturedQuad::UploadBuffers()
 {
     std::vector<PositionColorVertex> vertices{
@@ -243,6 +229,7 @@ void TexturedQuad::UploadBuffers()
     Uploader uploader{m_device};
     m_vertexBuffer = uploader.UploadBuffer(SDL_GPU_BUFFERUSAGE_VERTEX, std::span{vertices});
     m_indexBuffer = uploader.UploadBuffer(SDL_GPU_BUFFERUSAGE_INDEX, std::span{indices});
+    m_texture = uploader.UploadTexture(m_surface.GetSurface());
 
     uploader.Finish();
 

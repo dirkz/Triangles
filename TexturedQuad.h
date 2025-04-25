@@ -18,7 +18,6 @@ struct TexturedQuad
   private:
     void CreateGraphicsPipeline();
     void CreateSurfaceTexture();
-    void CreateTexture();
 
     void UploadBuffers();
 

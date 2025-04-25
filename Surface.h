@@ -13,6 +13,11 @@ struct Surface
     void SetPixel(int x, int y, Uint8 r, Uint8 g, Uint8 b, Uint8 a = 255);
     void SetPixel(int x, int y, Uint32 pixel);
 
+    inline SDL_Surface* GetSurface() const
+    {
+        return m_surface;
+    }
+
     inline int Width() const
     {
         return m_surface->w;
