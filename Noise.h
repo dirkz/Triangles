@@ -5,7 +5,7 @@
 namespace triangles
 {
 
-struct Noise2D
+struct Noise
 {
 };
 

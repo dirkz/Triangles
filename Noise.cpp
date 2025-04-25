@@ -1,4 +1,4 @@
-#include "Noise2D.h"
+#include "Noise.h"
 
 namespace triangles
 {

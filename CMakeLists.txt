@@ -32,8 +32,8 @@ add_library(triangles OBJECT
 	"Surface.cpp"
 	"PositionColorTextureVertex.h"
 	"PositionColorTextureVertex.cpp"
-	"Noise2D.h"
-	"Noise2D.cpp")
+	"Noise.h"
+	"Noise.cpp")
 
 if(WIN32)
 	add_executable(BasicTriangleMain WIN32 "BasicTriangleMain.cpp")
