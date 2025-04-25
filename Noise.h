@@ -5,7 +5,7 @@
 namespace triangles
 {
 
-constexpr int NumGradients = 256;
+constexpr int GradientsRowPitch = 256;
 
 struct Noise
 {
@@ -14,9 +14,9 @@ struct Noise
     float operator()(float x, float y);
 
   private:
-    glm::vec2 Gradient(int i);
+    glm::vec2 Gradient(int i, int j);
 
-    std::array<int, NumGradients> m_gradientIndices;
+    std::array<int, GradientsRowPitch * GradientsRowPitch> m_gradientIndices;
 };
 
 } // namespace triangles

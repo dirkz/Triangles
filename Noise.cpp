@@ -45,7 +45,7 @@ Noise::Noise()
     std::uniform_int_distribution<std::mt19937::result_type> dist(
         0, static_cast<int>(Gradients.size() - 1));
 
-    for (int i = 0; i < NumGradients; ++i)
+    for (int i = 0; i < GradientsRowPitch * GradientsRowPitch; ++i)
     {
         m_gradientIndices[i] = dist(rng);
     }
@@ -53,12 +53,17 @@ Noise::Noise()
 
 float Noise::operator()(float x, float y)
 {
+    int i = static_cast<int>(std::floor(x));
+    int j = static_cast<int>(std::floor(y));
+
+    vec2 g00 = Gradient(i, j);
+
     return 0.0f;
 }
 
-glm::vec2 Noise::Gradient(int i)
+glm::vec2 Noise::Gradient(int i, int j)
 {
-    return Gradients[m_gradientIndices[i]];
+    return Gradients[m_gradientIndices[i + j * GradientsRowPitch]];
 }
 
 } // namespace triangles
