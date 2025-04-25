@@ -17,6 +17,7 @@ struct Pixel
 {
     float4 Color : TEXCOORD0;
     float4 Position : SV_Position;
+    float2 Texture : TEXCOORD1;
 };
 
 Pixel VS(Vertex v)
@@ -25,11 +26,12 @@ Pixel VS(Vertex v)
 
     p.Position = mul(ViewProjection, float4(v.Position, 1));
     p.Color = v.Color;
+    p.Texture = v.Texture;
     
     return p;
 }
 
 float4 PS(Pixel p) : SV_Target
 {
-    return p.Color;
+    return p.Color * Texture.Sample(Sampler, p.Texture);
 }
