@@ -14,13 +14,9 @@ template <class T> T lerp(T a, T b, T factor)
     return a + ((b - a) * factor);
 }
 
-template <class T> T smootherstep(T t)
+template <class T> T fade(T t)
 {
-    T t3 = t * t * t;
-    T t4 = t3 * t;
-    T t5 = t4 * t;
-
-    return 6 * t5 - 15 * t4 + 10 * t3;
+    return t * t * t * (t * (t * 6 - 15) + 10);
 }
 
 Noise::Noise()
@@ -54,9 +50,9 @@ float Noise::operator()(float x, float y)
     float n01 = glm::dot(g01, vec2{u, v - 1});
     float n11 = glm::dot(g11, vec2{u - 1, v - 1});
 
-    float nx0 = n00 * (1 - smootherstep(u)) + n10 * smootherstep(u);
-    float nx1 = n01 * (1 - smootherstep(u)) + n11 * smootherstep(u);
-    float nxy = nx0 * (1 - smootherstep(v)) + nx1 * smootherstep(v);
+    float nx0 = n00 * (1 - fade(u)) + n10 * fade(u);
+    float nx1 = n01 * (1 - fade(u)) + n11 * fade(u);
+    float nxy = nx0 * (1 - fade(v)) + nx1 * fade(v);
 
     return nxy;
 }
