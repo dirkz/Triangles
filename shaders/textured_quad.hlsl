@@ -3,6 +3,9 @@ cbuffer UBO : register(b0, space1)
     float4x4 ViewProjection;
 };
 
+Texture2D<float4> Texture : register(t0, space2);
+SamplerState Sampler : register(s0, space2);
+
 struct Vertex
 {
     float3 Position : TEXCOORD0;

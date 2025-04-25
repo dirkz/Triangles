@@ -1,4 +1,7 @@
-set(SHADERS basic_triangle.hlsl basic_triangle_uniform.hlsl)
+set(SHADERS
+	basic_triangle.hlsl
+	basic_triangle_uniform.hlsl
+	textured_quad.hlsl)
 
 add_custom_target(shaders)
 

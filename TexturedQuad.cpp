@@ -163,7 +163,7 @@ void TexturedQuad::CreateGraphicsPipeline()
 {
     ShaderLoader shaderLoader{m_device};
 
-    const char *basicTriangle = "basic_triangle_uniform.hlsl";
+    const char *basicTriangle = "textured_quad.hlsl";
     sdl::DeviceOwned vertexShader{
         m_device, shaderLoader.Load(basicTriangle, SDL_GPU_SHADERSTAGE_VERTEX, 1, 0, 0, 0)};
     sdl::DeviceOwned fragmentShader{
