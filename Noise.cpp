@@ -29,6 +29,12 @@ template <class T> T clamp(T x, T y, T lower = 0, T upper = 1)
     return x;
 }
 
+template <class T> T smootherstep(T a, T b, T x)
+{
+    T x2 = clamp((x - a) / (b - a));
+    return x * x * x * (x * (6 * x - 15) + 10);
+}
+
 Noise::Noise()
 {
 }
