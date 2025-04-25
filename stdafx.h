@@ -3,6 +3,7 @@
 #include <format>
 #include <iostream>
 #include <numbers>
+#include <random>
 #include <span>
 #include <stdexcept>
 #include <string>

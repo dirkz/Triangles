@@ -40,11 +40,24 @@ template <class T> T smootherstep(T t)
 
 Noise::Noise()
 {
+    std::random_device dev;
+    std::mt19937 rng{dev()};
+    std::uniform_int_distribution<std::mt19937::result_type> dist(0, Gradients.size() - 1);
+
+    for (int i = 0; i < NumGradients; ++i)
+    {
+        m_gradientIndices[i] = dist(rng);
+    }
 }
 
 float Noise::operator()(float x, float y)
 {
     return 0.0f;
+}
+
+glm::vec2 Noise::Gradient(int i)
+{
+    return Gradients[m_gradientIndices[i]];
 }
 
 } // namespace triangles
