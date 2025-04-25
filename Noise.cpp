@@ -9,6 +9,11 @@ constexpr float D = 1.f / 1.41421f;
 constexpr std::array<vec2, 8> Gradients{vec2{0, 1},  vec2{D, D},   vec2{1, 0},  vec2{D, -D},
                                         vec2{0, -1}, vec2{-D, -D}, vec2{-1, 0}, vec2{-D, D}};
 
+template <class T> T lerp(T a, T b, T factor)
+{
+    return a + ((b - a) * factor);
+}
+
 Noise::Noise()
 {
 }
