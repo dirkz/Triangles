@@ -19,6 +19,11 @@ template <class T> T fade(T t)
     return t * t * t * (t * (t * 6 - 15) + 10);
 }
 
+template <class T> int fastfloor(T x)
+{
+    return x > 0 ? static_cast<int>(x) : static_cast<int>(x - 1);
+}
+
 Noise::Noise()
 {
     std::random_device dev;
@@ -32,27 +37,27 @@ Noise::Noise()
     }
 }
 
-float Noise::operator()(float x, float y)
+double Noise::operator()(double x, double y)
 {
-    int i = static_cast<int>(std::floor(x));
-    int j = static_cast<int>(std::floor(y));
+    int i = fastfloor(x);
+    int j = fastfloor(y);
 
     vec2 g00 = Gradient(i, j);
     vec2 g10 = Gradient(i + 1, j);
     vec2 g01 = Gradient(i, j + 1);
     vec2 g11 = Gradient(i + 1, j + 1);
 
-    float u = x - static_cast<float>(i);
-    float v = y - static_cast<float>(j);
+    double u = x - static_cast<double>(i);
+    double v = y - static_cast<double>(j);
 
-    float n00 = glm::dot(g00, vec2{u, v});
-    float n10 = glm::dot(g10, vec2{u - 1, v});
-    float n01 = glm::dot(g01, vec2{u, v - 1});
-    float n11 = glm::dot(g11, vec2{u - 1, v - 1});
+    double n00 = glm::dot(g00, vec2{u, v});
+    double n10 = glm::dot(g10, vec2{u - 1, v});
+    double n01 = glm::dot(g01, vec2{u, v - 1});
+    double n11 = glm::dot(g11, vec2{u - 1, v - 1});
 
-    float nx0 = n00 * (1 - fade(u)) + n10 * fade(u);
-    float nx1 = n01 * (1 - fade(u)) + n11 * fade(u);
-    float nxy = nx0 * (1 - fade(v)) + nx1 * fade(v);
+    double nx0 = n00 * (1 - fade(u)) + n10 * fade(u);
+    double nx1 = n01 * (1 - fade(u)) + n11 * fade(u);
+    double nxy = nx0 * (1 - fade(v)) + nx1 * fade(v);
 
     return nxy;
 }

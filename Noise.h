@@ -11,7 +11,7 @@ struct Noise
 {
     Noise();
 
-    float operator()(float x, float y);
+    double operator()(double x, double y);
 
   private:
     glm::vec2 Gradient(int i, int j);
