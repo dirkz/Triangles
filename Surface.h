@@ -23,6 +23,11 @@ struct Surface
         return m_surface->h;
     }
 
+    inline int Pitch() const
+    {
+        return m_surface->pitch;
+    }
+
   private:
     SDL_Surface *m_surface = nullptr;
 };
