@@ -47,7 +47,7 @@ Noise::Noise()
 
     for (int i = 0; i < GradientsRowPitch * GradientsRowPitch; ++i)
     {
-        m_gradientIndices[i] = dist(rng);
+        m_gradientIndices.push_back(dist(rng));
     }
 }
 

@@ -1,6 +1,7 @@
 #include "TexturedQuad.h"
 
 #include "Common.h"
+#include "Noise.h"
 #include "PositionColorTextureVertex.h"
 #include "ShaderLoader.h"
 #include "Uploader.h"
@@ -205,11 +206,17 @@ void TexturedQuad::CreateGraphicsPipeline()
 
 void TexturedQuad::CreateSurfaceTexture()
 {
+    Noise noise{};
+
     for (int x = 0; x < m_surface.Width(); ++x)
     {
         for (int y = 0; y < m_surface.Height(); ++y)
         {
-            constexpr Uint32 color = RGB(100, 100, 100);
+            float u = static_cast<float>(x) / 10.f;
+            float v = static_cast<float>(y) / 10.f;
+            float n = noise(u, v);
+            Uint8 c = static_cast<Uint8>(std::clamp(static_cast<int>(255.f * n), 0, 255));
+            Uint32 color = RGB(c, c, c);
             m_surface.SetPixel(x, y, color);
         }
     }

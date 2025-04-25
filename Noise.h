@@ -16,7 +16,7 @@ struct Noise
   private:
     glm::vec2 Gradient(int i, int j);
 
-    std::array<int, GradientsRowPitch * GradientsRowPitch> m_gradientIndices;
+    std::vector<int> m_gradientIndices;
 };
 
 } // namespace triangles
