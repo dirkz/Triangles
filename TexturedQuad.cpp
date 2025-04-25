@@ -136,6 +136,9 @@ void TexturedQuad::AppIterate()
         SDL_GPUBufferBinding indexBufferBinding{.buffer = m_indexBuffer, .offset = 0};
         sdl::BindGPUIndexBuffer(renderPass, &indexBufferBinding, SDL_GPU_INDEXELEMENTSIZE_16BIT);
 
+        SDL_GPUTextureSamplerBinding textureBinding{.texture = m_texture, .sampler = m_sampler};
+        sdl::BindGPUFragmentSamplers(renderPass, 0, &textureBinding, 1);
+
         sdl::DrawGPUIndexedPrimitives(renderPass, m_numIndices, 1, 0, 0, 0);
 
         sdl::EndGPURenderPass(renderPass);
@@ -164,7 +167,7 @@ void TexturedQuad::CreateGraphicsPipeline()
     sdl::DeviceOwned vertexShader{
         m_device, shaderLoader.Load(basicTriangle, SDL_GPU_SHADERSTAGE_VERTEX, 1, 0, 0, 0)};
     sdl::DeviceOwned fragmentShader{
-        m_device, shaderLoader.Load(basicTriangle, SDL_GPU_SHADERSTAGE_FRAGMENT, 0, 0, 0, 0)};
+        m_device, shaderLoader.Load(basicTriangle, SDL_GPU_SHADERSTAGE_FRAGMENT, 0, 1, 0, 0)};
 
     SDL_GPUVertexBufferDescription vertexBufferDescription{
         .slot = 0,
