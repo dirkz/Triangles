@@ -45,6 +45,41 @@ SDL_GPUBuffer *Uploader::UploadBuffer(SDL_GPUBufferUsageFlags usage, void *conte
     return vertexBuffer;
 }
 
+SDL_GPUTexture *Uploader::UploadTexture(SDL_Surface *surface)
+{
+    SDL_GPUTextureCreateInfo textureCreateInfo{.type = SDL_GPU_TEXTURETYPE_2D,
+                                               .format = SDL_GPU_TEXTUREFORMAT_R8G8B8A8_UNORM,
+                                               .usage = SDL_GPU_TEXTUREUSAGE_SAMPLER,
+                                               .width = static_cast<Uint32>(surface->w),
+                                               .height = static_cast<Uint32>(surface->h),
+                                               .layer_count_or_depth = 1,
+                                               .num_levels = 1};
+
+    SDL_GPUTexture *texture = sdl::CreateGPUTexture(m_device, &textureCreateInfo);
+
+    Uint32 textureSizeInBytes = surface->h * surface->pitch;
+
+    SDL_GPUTransferBufferCreateInfo transferBufferCreateInfo{
+        .usage = SDL_GPU_TRANSFERBUFFERUSAGE_UPLOAD, .size = textureSizeInBytes};
+
+    SDL_GPUTransferBuffer *transferBuffer =
+        sdl::CreateGPUTransferBuffer(m_device, &transferBufferCreateInfo);
+
+    void *pTextureData = sdl::MapGPUTransferBuffer(m_device, transferBuffer, false);
+
+    sdl::memcpy(pTextureData, surface->pixels, textureSizeInBytes);
+
+    SDL_GPUTextureTransferInfo transferInfo{.transfer_buffer = transferBuffer, .offset = 0};
+    SDL_GPUTextureRegion textureRegion{.texture = texture,
+                                       .w = static_cast<Uint32>(surface->w),
+                                       .h = static_cast<Uint32>(surface->h),
+                                       .d = 1};
+
+    sdl::UploadToGPUTexture(m_copyPass, &transferInfo, &textureRegion, false);
+
+    return texture;
+}
+
 void Uploader::Finish()
 {
     sdl::EndGPUCopyPass(m_copyPass);

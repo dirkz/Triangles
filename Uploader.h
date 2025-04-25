@@ -19,6 +19,8 @@ struct Uploader
         return UploadBuffer(usage, contents.data(), size);
     }
 
+    SDL_GPUTexture *UploadTexture(SDL_Surface *surface);
+
     void Finish();
 
   private:
