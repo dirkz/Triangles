@@ -33,7 +33,7 @@ add_library(triangles OBJECT
 	"PositionColorTextureVertex.h"
 	"PositionColorTextureVertex.cpp"
 	"Noise.h"
-	"Noise.cpp")
+	"Noise.cpp" "Cube.h" "Cube.cpp")
 
 if(WIN32)
 	add_executable(Main WIN32 "main.cpp")
