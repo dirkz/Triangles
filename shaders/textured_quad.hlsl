@@ -33,5 +33,5 @@ Pixel VS(Vertex v)
 
 float4 PS(Pixel p) : SV_Target
 {
-    return p.Color * Texture.Sample(Sampler, p.Texture);
+    return p.Color * 0.5 + 0.5 * p.Color * Texture.Sample(Sampler, p.Texture);
 }
