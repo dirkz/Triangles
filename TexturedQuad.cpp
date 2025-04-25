@@ -209,7 +209,7 @@ void TexturedQuad::CreateSurfaceTexture()
     {
         for (int y = 0; y < m_surface.Height(); ++y)
         {
-            Uint32 color = RGB(100, 100, 100);
+            constexpr Uint32 color = RGB(100, 100, 100);
             m_surface.SetPixel(x, y, color);
         }
     }
