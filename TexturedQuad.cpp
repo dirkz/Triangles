@@ -178,8 +178,8 @@ void TexturedQuad::CreateSurfaceTexture()
     {
         for (int y = 0; y < m_surface.Height(); ++y)
         {
-            int blockX = x / TextureBlockSize % 2;
-            int blockY = y / TextureBlockSize % 2;
+            int blockX = (x / TextureBlockSize) % 2;
+            int blockY = (y / TextureBlockSize) % 2;
 
             Uint32 color;
             if (!(x == 0) != !(y == 0))
