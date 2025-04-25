@@ -18,6 +18,7 @@ struct TexturedQuad
   private:
     void CreateGraphicsPipeline();
     void CreateSurfaceTexture();
+    void CreateTexture();
 
     void UploadBuffers();
 
@@ -28,6 +29,8 @@ struct TexturedQuad
     SDL_GPUBuffer *m_indexBuffer = nullptr;
     Uint32 m_numIndices = 0;
     Surface m_surface;
+    SDL_GPUTexture *m_texture = nullptr;
+    SDL_GPUSampler *m_sampler = nullptr;
 };
 
 } // namespace triangles
