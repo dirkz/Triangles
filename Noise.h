@@ -14,9 +14,6 @@ struct Noise
     double operator()(double x, double y);
 
   private:
-    glm::vec2 Gradient(int i, int j);
-
-    std::vector<int> m_gradientIndices;
 };
 
 } // namespace triangles
