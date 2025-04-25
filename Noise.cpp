@@ -14,21 +14,6 @@ template <class T> T lerp(T a, T b, T factor)
     return a + ((b - a) * factor);
 }
 
-template <class T> T clamp(T x, T y, T lower = 0, T upper = 1)
-{
-    if (x < lower)
-    {
-        return lower;
-    }
-
-    if (x > upper)
-    {
-        return upper;
-    }
-
-    return x;
-}
-
 template <class T> T smootherstep(T t)
 {
     T t3 = t * t * t;
