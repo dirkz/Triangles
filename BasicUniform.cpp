@@ -84,7 +84,7 @@ void BasicUniform::AppIterate()
             0, 0,  0, 1  // row 4
         };
 
-        // But, GLM adheres to the GLSLang spec, so it expects matrices
+        // GLM adheres to the GLSLang spec, so it expects matrices
         // to be constructed in column-major order (e.g. see here, page 84):
         // https://registry.khronos.org/OpenGL/specs/gl/GLSLangSpec.4.20.pdf
         // So we have to transpose.

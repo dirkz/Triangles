@@ -122,7 +122,7 @@ void TexturedQuad::AppIterate()
         glm::mat4x4 scale{1};
         scale = glm::scale(scale, glm::vec3{1.f / aspect, 1.f, 1.f});
 
-        // But, GLM adheres to the GLSLang spec, so it expects matrices
+        // GLM adheres to the GLSLang spec, so it expects matrices
         // to be constructed in column-major order (e.g. see here, page 84):
         // https://registry.khronos.org/OpenGL/specs/gl/GLSLangSpec.4.20.pdf
         // So we have to transpose.
