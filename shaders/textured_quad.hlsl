@@ -16,8 +16,8 @@ struct Vertex
 struct Pixel
 {
     float4 Color : TEXCOORD0;
-    float4 Position : SV_Position;
     float2 Texture : TEXCOORD1;
+    float4 Position : SV_Position;
 };
 
 Pixel VS(Vertex v)
