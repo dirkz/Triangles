@@ -110,7 +110,7 @@ void Cube::AppIterate()
         float s = std::sin(angle);
         float c = std::cos(angle);
 
-        XMMATRIX translation = XMMatrixTranslation(0, 0, 1);
+        XMMATRIX translation = XMMatrixTranslation(0.f, 0.f, 0.2f);
         XMMATRIX model = XMMatrixRotationZ(angle);
         model = XMMatrixMultiply(translation, model);
 
