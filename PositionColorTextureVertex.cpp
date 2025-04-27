@@ -9,11 +9,4 @@ PositionColorTextureVertex::PositionColorTextureVertex(float x, float y, float z
 {
 }
 
-bool PositionColorTextureVertex::operator<(const PositionColorTextureVertex &other) const
-{
-    return glm::all(glm::lessThan(m_position, other.m_position)) &&
-           glm::all(glm::lessThan(m_color, other.m_color)) &&
-           glm::all(glm::lessThan(m_texture, other.m_texture));
-}
-
 } // namespace triangles

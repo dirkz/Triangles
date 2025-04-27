@@ -13,8 +13,6 @@ struct PositionColorTextureVertex
     glm::vec4 m_color;
     glm::vec2 m_texture;
 
-    bool operator<(const PositionColorTextureVertex &other) const;
-
     friend std::hash;
     friend std::equal_to;
 };
