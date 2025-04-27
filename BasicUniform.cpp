@@ -138,12 +138,12 @@ void BasicUniform::CreateGraphicsPipeline()
     SDL_GPUVertexAttribute attributePosition{.location = 0,
                                              .buffer_slot = 0,
                                              .format = SDL_GPU_VERTEXELEMENTFORMAT_FLOAT3,
-                                             .offset = offsetof(PositionColorVertex, X)};
+                                             .offset = offsetof(PositionColorVertex, Position)};
 
     SDL_GPUVertexAttribute attributeColor{.location = 1,
                                           .buffer_slot = 0,
                                           .format = SDL_GPU_VERTEXELEMENTFORMAT_FLOAT4,
-                                          .offset = offsetof(PositionColorVertex, R)};
+                                          .offset = offsetof(PositionColorVertex, Color)};
 
     std::vector<SDL_GPUVertexAttribute> attributes{attributePosition, attributeColor};
 

@@ -7,12 +7,11 @@ namespace triangles
 
 struct PositionColorTextureVertex
 {
-    PositionColorTextureVertex(float x, float y, float z, std::array<float, 4> color, float u,
-                               float v);
+    PositionColorTextureVertex(float x, float y, float z, glm::vec4 color, float u, float v);
 
-    float X, Y, Z;
-    float R, G, B, A;
-    float U, V;
+    glm::vec3 Position;
+    glm::vec4 Color;
+    glm::vec2 Texture;
 };
 
 } // namespace triangles
@@ -24,17 +23,17 @@ template <> struct std::hash<triangles::PositionColorTextureVertex>
         size_t seed = 1997;
         auto hfloat = std::hash<float>{};
 
-        boost::hash_combine(seed, hfloat(vertex.X));
-        boost::hash_combine(seed, hfloat(vertex.Y));
-        boost::hash_combine(seed, hfloat(vertex.Z));
+        boost::hash_combine(seed, hfloat(vertex.Position.x));
+        boost::hash_combine(seed, hfloat(vertex.Position.y));
+        boost::hash_combine(seed, hfloat(vertex.Position.z));
 
-        boost::hash_combine(seed, hfloat(vertex.R));
-        boost::hash_combine(seed, hfloat(vertex.G));
-        boost::hash_combine(seed, hfloat(vertex.B));
-        boost::hash_combine(seed, hfloat(vertex.A));
+        boost::hash_combine(seed, hfloat(vertex.Color.x));
+        boost::hash_combine(seed, hfloat(vertex.Color.y));
+        boost::hash_combine(seed, hfloat(vertex.Color.y));
+        boost::hash_combine(seed, hfloat(vertex.Color.w));
 
-        boost::hash_combine(seed, hfloat(vertex.U));
-        boost::hash_combine(seed, hfloat(vertex.V));
+        boost::hash_combine(seed, hfloat(vertex.Texture.x));
+        boost::hash_combine(seed, hfloat(vertex.Texture.y));
 
         return seed;
     }
@@ -45,10 +44,14 @@ template <> struct std::equal_to<triangles::PositionColorTextureVertex>
     bool operator()(const triangles::PositionColorTextureVertex &v1,
                     const triangles::PositionColorTextureVertex &v2) const
     {
-        bool equalPosition = v1.X == v2.X && v1.Y == v2.Y && v1.Z == v2.Z;
-        bool equalColor = v1.R == v2.R && v1.G == v2.G && v1.B == v2.B && v1.A == v2.A;
-        bool equalTexture = v1.U == v2.U && v1.V == v2.V;
+        glm::bvec3 equalPosition = glm::equal(v1.Position, v2.Position);
+        glm::bvec3 equalColor = glm::equal(v1.Color, v2.Color);
+        glm::bvec2 equalTexture = glm::equal(v1.Texture, v2.Texture);
 
-        return equalPosition && equalColor && equalTexture;
+        bool bPosition = glm::all(equalPosition);
+        bool bColor = glm::all(equalColor);
+        bool bTexture = glm::all(equalTexture);
+
+        return bPosition && bColor && bTexture;
     }
 };
