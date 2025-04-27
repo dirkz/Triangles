@@ -14,6 +14,31 @@ struct PositionColorTextureVertex
     glm::vec2 m_texture;
 
     bool operator<(const PositionColorTextureVertex &other) const;
+
+    friend std::hash;
 };
 
 } // namespace triangles
+
+template <> struct std::hash<triangles::PositionColorTextureVertex>
+{
+    size_t operator()(const triangles::PositionColorTextureVertex &vertex) const noexcept
+    {
+        size_t seed = 1997;
+        auto hfloat = std::hash<float>{};
+
+        boost::hash_combine(seed, hfloat(vertex.m_position.x));
+        boost::hash_combine(seed, hfloat(vertex.m_position.y));
+        boost::hash_combine(seed, hfloat(vertex.m_position.z));
+
+        boost::hash_combine(seed, hfloat(vertex.m_color.x));
+        boost::hash_combine(seed, hfloat(vertex.m_color.y));
+        boost::hash_combine(seed, hfloat(vertex.m_color.y));
+        boost::hash_combine(seed, hfloat(vertex.m_color.w));
+
+        boost::hash_combine(seed, hfloat(vertex.m_texture.x));
+        boost::hash_combine(seed, hfloat(vertex.m_texture.y));
+
+        return seed;
+    }
+};
