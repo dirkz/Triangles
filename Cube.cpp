@@ -182,18 +182,18 @@ void Cube::CreateGraphicsPipeline()
                                              .buffer_slot = 0,
                                              .format = SDL_GPU_VERTEXELEMENTFORMAT_FLOAT3,
                                              .offset =
-                                                 offsetof(PositionColorTextureVertex, m_position)};
+                                                 offsetof(PositionColorTextureVertex, Position)};
 
     SDL_GPUVertexAttribute attributeColor{.location = 1,
                                           .buffer_slot = 0,
                                           .format = SDL_GPU_VERTEXELEMENTFORMAT_FLOAT4,
-                                          .offset = offsetof(PositionColorTextureVertex, m_color)};
+                                          .offset = offsetof(PositionColorTextureVertex, Color)};
 
     SDL_GPUVertexAttribute attributeTexture{.location = 2,
                                             .buffer_slot = 0,
                                             .format = SDL_GPU_VERTEXELEMENTFORMAT_FLOAT2,
                                             .offset =
-                                                offsetof(PositionColorTextureVertex, m_texture)};
+                                                offsetof(PositionColorTextureVertex, Texture)};
 
     std::vector<SDL_GPUVertexAttribute> attributes{attributePosition, attributeColor,
                                                    attributeTexture};
