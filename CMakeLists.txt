@@ -61,6 +61,8 @@ target_link_libraries(triangles PUBLIC glm::glm)
 target_link_libraries(samples PUBLIC glm::glm)
 
 target_include_directories(triangles PUBLIC ${Boost_INCLUDE_DIRS})
+target_include_directories(Main PUBLIC ${Boost_INCLUDE_DIRS})
+target_include_directories(samples PUBLIC ${Boost_INCLUDE_DIRS})
 
 target_precompile_headers(triangles PRIVATE stdafx.h)
 target_precompile_headers(samples PRIVATE stdafx.h)
