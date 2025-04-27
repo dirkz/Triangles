@@ -49,8 +49,14 @@ template <> struct std::equal_to<triangles::PositionColorTextureVertex>
     bool operator()(const triangles::PositionColorTextureVertex &v1,
                     const triangles::PositionColorTextureVertex &v2) const
     {
-        return glm::all(glm::equal(v1.m_position, v2.m_position)) &&
-               glm::all(glm::equal(v1.m_color, v2.m_color)) &&
-               glm::all(glm::equal(v1.m_texture, v2.m_texture));
+        glm::bvec3 equalPosition = glm::equal(v1.m_position, v2.m_position);
+        glm::bvec3 equalColor = glm::equal(v1.m_color, v2.m_color);
+        glm::bvec2 equalTexture = glm::equal(v1.m_texture, v2.m_texture);
+
+        bool bPosition = glm::all(equalPosition);
+        bool bColor = glm::all(equalColor);
+        bool bTexture = glm::all(equalTexture);
+
+        return bPosition && bColor && bTexture;
     }
 };
