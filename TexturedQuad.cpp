@@ -108,7 +108,8 @@ void TexturedQuad::AppIterate()
         float s = std::sin(angle);
         float c = std::cos(angle);
 
-        // Official counterclockwise rotation in a right-handed coordinate system:
+        // Official counterclockwise rotation around the z-axis
+        // in a right-handed coordinate system:
         // https://en.wikipedia.org/wiki/Rotation_matrix#Basic_3D_rotations
         glm::mat4x4 rotation{
             c, -s, 0, 0, // row 1
