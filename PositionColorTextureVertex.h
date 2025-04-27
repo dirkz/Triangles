@@ -12,9 +12,6 @@ struct PositionColorTextureVertex
     glm::vec3 m_position;
     glm::vec4 m_color;
     glm::vec2 m_texture;
-
-    friend std::hash;
-    friend std::equal_to;
 };
 
 } // namespace triangles
