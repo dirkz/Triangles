@@ -16,6 +16,7 @@ struct PositionColorTextureVertex
     bool operator<(const PositionColorTextureVertex &other) const;
 
     friend std::hash;
+    friend std::equal_to;
 };
 
 } // namespace triangles
@@ -46,7 +47,7 @@ template <> struct std::hash<triangles::PositionColorTextureVertex>
 template <> struct std::equal_to<triangles::PositionColorTextureVertex>
 {
     bool operator()(const triangles::PositionColorTextureVertex &v1,
-                    const triangles::PositionColorTextureVertex &v2) const noexcept
+                    const triangles::PositionColorTextureVertex &v2) const
     {
         return glm::all(glm::equal(v1.m_position, v2.m_position)) &&
                glm::all(glm::equal(v1.m_color, v2.m_color)) &&
