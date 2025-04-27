@@ -9,6 +9,8 @@
 namespace triangles
 {
 
+using namespace DirectX;
+
 constexpr int TextureSize = 512;
 
 constexpr Uint32 TextureColor1 = RGB(0, 0, 0);
@@ -98,7 +100,7 @@ void Cube::AppIterate()
 
         sdl::BindGPUGraphicsPipeline(renderPass, m_pipeline);
 
-        Uint64 now = sdl::GetTicks();  // ms
+        Uint64 now = sdl::GetTicks();          // ms
         constexpr Uint64 cycleRotation = 6000; // ms
         double factorRotation = Elapsed(cycleRotation, now);
 
@@ -108,23 +110,23 @@ void Cube::AppIterate()
         float s = std::sin(angle);
         float c = std::cos(angle);
 
-        // Official counterclockwise rotation around the z-axis
-        // in a right-handed coordinate system:
-        // https://en.wikipedia.org/wiki/Rotation_matrix#Basic_3D_rotations
-        glm::mat4x4 model{
-            c, -s, 0, 0, // row 1
-            s, c,  0, 0, // row 2
-            0, 0,  1, 0, // row 3
-            0, 0,  0, 1  // row 4
-        };
+        XMMATRIX translation = XMMatrixTranslation(0, 0, 1);
+        XMMATRIX model = XMMatrixRotationZ(angle);
+        model = XMMatrixMultiply(translation, model);
 
         float aspect = static_cast<float>(width) / height;
 
-        glm::mat4 view = glm::lookAt(glm::vec3(0.f, -2.f, 3.f), glm::vec3(0.f, 0.f, 0.f),
-                                     glm::vec3(0.f, 1.f, 0.f));
-        glm::mat4 projection = glm::perspective(glm::radians(45.f), aspect, 0.1f, 10.f);
+        XMVECTOR eyePosition = XMVectorSet(0.f, 0.f, -2.f, 1.f);
+        XMVECTOR eyeDirection = XMVectorSet(0, 0, 1, 1);
+        XMVECTOR up = XMVectorSet(0, 1, 0, 0);
+        XMMATRIX view = XMMatrixLookToLH(eyePosition, eyeDirection, up);
 
-        glm::mat4x4 transformation = projection * view * model;
+        XMMATRIX projection = XMMatrixPerspectiveFovLH(XM_PIDIV4, aspect, 0.1f, 10.f);
+
+        XMMATRIX m = XMMatrixMultiply(model, view);
+        m = XMMatrixMultiply(m, projection);
+        XMFLOAT4X4 transformation;
+        XMStoreFloat4x4(&transformation, m);
 
         sdl::PushGPUVertexUniformData(commandBuffer, 0, &transformation, sizeof(transformation));
 
