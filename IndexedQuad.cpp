@@ -150,12 +150,12 @@ void IndexedQuad::CreateGraphicsPipeline()
     SDL_GPUVertexAttribute attributePosition{.location = 0,
                                              .buffer_slot = 0,
                                              .format = SDL_GPU_VERTEXELEMENTFORMAT_FLOAT3,
-                                             .offset = offsetof(PositionColorVertex, Position)};
+                                             .offset = offsetof(PositionColorVertex, X)};
 
     SDL_GPUVertexAttribute attributeColor{.location = 1,
                                           .buffer_slot = 0,
                                           .format = SDL_GPU_VERTEXELEMENTFORMAT_FLOAT4,
-                                          .offset = offsetof(PositionColorVertex, Color)};
+                                          .offset = offsetof(PositionColorVertex, R)};
 
     std::vector<SDL_GPUVertexAttribute> attributes{attributePosition, attributeColor};
 

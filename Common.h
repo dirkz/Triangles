@@ -5,10 +5,10 @@
 namespace triangles
 {
 
-constexpr glm::vec4 Red{1, 0, 0, 1};
-constexpr glm::vec4 Green{0, 1, 0, 1};
-constexpr glm::vec4 Blue{0, 0, 1, 1};
-constexpr glm::vec4 Yellow{1.0, 0.9, 0., 1};
+constexpr std::array<float, 4> Red{1, 0, 0, 1};
+constexpr std::array<float, 4> Green{0, 1, 0, 1};
+constexpr std::array<float, 4> Blue{0, 0, 1, 1};
+constexpr std::array<float, 4> Yellow{1.0f, 0.9f, 0.f, 1.f};
 
 SDL_Window *CreateWindow(const char *title);
 

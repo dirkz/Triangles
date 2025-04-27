@@ -3,8 +3,8 @@
 namespace triangles
 {
 
-PositionColorVertex::PositionColorVertex(float x, float y, float z, glm::vec4 color)
-    : Position{x, y, z}, Color{color}
+PositionColorVertex::PositionColorVertex(float x, float y, float z, std::array<float, 4> color)
+    : X{x}, Y{y}, Z{z}, R{color[0]}, G{color[1]}, B{color[2]}, A{color[3]}
 {
 }
 
