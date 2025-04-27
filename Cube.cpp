@@ -223,13 +223,20 @@ void Cube::CreateSurfaceTexture()
 
 void Cube::UploadBuffers()
 {
-    std::vector<PositionColorTextureVertex> vertices{
-        PositionColorTextureVertex{-0.5, -0.5, 0, Red, 0, 1},
-        PositionColorTextureVertex{0.5, -0.5, 0, Green, 1, 1},
-        PositionColorTextureVertex{0.5, 0.5, 0, Blue, 1, 0},
-        PositionColorTextureVertex{-0.5, 0.5, 0, Yellow, 0, 0}};
+    PositionColorTextureVertex bottomLeft{-0.5, -0.5, 0, Red, 0, 1};
+    PositionColorTextureVertex bottomRight{0.5, -0.5, 0, Green, 1, 1};
+    PositionColorTextureVertex topRight{0.5, 0.5, 0, Blue, 1, 0};
+    PositionColorTextureVertex topLeft{-0.5, 0.5, 0, Yellow, 0, 0};
 
-    std::vector<Uint16> indices{0, 1, 2, 0, 2, 3};
+    m_indexedVertices.Add(bottomLeft);
+    m_indexedVertices.Add(bottomRight);
+    m_indexedVertices.Add(topRight);
+    m_indexedVertices.Add(bottomLeft);
+    m_indexedVertices.Add(topRight);
+    m_indexedVertices.Add(topLeft);
+
+    std::vector<PositionColorTextureVertex> vertices = m_indexedVertices.Vertices();
+    std::vector<Uint16> indices = m_indexedVertices.Indices();
 
     Uploader uploader{m_device};
     m_vertexBuffer = uploader.UploadBuffer(SDL_GPU_BUFFERUSAGE_VERTEX, std::span{vertices});
