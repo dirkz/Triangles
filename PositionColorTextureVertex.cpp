@@ -11,6 +11,8 @@ PositionColorTextureVertex::PositionColorTextureVertex(float x, float y, float z
 
 bool PositionColorTextureVertex::operator<(const PositionColorTextureVertex &other) const
 {
+    glm::bvec3 lessThanPosition = glm::lessThan(m_position, other.m_position);
+    bool bPosition = glm::all(lessThanPosition);
     return glm::all(glm::lessThan(m_position, other.m_position)) &&
            glm::all(glm::lessThan(m_color, other.m_color)) &&
            glm::all(glm::lessThan(m_texture, other.m_texture));

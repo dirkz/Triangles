@@ -235,6 +235,9 @@ void Cube::UploadBuffers()
     m_indexedVertices.Add(topRight);
     m_indexedVertices.Add(topLeft);
 
+    SDL_Log("v1 < v2 %d", bottomLeft < bottomRight);
+    SDL_Log("v2 < v1 %d", bottomRight < bottomLeft);
+
     std::vector<PositionColorTextureVertex> vertices = m_indexedVertices.Vertices();
     std::vector<Uint16> indices = m_indexedVertices.Indices();
 
