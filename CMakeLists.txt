@@ -13,6 +13,8 @@ project("Triangles")
 
 find_package(Boost REQUIRED)
 
+cmake_path(SET DirectXMath_INCLUDE_DIRS "${CMAKE_CURRENT_SOURCE_DIR}/../DirectXMath/Inc")
+
 add_library(triangles OBJECT
 	"PositionColorVertex.h"
 	"PositionColorVertex.cpp"
@@ -63,6 +65,10 @@ target_link_libraries(samples PUBLIC glm::glm)
 target_include_directories(triangles PUBLIC ${Boost_INCLUDE_DIRS})
 target_include_directories(main PUBLIC ${Boost_INCLUDE_DIRS})
 target_include_directories(samples PUBLIC ${Boost_INCLUDE_DIRS})
+
+target_include_directories(triangles PUBLIC ${DirectXMath_INCLUDE_DIRS})
+target_include_directories(main PUBLIC ${DirectXMath_INCLUDE_DIRS})
+target_include_directories(samples PUBLIC ${DirectXMath_INCLUDE_DIRS})
 
 target_precompile_headers(triangles PRIVATE stdafx.h)
 target_precompile_headers(samples PRIVATE stdafx.h)

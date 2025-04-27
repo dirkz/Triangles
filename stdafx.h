@@ -19,3 +19,5 @@
 #include <glm/vec4.hpp>                 // glm::vec4
 
 #include <boost/functional/hash.hpp>
+
+#include <DirectXMath.h>
