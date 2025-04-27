@@ -116,8 +116,9 @@ void Cube::AppIterate()
 
         float aspect = static_cast<float>(width) / height;
 
-        XMVECTOR eyePosition = XMVectorSet(0.f, 0.f, -2.f, 1.f);
-        XMVECTOR eyeDirection = XMVectorSet(0, 0, 1, 1);
+        XMVECTOR eyePosition = XMVectorSet(0.f, -2.f, -2.f, 1.f);
+        XMVECTOR lookAt = XMVectorSet(0.f, 0.f, 0.f, 0.f);
+        XMVECTOR eyeDirection = XMVectorSubtract(lookAt, eyePosition);
         XMVECTOR up = XMVectorSet(0, 1, 0, 0);
         XMMATRIX view = XMMatrixLookToLH(eyePosition, eyeDirection, up);
 
