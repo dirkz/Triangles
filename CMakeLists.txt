@@ -43,12 +43,12 @@ add_library(samples OBJECT
 	"IndexedVertexBuffer.h")
 
 if(WIN32)
-	add_executable(Main WIN32 "main.cpp")
+	add_executable(main WIN32 "main.cpp")
 else()
-	add_executable(Main "main.cpp")
+	add_executable(main "main.cpp")
 endif()
 
-target_link_libraries(Main PRIVATE triangles samples)
+target_link_libraries(main PRIVATE triangles samples)
 
 option(SDL_STATIC "Build SDL statically, so you don't have to install" ON)
 
@@ -61,7 +61,7 @@ target_link_libraries(triangles PUBLIC glm::glm)
 target_link_libraries(samples PUBLIC glm::glm)
 
 target_include_directories(triangles PUBLIC ${Boost_INCLUDE_DIRS})
-target_include_directories(Main PUBLIC ${Boost_INCLUDE_DIRS})
+target_include_directories(main PUBLIC ${Boost_INCLUDE_DIRS})
 target_include_directories(samples PUBLIC ${Boost_INCLUDE_DIRS})
 
 target_precompile_headers(triangles PRIVATE stdafx.h)
@@ -70,7 +70,7 @@ target_precompile_headers(samples PRIVATE stdafx.h)
 if (CMAKE_VERSION VERSION_GREATER 3.12)
   set_property(TARGET triangles PROPERTY CXX_STANDARD 20)
   set_property(TARGET samples PROPERTY CXX_STANDARD 20)
-  set_property(TARGET Main PROPERTY CXX_STANDARD 20)
+  set_property(TARGET main PROPERTY CXX_STANDARD 20)
 endif()
 
 add_subdirectory(shaders)
