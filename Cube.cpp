@@ -110,7 +110,7 @@ void Cube::AppIterate()
 
         // Official counterclockwise rotation in a right-handed coordinate system:
         // https://en.wikipedia.org/wiki/Rotation_matrix#Basic_3D_rotations
-        glm::mat4x4 rotation{
+        glm::mat4x4 model{
             c, -s, 0, 0, // row 1
             s, c,  0, 0, // row 2
             0, 0,  1, 0, // row 3
@@ -119,14 +119,15 @@ void Cube::AppIterate()
 
         float aspect = static_cast<float>(width) / height;
 
-        glm::mat4x4 scale{1};
-        scale = glm::scale(scale, glm::vec3{1.f / aspect, 1.f, 1.f});
+        glm::mat4 view = glm::lookAt(glm::vec3(0.f, 0.f, -4.f), glm::vec3(0.f, 0.f, 0.f),
+                                     glm::vec3(0.f, 1.f, 0.f));
+        glm::mat4 projection = glm::perspective(glm::radians(45.f), aspect, 0.1f, 10.f);
 
         // GLM adheres to the GLSLang spec, so it expects matrices
         // to be constructed in column-major order (e.g. see here, page 84):
         // https://registry.khronos.org/OpenGL/specs/gl/GLSLangSpec.4.20.pdf
         // So we have to transpose.
-        glm::mat4x4 transformation = glm::transpose(rotation * scale);
+        glm::mat4x4 transformation = glm::transpose(projection * view * model);
 
         sdl::PushGPUVertexUniformData(commandBuffer, 0, &transformation, sizeof(transformation));
 
