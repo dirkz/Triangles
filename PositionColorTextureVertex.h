@@ -42,3 +42,14 @@ template <> struct std::hash<triangles::PositionColorTextureVertex>
         return seed;
     }
 };
+
+template <> struct std::equal_to<triangles::PositionColorTextureVertex>
+{
+    bool operator()(const triangles::PositionColorTextureVertex &v1,
+                    const triangles::PositionColorTextureVertex &v2) const noexcept
+    {
+        return glm::all(glm::equal(v1.m_position, v2.m_position)) &&
+               glm::all(glm::equal(v1.m_color, v2.m_color)) &&
+               glm::all(glm::equal(v1.m_texture, v2.m_texture));
+    }
+};
