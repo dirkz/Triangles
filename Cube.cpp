@@ -111,8 +111,8 @@ void Cube::AppIterate()
         float c = std::cos(angle);
 
         XMMATRIX translation = XMMatrixTranslation(0.f, 0.f, 0.2f);
-        XMMATRIX model = XMMatrixRotationZ(angle);
-        model = XMMatrixMultiply(translation, model);
+        XMMATRIX rotation = XMMatrixRotationZ(angle);
+        XMMATRIX model = XMMatrixMultiply(translation, rotation);
 
         float aspect = static_cast<float>(width) / height;
 
@@ -127,6 +127,8 @@ void Cube::AppIterate()
         XMMATRIX m = XMMatrixMultiply(model, view);
         m = XMMatrixMultiply(m, projection);
         XMFLOAT4X4 transformation;
+
+        // This stores row-major, so no extra transpose is needed.
         XMStoreFloat4x4(&transformation, m);
 
         sdl::PushGPUVertexUniformData(commandBuffer, 0, &transformation, sizeof(transformation));
