@@ -99,11 +99,11 @@ void Cube::AppIterate()
         sdl::BindGPUGraphicsPipeline(renderPass, m_pipeline);
 
         Uint64 now = sdl::GetTicks();  // ms
-        constexpr Uint64 cycle = 6000; // ms
-        double factor = Elapsed(cycle, now);
+        constexpr Uint64 cycleRotation = 6000; // ms
+        double factorRotation = Elapsed(cycleRotation, now);
 
         double range = std::numbers::pi_v<double> * 2.0;
-        float angle = static_cast<float>(factor * range);
+        float angle = static_cast<float>(factorRotation * range);
 
         float s = std::sin(angle);
         float c = std::cos(angle);
