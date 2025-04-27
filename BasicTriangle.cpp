@@ -1,5 +1,6 @@
 #include "BasicTriangle.h"
 
+#include "Common.h"
 #include "PositionColorVertex.h"
 
 namespace triangles
@@ -254,13 +255,9 @@ void BasicTriangle::CreateGraphicsPipeline()
 
 void BasicTriangle::UploadBuffers()
 {
-    glm::vec4 red{1, 0, 0, 1};
-    glm::vec4 green{0, 1, 0, 1};
-    glm::vec4 blue{0, 0, 1, 1};
-
-    std::vector<PositionColorVertex> vertices{PositionColorVertex{-0.5, -0.5, 0, red},
-                                              PositionColorVertex{0.5, -0.5, 0, green},
-                                              PositionColorVertex{0, 0.5, 0, blue}};
+    std::vector<PositionColorVertex> vertices{PositionColorVertex{-0.5, -0.5, 0, Red},
+                                              PositionColorVertex{0.5, -0.5, 0, Green},
+                                              PositionColorVertex{0, 0.5, 0, Blue}};
 
     Uint32 sizeVertices = static_cast<Uint32>(vertices.size() * sizeof(PositionColorVertex));
 
