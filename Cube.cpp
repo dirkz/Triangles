@@ -124,11 +124,7 @@ void Cube::AppIterate()
                                      glm::vec3(0.f, 1.f, 0.f));
         glm::mat4 projection = glm::perspective(glm::radians(45.f), aspect, 0.1f, 10.f);
 
-        // GLM adheres to the GLSLang spec, so it expects matrices
-        // to be constructed in column-major order (e.g. see here, page 84):
-        // https://registry.khronos.org/OpenGL/specs/gl/GLSLangSpec.4.20.pdf
-        // So we have to transpose.
-        glm::mat4x4 transformation = glm::transpose(projection * view * model);
+        glm::mat4x4 transformation = projection * view * model;
 
         sdl::PushGPUVertexUniformData(commandBuffer, 0, &transformation, sizeof(transformation));
 
