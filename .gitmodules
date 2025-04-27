@@ -4,3 +4,6 @@
 [submodule "glm"]
 	path = glm
 	url = git@github.com:g-truc/glm.git
+[submodule "DirectXMath"]
+	path = DirectXMath
+	url = git@github.com:microsoft/DirectXMath.git
