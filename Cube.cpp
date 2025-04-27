@@ -120,7 +120,7 @@ void Cube::AppIterate()
 
         float aspect = static_cast<float>(width) / height;
 
-        glm::mat4 view = glm::lookAt(glm::vec3(0.f, -2.f, -3.f), glm::vec3(0.f, 0.f, 0.f),
+        glm::mat4 view = glm::lookAt(glm::vec3(0.f, -2.f, 3.f), glm::vec3(0.f, 0.f, 0.f),
                                      glm::vec3(0.f, 1.f, 0.f));
         glm::mat4 projection = glm::perspective(glm::radians(45.f), aspect, 0.1f, 10.f);
 
