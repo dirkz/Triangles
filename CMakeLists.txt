@@ -37,7 +37,8 @@ add_library(samples OBJECT
 	"TexturedQuad.h"
 	"TexturedQuad.cpp"
 	"Cube.h"
-	"Cube.cpp")
+	"Cube.cpp"
+	"VertexBuffer.h")
 
 if(WIN32)
 	add_executable(Main WIN32 "main.cpp")
