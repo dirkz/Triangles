@@ -32,8 +32,7 @@ struct Cube
     Surface m_surface;
     SDL_GPUTexture *m_texture = nullptr;
     SDL_GPUSampler *m_sampler = nullptr;
-    IndexedVertexBuffer<PositionColorTextureVertex, Uint16, PositionColorTextureVertex::Less>
-        m_indexedVertices;
+    IndexedVertexBuffer<PositionColorTextureVertex, Uint16> m_indexedVertices;
 };
 
 } // namespace triangles

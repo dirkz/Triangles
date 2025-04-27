@@ -9,8 +9,7 @@ PositionColorTextureVertex::PositionColorTextureVertex(float x, float y, float z
 {
 }
 
-bool PositionColorTextureVertex::Less::operator()(const PositionColorTextureVertex &v1,
-                                                  const PositionColorTextureVertex &v2) const
+bool PositionColorTextureVertex::operator<(const PositionColorTextureVertex &other) const
 {
     return false;
 }
