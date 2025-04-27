@@ -17,7 +17,6 @@ template <class V, class I = Uint16, class Compare = std::less<V>> struct Indexe
         else
         {
             I index = static_cast<I>(m_vertices.size());
-            m_mapVertexIndex.insert(std::make_pair(vertex, index));
             m_vertices.push_back(vertex);
             m_indices.push_back(index);
         }
