@@ -9,4 +9,10 @@ PositionColorTextureVertex::PositionColorTextureVertex(float x, float y, float z
 {
 }
 
+bool PositionColorTextureVertex::Less::operator()(const PositionColorTextureVertex &v1,
+                                                  const PositionColorTextureVertex &v2) const
+{
+    return false;
+}
+
 } // namespace triangles

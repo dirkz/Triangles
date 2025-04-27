@@ -5,7 +5,7 @@
 namespace triangles
 {
 
-template <class Key, class V, class I = Uint16, class Compare = std::less<Key>> struct VertexBuffer
+template <class V, class I = Uint16, class Compare = std::less<V>> struct IndexedVertexBuffer
 {
     void Add(const V &vertex)
     {
@@ -33,7 +33,7 @@ template <class Key, class V, class I = Uint16, class Compare = std::less<Key>> 
     }
 
   private:
-    std::map<Key, V, I, Compare> m_mapVertexIndex;
+    std::map<V, I, Compare> m_mapVertexIndex;
     std::vector<V> m_vertices;
     std::vector<I> m_indices;
 };

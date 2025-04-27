@@ -2,6 +2,8 @@
 
 #include "stdafx.h"
 
+#include "IndexedVertexBuffer.h"
+#include "PositionColorTextureVertex.h"
 #include "Surface.h"
 
 namespace triangles
@@ -30,6 +32,8 @@ struct Cube
     Surface m_surface;
     SDL_GPUTexture *m_texture = nullptr;
     SDL_GPUSampler *m_sampler = nullptr;
+    IndexedVertexBuffer<PositionColorTextureVertex, Uint16, PositionColorTextureVertex::Less>
+        m_vertices;
 };
 
 } // namespace triangles

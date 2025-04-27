@@ -12,6 +12,14 @@ struct PositionColorTextureVertex
     glm::vec3 m_position;
     glm::vec4 m_color;
     glm::vec2 m_texture;
+
+    struct Less
+    {
+        bool operator()(const PositionColorTextureVertex &v1,
+                        const PositionColorTextureVertex &v2) const;
+    };
+
+    friend Less;
 };
 
 } // namespace triangles
