@@ -153,10 +153,10 @@ bool Cube::AppEvent(SDL_Event *event)
         switch (event->key.key)
         {
         case SDLK_LEFT:
-            m_rotationHorizontal += rotationLeftRight;
+            m_rotationHorizontal -= rotationLeftRight;
             return false;
         case SDLK_RIGHT:
-            m_rotationHorizontal -= rotationLeftRight;
+            m_rotationHorizontal += rotationLeftRight;
             return false;
         case SDLK_UP:
             m_rotationVertical += rotationUpDown;
@@ -244,10 +244,15 @@ void Cube::UploadBuffers()
     // front face
     m_indexedVertices.Quad(v0, v1, v2, v3);
 
-    // bottom
-    m_indexedVertices.Quad(v0.TranslatedZ(1).WithTexture(0, 1).WithColor(Blue),
-                           v1.TranslatedZ(1).WithTexture(1, 1).WithColor(Yellow),
+    // bottom face
+    m_indexedVertices.Quad(v0.TranslatedZ(1).WithTexture(0, 1).WithColor(Yellow),
+                           v1.TranslatedZ(1).WithTexture(1, 1).WithColor(Red),
                            v1.WithTexture(1, 0), v0.WithTexture(0, 0));
+
+    // right face
+    m_indexedVertices.Quad(v1.WithTexture(0, 1), v1.TranslatedZ(1).WithTexture(1, 1).WithColor(Red),
+                           v2.TranslatedZ(1).WithTexture(1, 0).WithColor(Yellow),
+                           v2.WithTexture(0, 0));
 
     std::vector<PositionColorTextureVertex> vertices = m_indexedVertices.Vertices();
     std::vector<Uint16> indices = m_indexedVertices.Indices();
