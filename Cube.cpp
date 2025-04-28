@@ -101,7 +101,9 @@ void Cube::AppIterate()
         sdl::BindGPUGraphicsPipeline(renderPass, m_pipeline);
 
         XMMATRIX translation = XMMatrixTranslation(0.f, 0.f, 0.2f);
-        XMMATRIX rotation = XMMatrixRotationY(m_rotationHorizontal);
+        XMMATRIX rotationY = XMMatrixRotationY(m_rotationHorizontal);
+        XMMATRIX rotationX = XMMatrixRotationX(m_rotationVertical);
+        XMMATRIX rotation = XMMatrixMultiply(rotationX, rotationY);
         XMMATRIX model = XMMatrixMultiply(translation, rotation);
 
         float aspect = static_cast<float>(width) / height;
@@ -142,6 +144,7 @@ void Cube::AppIterate()
 bool Cube::AppEvent(SDL_Event *event)
 {
     constexpr float rotationLeftRight = XM_PI / 10.f;
+    constexpr float rotationUpDown = XM_PI / 10.f;
 
     switch (event->type)
     {
@@ -154,6 +157,12 @@ bool Cube::AppEvent(SDL_Event *event)
             return false;
         case SDLK_RIGHT:
             m_rotationHorizontal -= rotationLeftRight;
+            return false;
+        case SDLK_UP:
+            m_rotationVertical += rotationUpDown;
+            return false;
+        case SDLK_DOWN:
+            m_rotationVertical -= rotationUpDown;
             return false;
         default:
             return true;

@@ -35,6 +35,7 @@ struct Cube
     IndexedVertexBuffer<PositionColorTextureVertex, Uint16> m_indexedVertices;
 
     float m_rotationHorizontal = 0;
+    float m_rotationVertical = 0;
 };
 
 } // namespace triangles
