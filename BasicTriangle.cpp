@@ -227,12 +227,12 @@ void BasicTriangle::CreateGraphicsPipeline()
     SDL_GPUVertexAttribute attributePosition{.location = 0,
                                              .buffer_slot = 0,
                                              .format = SDL_GPU_VERTEXELEMENTFORMAT_FLOAT3,
-                                             .offset = offsetof(PositionColorVertex, Position)};
+                                             .offset = offsetof(PositionColorVertex, X)};
 
     SDL_GPUVertexAttribute attributeColor{.location = 1,
                                           .buffer_slot = 0,
                                           .format = SDL_GPU_VERTEXELEMENTFORMAT_FLOAT4,
-                                          .offset = offsetof(PositionColorVertex, Color)};
+                                          .offset = offsetof(PositionColorVertex, R)};
 
     std::array<SDL_GPUVertexAttribute, 2> attributes{attributePosition, attributeColor};
 
@@ -255,9 +255,10 @@ void BasicTriangle::CreateGraphicsPipeline()
 
 void BasicTriangle::UploadBuffers()
 {
-    std::vector<PositionColorVertex> vertices{PositionColorVertex{-0.5, -0.5, 0, Red},
-                                              PositionColorVertex{0.5, -0.5, 0, Green},
-                                              PositionColorVertex{0, 0.5, 0, Blue}};
+    std::vector<PositionColorVertex> vertices{
+        PositionColorVertex{-0.5, -0.5, 0, DirectX::Colors::Red},
+        PositionColorVertex{0.5, -0.5, 0, DirectX::Colors::Green},
+        PositionColorVertex{0, 0.5, 0, DirectX::Colors::Blue}};
 
     Uint32 sizeVertices = static_cast<Uint32>(vertices.size() * sizeof(PositionColorVertex));
 

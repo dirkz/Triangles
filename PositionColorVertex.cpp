@@ -3,9 +3,17 @@
 namespace triangles
 {
 
-PositionColorVertex::PositionColorVertex(float x, float y, float z, glm::vec4 color)
-    : Position{x, y, z}, Color{color}
+using namespace DirectX;
+
+PositionColorVertex::PositionColorVertex(float x, float y, float z, DirectX::FXMVECTOR colorVector)
+    : X{x}, Y{y}, Z{z}
 {
+    XMFLOAT4 color;
+    XMStoreFloat4(&color, colorVector);
+    R = color.x;
+    G = color.y;
+    B = color.z;
+    A = color.w;
 }
 
 } // namespace triangles

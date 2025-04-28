@@ -150,12 +150,12 @@ void IndexedQuad::CreateGraphicsPipeline()
     SDL_GPUVertexAttribute attributePosition{.location = 0,
                                              .buffer_slot = 0,
                                              .format = SDL_GPU_VERTEXELEMENTFORMAT_FLOAT3,
-                                             .offset = offsetof(PositionColorVertex, Position)};
+                                             .offset = offsetof(PositionColorVertex, X)};
 
     SDL_GPUVertexAttribute attributeColor{.location = 1,
                                           .buffer_slot = 0,
                                           .format = SDL_GPU_VERTEXELEMENTFORMAT_FLOAT4,
-                                          .offset = offsetof(PositionColorVertex, Color)};
+                                          .offset = offsetof(PositionColorVertex, R)};
 
     std::vector<SDL_GPUVertexAttribute> attributes{attributePosition, attributeColor};
 
@@ -167,8 +167,10 @@ void IndexedQuad::CreateGraphicsPipeline()
 void IndexedQuad::UploadBuffers()
 {
     std::vector<PositionColorVertex> vertices{
-        PositionColorVertex{-0.5, -0.5, 0, Red}, PositionColorVertex{0.5, -0.5, 0, Green},
-        PositionColorVertex{0.5, 0.5, 0, Blue}, PositionColorVertex{-0.5, 0.5, 0, Yellow}};
+        PositionColorVertex{-0.5, -0.5, 0, DirectX::Colors::Red},
+        PositionColorVertex{0.5, -0.5, 0, DirectX::Colors::Green},
+        PositionColorVertex{0.5, 0.5, 0, DirectX::Colors::Blue},
+        PositionColorVertex{-0.5, 0.5, 0, DirectX::Colors::Yellow}};
 
     std::vector<Uint16> indices{0, 1, 2, 0, 2, 3};
 

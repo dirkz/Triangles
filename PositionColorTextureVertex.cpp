@@ -4,7 +4,6 @@ namespace triangles
 {
 
 using namespace DirectX;
-using namespace DirectX::PackedVector;
 
 PositionColorTextureVertex::PositionColorTextureVertex(float x, float y, float z,
                                                        DirectX::FXMVECTOR colorVector, float u,

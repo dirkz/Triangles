@@ -138,12 +138,12 @@ void BasicUniform::CreateGraphicsPipeline()
     SDL_GPUVertexAttribute attributePosition{.location = 0,
                                              .buffer_slot = 0,
                                              .format = SDL_GPU_VERTEXELEMENTFORMAT_FLOAT3,
-                                             .offset = offsetof(PositionColorVertex, Position)};
+                                             .offset = offsetof(PositionColorVertex, X)};
 
     SDL_GPUVertexAttribute attributeColor{.location = 1,
                                           .buffer_slot = 0,
                                           .format = SDL_GPU_VERTEXELEMENTFORMAT_FLOAT4,
-                                          .offset = offsetof(PositionColorVertex, Color)};
+                                          .offset = offsetof(PositionColorVertex, R)};
 
     std::vector<SDL_GPUVertexAttribute> attributes{attributePosition, attributeColor};
 
@@ -154,9 +154,10 @@ void BasicUniform::CreateGraphicsPipeline()
 
 void BasicUniform::UploadBuffers()
 {
-    std::vector<PositionColorVertex> vertices{PositionColorVertex{-0.5, -0.5, 0, Red},
-                                              PositionColorVertex{0.5, -0.5, 0, Green},
-                                              PositionColorVertex{0, 0.5, 0, Blue}};
+    std::vector<PositionColorVertex> vertices{
+        PositionColorVertex{-0.5, -0.5, 0, DirectX::Colors::Red},
+        PositionColorVertex{0.5, -0.5, 0, DirectX::Colors::Green},
+        PositionColorVertex{0, 0.5, 0, DirectX::Colors::Blue}};
 
     Uploader uploader{m_device};
     m_vertexBuffer = uploader.UploadBuffer(SDL_GPU_BUFFERUSAGE_VERTEX, std::span{vertices});
