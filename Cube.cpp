@@ -230,12 +230,8 @@ void Cube::UploadBuffers()
     PositionColorTextureVertex topRightFront{0.5, 0.5, -0.5, Blue, 1, 0};
     PositionColorTextureVertex topLeftFront{-0.5, 0.5, -0.5, Yellow, 0, 0};
 
-    m_indexedVertices.Add(bottomLeftFront);
-    m_indexedVertices.Add(bottomRightFront);
-    m_indexedVertices.Add(topRightFront);
-    m_indexedVertices.Add(bottomLeftFront);
-    m_indexedVertices.Add(topRightFront);
-    m_indexedVertices.Add(topLeftFront);
+    // front face
+    m_indexedVertices.Quad(bottomLeftFront, bottomRightFront, topRightFront, topLeftFront);
 
     std::vector<PositionColorTextureVertex> vertices = m_indexedVertices.Vertices();
     std::vector<Uint16> indices = m_indexedVertices.Indices();

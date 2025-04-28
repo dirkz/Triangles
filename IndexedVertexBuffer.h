@@ -24,6 +24,16 @@ struct IndexedVertexBuffer
         }
     }
 
+    void Quad(const V &bottomLeft, const V &bottomRight, const V &topRight, const V &topLeft)
+    {
+        Add(bottomLeft);
+        Add(bottomRight);
+        Add(topRight);
+        Add(bottomLeft);
+        Add(topRight);
+        Add(topLeft);
+    }
+
     const std::vector<I> &Indices() const
     {
         return m_indices;
