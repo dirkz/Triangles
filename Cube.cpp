@@ -264,6 +264,12 @@ void Cube::UploadBuffers()
                            v2.TranslatedZ(1).WithTexture(0, 0).WithColor(Red),
                            v3.TranslatedZ(1).WithTexture(1, 0).WithColor(Green));
 
+    // back
+    m_indexedVertices.Quad(v1.TranslatedZ(1).WithTexture(0, 1).WithColor(Yellow),
+                           v0.TranslatedZ(1).WithTexture(1, 1).WithColor(Blue),
+                           v3.TranslatedZ(1).WithTexture(1, 0).WithColor(Green),
+                           v2.TranslatedZ(1).WithTexture(0, 0).WithColor(Red));
+
     std::vector<PositionColorTextureVertex> vertices = m_indexedVertices.Vertices();
     std::vector<Uint16> indices = m_indexedVertices.Indices();
 
