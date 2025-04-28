@@ -182,19 +182,17 @@ void TexturedQuad::CreateGraphicsPipeline()
     SDL_GPUVertexAttribute attributePosition{.location = 0,
                                              .buffer_slot = 0,
                                              .format = SDL_GPU_VERTEXELEMENTFORMAT_FLOAT3,
-                                             .offset =
-                                                 offsetof(PositionColorTextureVertex, Position)};
+                                             .offset = offsetof(PositionColorTextureVertex, X)};
 
     SDL_GPUVertexAttribute attributeColor{.location = 1,
                                           .buffer_slot = 0,
                                           .format = SDL_GPU_VERTEXELEMENTFORMAT_FLOAT4,
-                                          .offset = offsetof(PositionColorTextureVertex, Color)};
+                                          .offset = offsetof(PositionColorTextureVertex, R)};
 
     SDL_GPUVertexAttribute attributeTexture{.location = 2,
                                             .buffer_slot = 0,
                                             .format = SDL_GPU_VERTEXELEMENTFORMAT_FLOAT2,
-                                            .offset =
-                                                offsetof(PositionColorTextureVertex, Texture)};
+                                            .offset = offsetof(PositionColorTextureVertex, U)};
 
     std::vector<SDL_GPUVertexAttribute> attributes{attributePosition, attributeColor,
                                                    attributeTexture};
@@ -225,10 +223,10 @@ void TexturedQuad::CreateSurfaceTexture()
 void TexturedQuad::UploadBuffers()
 {
     std::vector<PositionColorTextureVertex> vertices{
-        PositionColorTextureVertex{-0.5, -0.5, 0, Red, 0, 1},
-        PositionColorTextureVertex{0.5, -0.5, 0, Green, 1, 1},
-        PositionColorTextureVertex{0.5, 0.5, 0, Blue, 1, 0},
-        PositionColorTextureVertex{-0.5, 0.5, 0, Yellow, 0, 0}};
+        PositionColorTextureVertex{-0.5, -0.5, 0, DirectX::Colors::Red, 0, 1},
+        PositionColorTextureVertex{0.5, -0.5, 0, DirectX::Colors::Green, 1, 1},
+        PositionColorTextureVertex{0.5, 0.5, 0, DirectX::Colors::Blue, 1, 0},
+        PositionColorTextureVertex{-0.5, 0.5, 0, DirectX::Colors::Yellow, 0, 0}};
 
     std::vector<Uint16> indices{0, 1, 2, 0, 2, 3};
 

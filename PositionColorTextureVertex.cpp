@@ -3,16 +3,26 @@
 namespace triangles
 {
 
-PositionColorTextureVertex::PositionColorTextureVertex(float x, float y, float z, glm::vec4 color,
-                                                       float u, float v)
-    : Position{x, y, z}, Color{color}, Texture{u, v}
+using namespace DirectX;
+using namespace DirectX::PackedVector;
+
+PositionColorTextureVertex::PositionColorTextureVertex(float x, float y, float z,
+                                                       DirectX::FXMVECTOR colorVector, float u,
+                                                       float v)
+    : X{x}, Y{y}, Z{z}, U{u}, V{v}
 {
+    XMFLOAT4 color;
+    XMStoreFloat4(&color, colorVector);
+    R = color.x;
+    G = color.y;
+    B = color.z;
+    A = color.w;
 }
 
 PositionColorTextureVertex PositionColorTextureVertex::Translated(float x, float y, float z)
 {
-    return PositionColorTextureVertex(Position.x + x, Position.y + y, Position.z + z, Color,
-                                      Texture.x, Texture.y);
+    XMVECTOR color = XMVectorSet(R, G, B, A);
+    return PositionColorTextureVertex{X + x, Y + y, Z + z, color, U, V};
 }
 
 PositionColorTextureVertex PositionColorTextureVertex::TranslatedZ(float z)
@@ -22,13 +32,13 @@ PositionColorTextureVertex PositionColorTextureVertex::TranslatedZ(float z)
 
 PositionColorTextureVertex PositionColorTextureVertex::WithTexture(float u, float v)
 {
-    return PositionColorTextureVertex(Position.x, Position.y, Position.z, Color, u, v);
+    XMVECTOR color = XMVectorSet(R, G, B, A);
+    return PositionColorTextureVertex{X, Y, Z, color, u, v};
 }
 
-PositionColorTextureVertex PositionColorTextureVertex::WithColor(glm::vec4 color)
+PositionColorTextureVertex XM_CALLCONV PositionColorTextureVertex::WithColor(FXMVECTOR color)
 {
-    return PositionColorTextureVertex(Position.x, Position.y, Position.z, color, Texture.x,
-                                      Texture.y);
+    return PositionColorTextureVertex{X, Y, Z, color, U, V};
 }
 
 } // namespace triangles

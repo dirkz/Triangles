@@ -22,3 +22,4 @@
 
 #include <DirectXMath.h>
 #include <DirectXColors.h>
+#include <DirectXPackedVector.h>

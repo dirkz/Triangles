@@ -194,19 +194,17 @@ void Cube::CreateGraphicsPipeline()
     SDL_GPUVertexAttribute attributePosition{.location = 0,
                                              .buffer_slot = 0,
                                              .format = SDL_GPU_VERTEXELEMENTFORMAT_FLOAT3,
-                                             .offset =
-                                                 offsetof(PositionColorTextureVertex, Position)};
+                                             .offset = offsetof(PositionColorTextureVertex, X)};
 
     SDL_GPUVertexAttribute attributeColor{.location = 1,
                                           .buffer_slot = 0,
                                           .format = SDL_GPU_VERTEXELEMENTFORMAT_FLOAT4,
-                                          .offset = offsetof(PositionColorTextureVertex, Color)};
+                                          .offset = offsetof(PositionColorTextureVertex, R)};
 
     SDL_GPUVertexAttribute attributeTexture{.location = 2,
                                             .buffer_slot = 0,
                                             .format = SDL_GPU_VERTEXELEMENTFORMAT_FLOAT2,
-                                            .offset =
-                                                offsetof(PositionColorTextureVertex, Texture)};
+                                            .offset = offsetof(PositionColorTextureVertex, U)};
 
     std::vector<SDL_GPUVertexAttribute> attributes{attributePosition, attributeColor,
                                                    attributeTexture};
@@ -236,39 +234,40 @@ void Cube::CreateSurfaceTexture()
 
 void Cube::UploadBuffers()
 {
-    PositionColorTextureVertex v0{-0.5, -0.5, -0.5, Red, 0, 1};
-    PositionColorTextureVertex v1{0.5, -0.5, -0.5, Green, 1, 1};
-    PositionColorTextureVertex v2{0.5, 0.5, -0.5, Blue, 1, 0};
-    PositionColorTextureVertex v3{-0.5, 0.5, -0.5, Yellow, 0, 0};
+    PositionColorTextureVertex v0{-0.5, -0.5, -0.5, DirectX::Colors::Red, 0, 1};
+    PositionColorTextureVertex v1{0.5, -0.5, -0.5, DirectX::Colors::Green, 1, 1};
+    PositionColorTextureVertex v2{0.5, 0.5, -0.5, DirectX::Colors::Blue, 1, 0};
+    PositionColorTextureVertex v3{-0.5, 0.5, -0.5, DirectX::Colors::Yellow, 0, 0};
 
     // front
     m_indexedVertices.Quad(v0, v1, v2, v3);
 
     // bottom
-    m_indexedVertices.Quad(v0.TranslatedZ(1).WithTexture(0, 1).WithColor(Blue),
-                           v1.TranslatedZ(1).WithTexture(1, 1).WithColor(Yellow),
+    m_indexedVertices.Quad(v0.TranslatedZ(1).WithTexture(0, 1).WithColor(DirectX::Colors::Blue),
+                           v1.TranslatedZ(1).WithTexture(1, 1).WithColor(DirectX::Colors::Yellow),
                            v1.WithTexture(1, 0), v0.WithTexture(0, 0));
 
     // right
-    m_indexedVertices.Quad(
-        v1.WithTexture(0, 1), v1.TranslatedZ(1).WithTexture(1, 1).WithColor(Yellow),
-        v2.TranslatedZ(1).WithTexture(1, 0).WithColor(Red), v2.WithTexture(0, 0));
+    m_indexedVertices.Quad(v1.WithTexture(0, 1),
+                           v1.TranslatedZ(1).WithTexture(1, 1).WithColor(DirectX::Colors::Yellow),
+                           v2.TranslatedZ(1).WithTexture(1, 0).WithColor(DirectX::Colors::Red),
+                           v2.WithTexture(0, 0));
 
     // left
-    m_indexedVertices.Quad(v0.TranslatedZ(1).WithTexture(0, 1).WithColor(Blue),
+    m_indexedVertices.Quad(v0.TranslatedZ(1).WithTexture(0, 1).WithColor(DirectX::Colors::Blue),
                            v0.WithTexture(1, 1), v3.WithTexture(1, 0),
-                           v3.TranslatedZ(1).WithTexture(0, 0).WithColor(Green));
+                           v3.TranslatedZ(1).WithTexture(0, 0).WithColor(DirectX::Colors::Green));
 
     // top
     m_indexedVertices.Quad(v3.WithTexture(0, 1), v2.WithTexture(1, 1),
-                           v2.TranslatedZ(1).WithTexture(0, 0).WithColor(Red),
-                           v3.TranslatedZ(1).WithTexture(1, 0).WithColor(Green));
+                           v2.TranslatedZ(1).WithTexture(0, 0).WithColor(DirectX::Colors::Red),
+                           v3.TranslatedZ(1).WithTexture(1, 0).WithColor(DirectX::Colors::Green));
 
     // back
-    m_indexedVertices.Quad(v1.TranslatedZ(1).WithTexture(0, 1).WithColor(Yellow),
-                           v0.TranslatedZ(1).WithTexture(1, 1).WithColor(Blue),
-                           v3.TranslatedZ(1).WithTexture(1, 0).WithColor(Green),
-                           v2.TranslatedZ(1).WithTexture(0, 0).WithColor(Red));
+    m_indexedVertices.Quad(v1.TranslatedZ(1).WithTexture(0, 1).WithColor(DirectX::Colors::Yellow),
+                           v0.TranslatedZ(1).WithTexture(1, 1).WithColor(DirectX::Colors::Blue),
+                           v3.TranslatedZ(1).WithTexture(1, 0).WithColor(DirectX::Colors::Green),
+                           v2.TranslatedZ(1).WithTexture(0, 0).WithColor(DirectX::Colors::Red));
 
     std::vector<PositionColorTextureVertex> vertices = m_indexedVertices.Vertices();
     std::vector<Uint16> indices = m_indexedVertices.Indices();
