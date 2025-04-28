@@ -9,4 +9,15 @@ PositionColorTextureVertex::PositionColorTextureVertex(float x, float y, float z
 {
 }
 
+PositionColorTextureVertex PositionColorTextureVertex::Translated(float x, float y, float z)
+{
+    return PositionColorTextureVertex(Position.x + x, Position.y + y, Position.z + z, Color,
+                                      Texture.x, Texture.y);
+}
+
+PositionColorTextureVertex PositionColorTextureVertex::WithTexture(float u, float v)
+{
+    return PositionColorTextureVertex(Position.x, Position.y, Position.z, Color, u, v);
+}
+
 } // namespace triangles

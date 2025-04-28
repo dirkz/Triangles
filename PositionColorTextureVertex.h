@@ -9,6 +9,9 @@ struct PositionColorTextureVertex
 {
     PositionColorTextureVertex(float x, float y, float z, glm::vec4 color, float u, float v);
 
+    PositionColorTextureVertex Translated(float x, float y, float z);
+    PositionColorTextureVertex WithTexture(float u, float v);
+
     glm::vec3 Position;
     glm::vec4 Color;
     glm::vec2 Texture;
