@@ -159,10 +159,10 @@ bool Cube::AppEvent(SDL_Event *event)
             m_rotationHorizontal += rotationLeftRight;
             return false;
         case SDLK_UP:
-            m_rotationVertical += rotationUpDown;
+            m_rotationVertical -= rotationUpDown;
             return false;
         case SDLK_DOWN:
-            m_rotationVertical -= rotationUpDown;
+            m_rotationVertical += rotationUpDown;
             return false;
         default:
             return true;
@@ -241,23 +241,28 @@ void Cube::UploadBuffers()
     PositionColorTextureVertex v2{0.5, 0.5, -0.5, Blue, 1, 0};
     PositionColorTextureVertex v3{-0.5, 0.5, -0.5, Yellow, 0, 0};
 
-    // front face
+    // front
     m_indexedVertices.Quad(v0, v1, v2, v3);
 
-    // bottom face
-    m_indexedVertices.Quad(v0.TranslatedZ(1).WithTexture(0, 1).WithColor(Yellow),
-                           v1.TranslatedZ(1).WithTexture(1, 1).WithColor(Red), v1.WithTexture(1, 0),
-                           v0.WithTexture(0, 0));
+    // bottom
+    m_indexedVertices.Quad(v0.TranslatedZ(1).WithTexture(0, 1).WithColor(Blue),
+                           v1.TranslatedZ(1).WithTexture(1, 1).WithColor(Yellow),
+                           v1.WithTexture(1, 0), v0.WithTexture(0, 0));
 
-    // right face
-    m_indexedVertices.Quad(v1.WithTexture(0, 1), v1.TranslatedZ(1).WithTexture(1, 1).WithColor(Red),
-                           v2.TranslatedZ(1).WithTexture(1, 0).WithColor(Yellow),
-                           v2.WithTexture(0, 0));
+    // right
+    m_indexedVertices.Quad(
+        v1.WithTexture(0, 1), v1.TranslatedZ(1).WithTexture(1, 1).WithColor(Yellow),
+        v2.TranslatedZ(1).WithTexture(1, 0).WithColor(Red), v2.WithTexture(0, 0));
 
-    // left face
-    m_indexedVertices.Quad(v0.TranslatedZ(1).WithTexture(0, 1).WithColor(Green),
+    // left
+    m_indexedVertices.Quad(v0.TranslatedZ(1).WithTexture(0, 1).WithColor(Blue),
                            v0.WithTexture(1, 1), v3.WithTexture(1, 0),
-                           v3.TranslatedZ(1).WithTexture(0, 0).WithColor(Blue));
+                           v3.TranslatedZ(1).WithTexture(0, 0).WithColor(Green));
+
+    // top
+    m_indexedVertices.Quad(v3.WithTexture(0, 1), v2.WithTexture(1, 1),
+                           v2.TranslatedZ(1).WithTexture(0, 0).WithColor(Red),
+                           v3.TranslatedZ(1).WithTexture(1, 0).WithColor(Green));
 
     std::vector<PositionColorTextureVertex> vertices = m_indexedVertices.Vertices();
     std::vector<Uint16> indices = m_indexedVertices.Indices();
