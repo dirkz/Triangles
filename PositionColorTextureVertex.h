@@ -10,7 +10,9 @@ struct PositionColorTextureVertex
     PositionColorTextureVertex(float x, float y, float z, glm::vec4 color, float u, float v);
 
     PositionColorTextureVertex Translated(float x, float y, float z);
+    PositionColorTextureVertex TranslatedZ(float z);
     PositionColorTextureVertex WithTexture(float u, float v);
+    PositionColorTextureVertex WithColor(glm::vec4 color);
 
     glm::vec3 Position;
     glm::vec4 Color;
