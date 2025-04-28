@@ -10,11 +10,6 @@ struct PositionColorTextureVertex
     PositionColorTextureVertex(float x, float y, float z, DirectX::FXMVECTOR colorVector, float u,
                                float v);
 
-    PositionColorTextureVertex Translated(float x, float y, float z);
-    PositionColorTextureVertex TranslatedZ(float z);
-    PositionColorTextureVertex WithTexture(float u, float v);
-    PositionColorTextureVertex XM_CALLCONV WithColor(DirectX::FXMVECTOR color);
-
     float X, Y, Z;
     float R, G, B, A;
     float U, V;
