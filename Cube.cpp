@@ -100,23 +100,13 @@ void Cube::AppIterate()
 
         sdl::BindGPUGraphicsPipeline(renderPass, m_pipeline);
 
-        Uint64 now = sdl::GetTicks();          // ms
-        constexpr Uint64 cycleRotation = 6000; // ms
-        double factorRotation = Elapsed(cycleRotation, now);
-
-        double range = std::numbers::pi_v<double> * 2.0;
-        float angle = static_cast<float>(factorRotation * range);
-
-        float s = std::sin(angle);
-        float c = std::cos(angle);
-
         XMMATRIX translation = XMMatrixTranslation(0.f, 0.f, 0.2f);
-        XMMATRIX rotation = XMMatrixRotationZ(angle);
+        XMMATRIX rotation = XMMatrixRotationY(m_rotationHorizontal);
         XMMATRIX model = XMMatrixMultiply(translation, rotation);
 
         float aspect = static_cast<float>(width) / height;
 
-        XMVECTOR eyePosition = XMVectorSet(0.f, -2.f, -2.f, 1.f);
+        XMVECTOR eyePosition = XMVectorSet(0.f, 0.f, -2.f, 1.f);
         XMVECTOR lookAt = XMVectorSet(0.f, 0.f, 0.f, 1.f);
         XMVECTOR upDirection = XMVectorSet(0, 1, 0, 0);
         XMMATRIX view = XMMatrixLookAtLH(eyePosition, lookAt, upDirection);
@@ -151,11 +141,23 @@ void Cube::AppIterate()
 
 bool Cube::AppEvent(SDL_Event *event)
 {
+    constexpr float rotationLeftRight = XM_PI / 10.f;
+
     switch (event->type)
     {
     case SDL_EVENT_QUIT:
     case SDL_EVENT_KEY_DOWN:
-        return true;
+        switch (event->key.key)
+        {
+        case SDLK_LEFT:
+            m_rotationHorizontal += rotationLeftRight;
+            return false;
+        case SDLK_RIGHT:
+            m_rotationHorizontal -= rotationLeftRight;
+            return false;
+        default:
+            return true;
+        }
     default:
         return false;
     }
