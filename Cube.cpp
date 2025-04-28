@@ -225,21 +225,13 @@ void Cube::CreateSurfaceTexture()
 
 void Cube::UploadBuffers()
 {
-    PositionColorTextureVertex bottomLeftFront{-0.5, -0.5, -0.5, Red, 0, 1};
-    PositionColorTextureVertex bottomRightFront{0.5, -0.5, -0.5, Green, 1, 1};
-    PositionColorTextureVertex topRightFront{0.5, 0.5, -0.5, Blue, 1, 0};
-    PositionColorTextureVertex topLeftFront{-0.5, 0.5, -0.5, Yellow, 0, 0};
-
-    PositionColorTextureVertex bottomLeftBack{-0.5, -0.5, 0.5, Red, 0, 1};
-    PositionColorTextureVertex bottomRightBack{0.5, -0.5, 0.5, Green, 1, 1};
-    PositionColorTextureVertex topRightBack{0.5, 0.5, 0.5, Blue, 1, 0};
-    PositionColorTextureVertex topLeftBack{-0.5, 0.5, 0.5, Yellow, 0, 0};
+    PositionColorTextureVertex v0{-0.5, -0.5, -0.5, Red, 0, 1};
+    PositionColorTextureVertex v1{0.5, -0.5, -0.5, Green, 1, 1};
+    PositionColorTextureVertex v2{0.5, 0.5, -0.5, Blue, 1, 0};
+    PositionColorTextureVertex v4{-0.5, 0.5, -0.5, Yellow, 0, 0};
 
     // front face
-    m_indexedVertices.Quad(bottomLeftFront, bottomRightFront, topRightFront, topLeftFront);
-
-    // back face
-    m_indexedVertices.Quad(bottomRightBack, bottomLeftBack, topLeftBack, topRightBack);
+    m_indexedVertices.Quad(v0, v1, v2, v4);
 
     std::vector<PositionColorTextureVertex> vertices = m_indexedVertices.Vertices();
     std::vector<Uint16> indices = m_indexedVertices.Indices();
