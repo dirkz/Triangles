@@ -49,11 +49,14 @@ SDL_GPUGraphicsPipeline *CreateGraphicsPipeline(
         .vertex_attributes = attributes.data(),
         .num_vertex_attributes = static_cast<Uint32>(attributes.size())};
 
+    SDL_GPURasterizerState rasterizerState{};
+
     SDL_GPUGraphicsPipelineCreateInfo pipelineCreateInfo{
         .vertex_shader = vertexShader,
         .fragment_shader = fragmentShader,
         .vertex_input_state = vertexInputState,
         .primitive_type = SDL_GPU_PRIMITIVETYPE_TRIANGLELIST,
+        .rasterizer_state = rasterizerState,
         .target_info = {.color_target_descriptions = &colorTargetDescription,
                         .num_color_targets = 1}};
 
