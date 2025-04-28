@@ -5,6 +5,8 @@
 namespace triangles
 {
 
+using namespace DirectX;
+
 constexpr glm::vec4 Red{1, 0, 0, 1};
 constexpr glm::vec4 Green{0, 1, 0, 1};
 constexpr glm::vec4 Blue{0, 0, 1, 1};

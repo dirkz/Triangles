@@ -118,9 +118,8 @@ void Cube::AppIterate()
 
         XMVECTOR eyePosition = XMVectorSet(0.f, -2.f, -2.f, 1.f);
         XMVECTOR lookAt = XMVectorSet(0.f, 0.f, 0.f, 1.f);
-        XMVECTOR eyeDirection = XMVectorSubtract(lookAt, eyePosition);
-        XMVECTOR up = XMVectorSet(0, 1, 0, 0);
-        XMMATRIX view = XMMatrixLookToLH(eyePosition, eyeDirection, up);
+        XMVECTOR upDirection = XMVectorSet(0, 1, 0, 0);
+        XMMATRIX view = XMMatrixLookAtLH(eyePosition, lookAt, upDirection);
 
         XMMATRIX projection = XMMatrixPerspectiveFovLH(XM_PIDIV4, aspect, 0.1f, 10.f);
 
