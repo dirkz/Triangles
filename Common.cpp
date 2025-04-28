@@ -49,7 +49,7 @@ SDL_GPUGraphicsPipeline *CreateGraphicsPipeline(
         .vertex_attributes = attributes.data(),
         .num_vertex_attributes = static_cast<Uint32>(attributes.size())};
 
-    SDL_GPURasterizerState rasterizerState{};
+    SDL_GPURasterizerState rasterizerState{.cull_mode = SDL_GPU_CULLMODE_BACK};
 
     SDL_GPUGraphicsPipelineCreateInfo pipelineCreateInfo{
         .vertex_shader = vertexShader,
