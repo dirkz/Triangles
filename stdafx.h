@@ -21,3 +21,4 @@
 #include <boost/functional/hash.hpp>
 
 #include <DirectXMath.h>
+#include <DirectXColors.h>
