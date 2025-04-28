@@ -5,13 +5,6 @@
 namespace triangles
 {
 
-using namespace DirectX;
-
-constexpr glm::vec4 Red{1, 0, 0, 1};
-constexpr glm::vec4 Green{0, 1, 0, 1};
-constexpr glm::vec4 Blue{0, 0, 1, 1};
-constexpr glm::vec4 Yellow{1.0, 0.9, 0., 1};
-
 SDL_Window *CreateWindow(const char *title);
 
 SDL_GPUDevice *CreateDevice(SDL_Window *window);
