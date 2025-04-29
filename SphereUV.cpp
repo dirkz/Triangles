@@ -19,10 +19,10 @@ static XMVECTOR PointOnSphere(float angleXY, float angleXZ)
 
 SphereUV::SphereUV(FXMVECTOR color)
 {
-    constexpr float interval = XM_PI / 10.f;
-    constexpr float limitXY = XM_PIDIV2 - interval;
-    constexpr float stepXY = interval;
-    constexpr float stepXZ = interval;
+    constexpr float distanceFromPoles = XM_PI / 10.f;
+    constexpr float limitXY = XM_PIDIV2 - distanceFromPoles;
+    constexpr float stepXY = distanceFromPoles;
+    constexpr float stepXZ = distanceFromPoles;
     constexpr float stepU = stepXY / XM_PI;
     constexpr float stepV = stepXZ / XM_2PI;
 
