@@ -9,6 +9,8 @@ struct PositionColorTextureVertex
 {
     PositionColorTextureVertex(float x, float y, float z, DirectX::FXMVECTOR colorVector, float u,
                                float v);
+    PositionColorTextureVertex(DirectX::FXMVECTOR p, DirectX::FXMVECTOR colorVector, float u,
+                               float v);
 
     float X, Y, Z;
     float R, G, B, A;
