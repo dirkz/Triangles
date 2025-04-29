@@ -34,6 +34,24 @@ struct IndexedVertexBuffer
         Add(topLeft);
     }
 
+    I Add(const IndexedVertexBuffer<V, I, Hash, KeyEqual> &vertexBuffer)
+    {
+        I currentIndex = static_cast<I>(m_indices.size());
+        I vertexIndex = static_cast<I>(m_vertices.size());
+
+        for (const V &vertex : vertexBuffer.m_vertices)
+        {
+            m_vertices.push_back(vertex);
+        }
+
+        for (const I index : vertexBuffer.m_indices)
+        {
+            m_indices.push_back(index + currentIndex);
+        }
+
+        return currentIndex;
+    }
+
     const std::vector<I> &Indices() const
     {
         return m_indices;
