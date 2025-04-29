@@ -23,6 +23,7 @@ struct Objects
     void CreateGraphicsPipeline();
     void CreateSurfaceTexture();
 
+    VertexBuffer CreateCubeVertexBuffer();
     void UploadBuffers();
 
     SDL_Window *m_window = nullptr;
