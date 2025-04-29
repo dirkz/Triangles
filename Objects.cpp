@@ -304,7 +304,7 @@ Objects::VertexBuffer Objects::CreateCubeVertexBuffer()
 
 void Objects::UploadBuffers()
 {
-    SphereUV sphere{DirectX::Colors::Azure};
+    SphereUV sphere{DirectX::Colors::Yellow};
 
     m_indexedVertices = sphere.GetVertexBuffer();
 
