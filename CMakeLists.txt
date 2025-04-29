@@ -30,8 +30,7 @@ add_library(triangles OBJECT
 	"PositionColorTextureVertex.cpp"
 	"Noise.h"
 	"Noise.cpp"
-	"SphereUV.h"
-	"SphereUV.cpp")
+	)
 
 add_library(samples OBJECT
 	"BasicTriangle.h"

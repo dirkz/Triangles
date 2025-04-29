@@ -4,7 +4,6 @@
 #include "Noise.h"
 #include "PositionColorTextureVertex.h"
 #include "ShaderLoader.h"
-#include "SphereUV.h"
 #include "Uploader.h"
 
 namespace triangles
@@ -304,9 +303,7 @@ Objects::VertexBuffer Objects::CreateCubeVertexBuffer()
 
 void Objects::UploadBuffers()
 {
-    SphereUV sphere{DirectX::Colors::Yellow};
-
-    m_indexedVertices = sphere.GetVertexBuffer();
+    m_indexedVertices = CreateCubeVertexBuffer();
 
     std::vector<PositionColorTextureVertex> vertices = m_indexedVertices.Vertices();
     std::vector<Uint16> indices = m_indexedVertices.Indices();
