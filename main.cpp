@@ -4,12 +4,13 @@
 #include "BasicTriangle.h"
 #include "BasicUniform.h"
 #include "Cube.h"
+#include "Icosahedron.h"
 #include "IndexedQuad.h"
 #include "TexturedQuad.h"
 
 using namespace triangles;
 
-using App = Cube;
+using App = Icosahedron;
 
 static SDL_AppResult SDL_AppInit(void **appstate, int argc, char **argv)
 {

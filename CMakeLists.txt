@@ -30,7 +30,8 @@ add_library(triangles OBJECT
 	"PositionColorTextureVertex.cpp"
 	"Noise.h"
 	"Noise.cpp"
-	)
+	"Icosahedron.h"
+	"Icosahedron.cpp")
 
 add_library(samples OBJECT
 	"BasicTriangle.h"
