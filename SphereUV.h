@@ -12,7 +12,7 @@ struct SphereUV
 {
     using VertexBuffer = IndexedVertexBuffer<PositionColorTextureVertex>;
 
-    SphereUV();
+    SphereUV(DirectX::FXMVECTOR color);
 
     const VertexBuffer &GetVertexBuffer() const
     {

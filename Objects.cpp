@@ -306,6 +306,8 @@ void Objects::UploadBuffers()
 {
     m_indexedVertices = CreateCubeVertexBuffer();
 
+    SphereUV sphere{DirectX::Colors::Azure};
+
     std::vector<PositionColorTextureVertex> vertices = m_indexedVertices.Vertices();
     std::vector<Uint16> indices = m_indexedVertices.Indices();
 
