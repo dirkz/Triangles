@@ -13,9 +13,6 @@ using namespace DirectX;
 
 constexpr int TextureSize = 512;
 
-constexpr Uint32 TextureColor1 = RGB(0, 0, 0);
-constexpr Uint32 TextureColor2 = RGB(255, 255, 255);
-
 Cube::Cube()
     : m_window{CreateWindow("Cube")}, m_device{CreateDevice(m_window)},
       m_surface{TextureSize, TextureSize}
@@ -143,8 +140,8 @@ void Cube::AppIterate()
 
 bool Cube::AppEvent(SDL_Event *event)
 {
-    constexpr float rotationLeftRight = XM_PI / 10.f;
-    constexpr float rotationUpDown = XM_PI / 10.f;
+    constexpr float RotationLeftRight = XM_PI / 10.f;
+    constexpr float RotationUpDown = XM_PI / 10.f;
 
     switch (event->type)
     {
@@ -153,16 +150,16 @@ bool Cube::AppEvent(SDL_Event *event)
         switch (event->key.key)
         {
         case SDLK_LEFT:
-            m_rotationHorizontal -= rotationLeftRight;
+            m_rotationHorizontal -= RotationLeftRight;
             return false;
         case SDLK_RIGHT:
-            m_rotationHorizontal += rotationLeftRight;
+            m_rotationHorizontal += RotationLeftRight;
             return false;
         case SDLK_UP:
-            m_rotationVertical -= rotationUpDown;
+            m_rotationVertical -= RotationUpDown;
             return false;
         case SDLK_DOWN:
-            m_rotationVertical += rotationUpDown;
+            m_rotationVertical += RotationUpDown;
             return false;
         default:
             return true;

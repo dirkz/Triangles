@@ -44,8 +44,8 @@ add_library(samples OBJECT
 	"Cube.h"
 	"Cube.cpp"
 	"IndexedVertexBuffer.h"
-	"Objects.cpp"
-	"Objects.h")
+	
+	)
 
 if(WIN32)
 	add_executable(main WIN32 "main.cpp")
