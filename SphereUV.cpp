@@ -9,9 +9,11 @@ static XMVECTOR PointOnSphere(float angleXY, float angleXZ)
 {
     float x = std::cos(angleXY);
     float y = std::sin(angleXY);
-    float z = std::sin(angleXZ);
 
-    XMVECTOR v = XMVectorSet(x, y, z, 1);
+    XMVECTOR v = XMVectorSet(x, y, 0, 1);
+
+    XMMATRIX rotation = XMMatrixRotationY(angleXZ);
+    v = XMVector3Transform(v, rotation);
 
     return v;
 }
