@@ -29,7 +29,7 @@ SphereUV::SphereUV(FXMVECTOR color)
 
     for (float angleXY = -LimitXY; angleXY < LimitXY; angleXY += StepXY)
     {
-        for (float angleXZ = 0; angleXZ < XM_2PI - StepXZ; angleXZ += StepXZ)
+        for (float angleXZ = 0; angleXZ < XM_2PI; angleXZ += StepXZ)
         {
             XMVECTOR v0 = PointOnSphere(angleXY, angleXZ);
             XMVECTOR v1 = PointOnSphere(angleXY, angleXZ + StepXZ);
