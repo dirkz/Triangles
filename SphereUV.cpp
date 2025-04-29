@@ -35,10 +35,10 @@ SphereUV::SphereUV(FXMVECTOR color)
             XMVECTOR v2 = PointOnSphere(angleXY + stepXY, angleXZ + stepXZ);
             XMVECTOR v3 = PointOnSphere(angleXY + stepXY, angleXZ);
 
-            float tu0 = (angleXY + XM_PIDIV2) / XM_PI;
-            float tu1 = tu0 + stepU;
-            float tv0 = angleXZ / XM_2PI;
-            float tv1 = tv0 + stepV;
+            float tu0 = angleXZ / XM_2PI;
+            float tu1 = tu0 + stepV;
+            float tv0 = (angleXY + XM_PIDIV2) / XM_PI;
+            float tv1 = tv0 + stepU;
 
             PositionColorTextureVertex p0{v0, color, tu0, tv0};
             PositionColorTextureVertex p1{v1, color, tu1, tv0};
