@@ -12,7 +12,6 @@ static XMVECTOR PointOnSphere(float angleXY, float angleXZ)
     float z = std::sin(angleXZ);
 
     XMVECTOR v = XMVectorSet(x, y, z, 1);
-    v = XMVector3Normalize(v);
 
     return v;
 }
