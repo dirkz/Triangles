@@ -11,6 +11,8 @@ namespace triangles
 
 struct Objects
 {
+    using VertexBuffer = IndexedVertexBuffer<PositionColorTextureVertex>;
+
     Objects();
     ~Objects();
 
@@ -32,7 +34,7 @@ struct Objects
     Surface m_surface;
     SDL_GPUTexture *m_texture = nullptr;
     SDL_GPUSampler *m_sampler = nullptr;
-    IndexedVertexBuffer<PositionColorTextureVertex> m_indexedVertices;
+    VertexBuffer m_indexedVertices;
 
     float m_rotationHorizontal = 0;
     float m_rotationVertical = 0;
