@@ -43,8 +43,8 @@ SphereUV::SphereUV(FXMVECTOR color)
 
             PositionColorTextureVertex p0{v0, color, tu0, tv0};
             PositionColorTextureVertex p1{v1, color, tu1, tv0};
-            PositionColorTextureVertex p2{v2, color, tu0, tv1};
-            PositionColorTextureVertex p3{v3, color, tu1, tv1};
+            PositionColorTextureVertex p2{v2, color, tu1, tv1};
+            PositionColorTextureVertex p3{v3, color, tu0, tv1};
 
             m_vertexBuffer.Quad(p0, p1, p2, p3);
         }
