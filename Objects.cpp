@@ -4,6 +4,7 @@
 #include "Noise.h"
 #include "PositionColorTextureVertex.h"
 #include "ShaderLoader.h"
+#include "SphereUV.h"
 #include "Uploader.h"
 
 namespace triangles
