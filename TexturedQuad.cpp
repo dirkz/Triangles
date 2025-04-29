@@ -11,9 +11,6 @@ namespace triangles
 
 constexpr int TextureSize = 512;
 
-constexpr Uint32 TextureColor1 = RGB(0, 0, 0);
-constexpr Uint32 TextureColor2 = RGB(255, 255, 255);
-
 TexturedQuad::TexturedQuad()
     : m_window{CreateWindow("TexturedQuad")}, m_device{CreateDevice(m_window)},
       m_surface{TextureSize, TextureSize}
