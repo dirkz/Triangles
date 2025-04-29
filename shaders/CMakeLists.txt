@@ -1,7 +1,7 @@
 set(SHADERS
-	basic_triangle.hlsl
-	basic_triangle_uniform.hlsl
-	textured_quad.hlsl)
+	position_color.hlsl
+	position_color_projection.hlsl
+	position_color_texture_projection.hlsl)
 
 add_custom_target(shaders)
 

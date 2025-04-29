@@ -209,7 +209,7 @@ SDL_GPUShader *BasicTriangle::LoadShader(const std::string &filenameBase, SDL_GP
 
 void BasicTriangle::CreateGraphicsPipeline()
 {
-    const char *basicTriangle = "basic_triangle.hlsl";
+    const char *basicTriangle = "position_color.hlsl";
     sdl::DeviceOwned vertexShader{m_device, LoadShader(basicTriangle, SDL_GPU_SHADERSTAGE_VERTEX)};
     sdl::DeviceOwned fragmentShader{m_device,
                                     LoadShader(basicTriangle, SDL_GPU_SHADERSTAGE_FRAGMENT)};
