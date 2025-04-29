@@ -5,11 +5,12 @@
 #include "BasicUniform.h"
 #include "Cube.h"
 #include "IndexedQuad.h"
+#include "Objects.h"
 #include "TexturedQuad.h"
 
 using namespace triangles;
 
-using App = Cube;
+using App = Objects;
 
 static SDL_AppResult SDL_AppInit(void **appstate, int argc, char **argv)
 {
