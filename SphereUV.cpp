@@ -19,26 +19,26 @@ static XMVECTOR PointOnSphere(float angleXY, float angleXZ)
 
 SphereUV::SphereUV(FXMVECTOR color)
 {
-    constexpr float distanceFromPoles = XM_PI / 10.f;
-    constexpr float limitXY = XM_PIDIV2 - distanceFromPoles;
-    constexpr float stepXY = distanceFromPoles;
-    constexpr float stepXZ = distanceFromPoles;
-    constexpr float stepU = stepXY / XM_PI;
-    constexpr float stepV = stepXZ / XM_2PI;
+    constexpr float DistanceFromPoles = XM_PI / 10.f;
+    constexpr float LimitXY = XM_PIDIV2 - DistanceFromPoles;
+    constexpr float StepXY = DistanceFromPoles;
+    constexpr float StepXZ = DistanceFromPoles;
+    constexpr float StepU = StepXY / XM_PI;
+    constexpr float StepV = StepXZ / XM_2PI;
 
-    for (float angleXY = -limitXY; angleXY < limitXY; angleXY += stepXY)
+    for (float angleXY = -LimitXY; angleXY < LimitXY; angleXY += StepXY)
     {
-        for (float angleXZ = 0; angleXZ < XM_2PI - stepXZ; angleXZ += stepXZ)
+        for (float angleXZ = 0; angleXZ < XM_2PI - StepXZ; angleXZ += StepXZ)
         {
             XMVECTOR v0 = PointOnSphere(angleXY, angleXZ);
-            XMVECTOR v1 = PointOnSphere(angleXY, angleXZ + stepXZ);
-            XMVECTOR v2 = PointOnSphere(angleXY + stepXY, angleXZ + stepXZ);
-            XMVECTOR v3 = PointOnSphere(angleXY + stepXY, angleXZ);
+            XMVECTOR v1 = PointOnSphere(angleXY, angleXZ + StepXZ);
+            XMVECTOR v2 = PointOnSphere(angleXY + StepXY, angleXZ + StepXZ);
+            XMVECTOR v3 = PointOnSphere(angleXY + StepXY, angleXZ);
 
             float tu0 = angleXZ / XM_2PI;
-            float tu1 = tu0 + stepV;
+            float tu1 = tu0 + StepV;
             float tv0 = (angleXY + XM_PIDIV2) / XM_PI;
-            float tv1 = tv0 + stepU;
+            float tv1 = tv0 + StepU;
 
             PositionColorTextureVertex p0{v0, color, tu0, tv0};
             PositionColorTextureVertex p1{v1, color, tu1, tv0};
