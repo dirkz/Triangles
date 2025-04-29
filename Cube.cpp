@@ -104,7 +104,7 @@ void Cube::AppIterate()
         XMMATRIX rotationY = XMMatrixRotationY(m_rotationHorizontal);
         XMMATRIX rotationX = XMMatrixRotationX(m_rotationVertical);
         XMMATRIX rotation = XMMatrixMultiply(rotationX, rotationY);
-        XMMATRIX model = XMMatrixMultiply(translation, rotation);
+        XMMATRIX model = XMMatrixMultiply(rotation, translation);
 
         float aspect = static_cast<float>(width) / height;
 
