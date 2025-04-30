@@ -224,23 +224,23 @@ void Icosahedron::CreateSurfaceTexture()
     }
 }
 
-const XMVECTOR PlaneXColor = XMVectorSet(0.61f, 0.53f, 0.88f, 1.f);
-const XMVECTOR PlaneYColor = XMVectorSet(0.77f, 0.93f, 0.65f, 1.f);
-const XMVECTOR PlaneZColor = XMVectorSet(0.18f, 0.41f, 0.33f, 1.f);
+const XMVECTOR PlaneXYColor = XMVectorSet(0.61f, 0.53f, 0.88f, 1.f); // violet
+const XMVECTOR PlaneXZColor = XMVectorSet(0.77f, 0.93f, 0.65f, 1.f); // light green
+const XMVECTOR PlaneYZColor = XMVectorSet(0.18f, 0.41f, 0.33f, 1.f); // dark green
 
 const float G = (1.f + std::sqrt(5.f)) / 2.f;
 
 void Icosahedron::CreateGeometry()
 {
-    PositionColorVertex frontTop{0, 1, -G, PlaneZColor};
-    PositionColorVertex frontBottom{0, -1, -G, PlaneZColor};
-    PositionColorVertex frontLeft{-G, 0, -1, PlaneYColor};
-    PositionColorVertex frontRight{G, 0, -1, PlaneYColor};
+    PositionColorVertex frontTop{0, 1, -G, PlaneYZColor};
+    PositionColorVertex frontBottom{0, -1, -G, PlaneYZColor};
+    PositionColorVertex frontLeft{-G, 0, -1, PlaneXZColor};
+    PositionColorVertex frontRight{G, 0, -1, PlaneXZColor};
 
-    PositionColorVertex midBottomLeft{-1, -G, 0, PlaneZColor};
-    PositionColorVertex midBottomRight{1, -G, 0, PlaneZColor};
-    PositionColorVertex midTopRight{1, G, 0, PlaneZColor};
-    PositionColorVertex midTopLeft{-1, G, 0, PlaneZColor};
+    PositionColorVertex midBottomLeft{-1, -G, 0, PlaneXYColor};
+    PositionColorVertex midBottomRight{1, -G, 0, PlaneXYColor};
+    PositionColorVertex midTopRight{1, G, 0, PlaneXYColor};
+    PositionColorVertex midTopLeft{-1, G, 0, PlaneXYColor};
 
     m_vertices.Add(frontBottom);
     m_vertices.Add(frontRight);
@@ -249,6 +249,10 @@ void Icosahedron::CreateGeometry()
     m_vertices.Add(frontBottom);
     m_vertices.Add(frontTop);
     m_vertices.Add(frontLeft);
+
+    m_vertices.Add(frontTop);
+    m_vertices.Add(midTopRight);
+    m_vertices.Add(midTopLeft);
 }
 
 void Icosahedron::UploadBuffers()
