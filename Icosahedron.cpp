@@ -173,7 +173,7 @@ void Icosahedron::CreateGraphicsPipeline()
 {
     ShaderLoader shaderLoader{m_device};
 
-    const char *basicTriangle = "position_color_texture_projection.hlsl";
+    const char *basicTriangle = "position_color_projection.hlsl";
     sdl::DeviceOwned vertexShader{
         m_device, shaderLoader.Load(basicTriangle, SDL_GPU_SHADERSTAGE_VERTEX, 1, 0, 0, 0)};
     sdl::DeviceOwned fragmentShader{
@@ -229,71 +229,9 @@ void Icosahedron::CreateSurfaceTexture()
     }
 }
 
-struct Texture
-{
-    Texture(float u, float v) : U{u}, V{v}
-    {
-    }
-
-    float U, V;
-};
-
-struct Corner
-{
-    Corner(float x, float y, float z, FXMVECTOR color) : X{x}, Y{y}, Z{z}, Color{color}
-    {
-    }
-
-    PositionColorTextureVertex WithTexture(const Texture &t)
-    {
-        return PositionColorTextureVertex{X, Y, Z, Color, t.U, t.V};
-    }
-
-    float X, Y, Z;
-    XMVECTOR Color;
-};
-
 void Icosahedron::UploadBuffers()
 {
-    Texture t0{0, 1};
-    Texture t1{1, 1};
-    Texture t2{1, 0};
-    Texture t3{0, 0};
-
-    Corner v0{-0.5, -0.5, -0.5, DirectX::Colors::Red};
-    Corner v1{0.5, -0.5, -0.5, DirectX::Colors::Green};
-    Corner v2{0.5, 0.5, -0.5, DirectX::Colors::Blue};
-    Corner v3{-0.5, 0.5, -0.5, DirectX::Colors::Yellow};
-    Corner v4{-0.5, -0.5, 0.5, DirectX::Colors::Red};
-    Corner v5{0.5, -0.5, 0.5, DirectX::Colors::Green};
-    Corner v6{0.5, 0.5, 0.5, DirectX::Colors::Blue};
-    Corner v7{-0.5, 0.5, 0.5, DirectX::Colors::Yellow};
-
-    // front
-    m_indexedVertices.Quad(v0.WithTexture(t0), v1.WithTexture(t1), v2.WithTexture(t2),
-                           v3.WithTexture(t3));
-
-    // bottom
-    m_indexedVertices.Quad(v4.WithTexture(t0), v5.WithTexture(t1), v1.WithTexture(t2),
-                           v0.WithTexture(t3));
-
-    // top
-    m_indexedVertices.Quad(v3.WithTexture(t0), v2.WithTexture(t1), v6.WithTexture(t2),
-                           v7.WithTexture(t3));
-
-    // right
-    m_indexedVertices.Quad(v1.WithTexture(t0), v5.WithTexture(t1), v6.WithTexture(t2),
-                           v2.WithTexture(t3));
-
-    // left
-    m_indexedVertices.Quad(v4.WithTexture(t0), v0.WithTexture(t1), v3.WithTexture(t2),
-                           v7.WithTexture(t3));
-
-    // back
-    m_indexedVertices.Quad(v5.WithTexture(t0), v4.WithTexture(t1), v7.WithTexture(t2),
-                           v6.WithTexture(t3));
-
-    std::vector<PositionColorTextureVertex> vertices = m_indexedVertices.Vertices();
+    std::vector<PositionColorVertex> vertices = m_indexedVertices.Vertices();
     std::vector<Uint16> indices = m_indexedVertices.Indices();
 
     Uploader uploader{m_device};
