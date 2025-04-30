@@ -99,7 +99,7 @@ void Icosahedron::AppIterate()
 
         sdl::BindGPUGraphicsPipeline(renderPass, m_pipeline);
 
-        XMMATRIX translation = XMMatrixTranslation(0.f, 0.f, 5.f);
+        XMMATRIX translation = XMMatrixTranslation(0.f, 0.f, 2.f);
         XMMATRIX rotationY = XMMatrixRotationY(m_rotationHorizontal);
         XMMATRIX rotationX = XMMatrixRotationX(m_rotationVertical);
         XMMATRIX rotation = XMMatrixMultiply(rotationX, rotationY);
