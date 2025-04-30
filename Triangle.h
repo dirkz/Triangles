@@ -7,9 +7,13 @@ namespace triangles
 
 struct Triangle
 {
+    static std::vector<Triangle> Triangulate(const std::vector<Triangle> &triangles);
+
     Triangle(DirectX::FXMVECTOR v0, DirectX::FXMVECTOR v1, DirectX::FXMVECTOR v2);
 
     void Normalize(float distance);
+
+    std::array<Triangle, 4> Triangulate() const;
 
     inline DirectX::XMVECTOR V0() const
     {

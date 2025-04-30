@@ -289,9 +289,11 @@ void Icosahedron::CreateGeometry()
     std::vector<XMVECTOR> colors{Colors::Red,    Colors::Green,     Colors::Blue,
                                  Colors::Yellow, Colors::BurlyWood, Colors::CornflowerBlue};
 
+    std::vector<Triangle> triangles2 = Triangle::Triangulate(triangles);
+
     constexpr float radius = 1;
     int colorIndex = 0;
-    for (Triangle &triangle : triangles)
+    for (Triangle &triangle : triangles2)
     {
         triangle.Normalize(radius);
 
