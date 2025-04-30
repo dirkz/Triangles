@@ -231,8 +231,6 @@ void Icosahedron::CreateSurfaceTexture()
     }
 }
 
-const float G = (1.f + std::sqrt(5.f)) / 2.f;
-
 static XMVECTOR XM_CALLCONV Texture(FXMVECTOR vect, float radius)
 {
     XMFLOAT4 floats;
@@ -244,47 +242,47 @@ static XMVECTOR XM_CALLCONV Texture(FXMVECTOR vect, float radius)
     return XMVectorSet(u, v, 0, 0);
 }
 
+const float G = (1.f + std::sqrt(5.f)) / 2.f;
+
 void Icosahedron::CreateGeometry()
 {
     std::vector<Triangle> triangles{};
 
-    {
-        XMVECTOR frontTop = XMVectorSet(0, 1, -G, 1);
-        XMVECTOR frontBottom = XMVectorSet(0, -1, -G, 1);
-        XMVECTOR frontLeft = XMVectorSet(-G, 0, -1, 1);
-        XMVECTOR frontRight = XMVectorSet(G, 0, -1, 1);
+    XMVECTOR frontTop = XMVectorSet(0, 1, -G, 1);
+    XMVECTOR frontBottom = XMVectorSet(0, -1, -G, 1);
+    XMVECTOR frontLeft = XMVectorSet(-G, 0, -1, 1);
+    XMVECTOR frontRight = XMVectorSet(G, 0, -1, 1);
 
-        XMVECTOR midBottomLeft = XMVectorSet(-1, -G, 0, 1);
-        XMVECTOR midBottomRight = XMVectorSet(1, -G, 0, 1);
-        XMVECTOR midTopRight = XMVectorSet(1, G, 0, 1);
-        XMVECTOR midTopLeft = XMVectorSet(-1, G, 0, 1);
+    XMVECTOR midBottomLeft = XMVectorSet(-1, -G, 0, 1);
+    XMVECTOR midBottomRight = XMVectorSet(1, -G, 0, 1);
+    XMVECTOR midTopRight = XMVectorSet(1, G, 0, 1);
+    XMVECTOR midTopLeft = XMVectorSet(-1, G, 0, 1);
 
-        XMVECTOR backLeft = XMVectorSet(-G, 0, 1, 1);
-        XMVECTOR backRight = XMVectorSet(G, 0, 1, 1);
-        XMVECTOR backTop = XMVectorSet(0, 1, G, 1);
-        XMVECTOR backBottom = XMVectorSet(0, -1, G, 1);
+    XMVECTOR backLeft = XMVectorSet(-G, 0, 1, 1);
+    XMVECTOR backRight = XMVectorSet(G, 0, 1, 1);
+    XMVECTOR backTop = XMVectorSet(0, 1, G, 1);
+    XMVECTOR backBottom = XMVectorSet(0, -1, G, 1);
 
-        triangles.push_back(Triangle{frontBottom, frontRight, frontTop});
-        triangles.push_back(Triangle{frontBottom, frontTop, frontLeft});
-        triangles.push_back(Triangle{frontTop, midTopRight, midTopLeft});
-        triangles.push_back(Triangle{frontBottom, midBottomLeft, midBottomRight});
-        triangles.push_back(Triangle{frontBottom, midBottomRight, frontRight});
-        triangles.push_back(Triangle{frontBottom, frontLeft, midBottomLeft});
-        triangles.push_back(Triangle{frontTop, frontRight, midTopRight});
-        triangles.push_back(Triangle{frontTop, midTopLeft, frontLeft});
-        triangles.push_back(Triangle{midBottomLeft, frontLeft, backLeft});
-        triangles.push_back(Triangle{midBottomRight, backRight, frontRight});
-        triangles.push_back(Triangle{frontLeft, midTopLeft, backLeft});
-        triangles.push_back(Triangle{frontRight, backRight, midTopRight});
-        triangles.push_back(Triangle{backLeft, midTopLeft, backTop});
-        triangles.push_back(Triangle{backRight, backTop, midTopRight});
-        triangles.push_back(Triangle{backTop, midTopLeft, midTopRight});
-        triangles.push_back(Triangle{midBottomLeft, backLeft, backBottom});
-        triangles.push_back(Triangle{midBottomRight, backBottom, backRight});
-        triangles.push_back(Triangle{backBottom, backLeft, backTop});
-        triangles.push_back(Triangle{backBottom, backTop, backRight});
-        triangles.push_back(Triangle{backBottom, midBottomRight, midBottomLeft});
-    }
+    triangles.push_back(Triangle{frontBottom, frontRight, frontTop});
+    triangles.push_back(Triangle{frontBottom, frontTop, frontLeft});
+    triangles.push_back(Triangle{frontTop, midTopRight, midTopLeft});
+    triangles.push_back(Triangle{frontBottom, midBottomLeft, midBottomRight});
+    triangles.push_back(Triangle{frontBottom, midBottomRight, frontRight});
+    triangles.push_back(Triangle{frontBottom, frontLeft, midBottomLeft});
+    triangles.push_back(Triangle{frontTop, frontRight, midTopRight});
+    triangles.push_back(Triangle{frontTop, midTopLeft, frontLeft});
+    triangles.push_back(Triangle{midBottomLeft, frontLeft, backLeft});
+    triangles.push_back(Triangle{midBottomRight, backRight, frontRight});
+    triangles.push_back(Triangle{frontLeft, midTopLeft, backLeft});
+    triangles.push_back(Triangle{frontRight, backRight, midTopRight});
+    triangles.push_back(Triangle{backLeft, midTopLeft, backTop});
+    triangles.push_back(Triangle{backRight, backTop, midTopRight});
+    triangles.push_back(Triangle{backTop, midTopLeft, midTopRight});
+    triangles.push_back(Triangle{midBottomLeft, backLeft, backBottom});
+    triangles.push_back(Triangle{midBottomRight, backBottom, backRight});
+    triangles.push_back(Triangle{backBottom, backLeft, backTop});
+    triangles.push_back(Triangle{backBottom, backTop, backRight});
+    triangles.push_back(Triangle{backBottom, midBottomRight, midBottomLeft});
 
     std::vector<XMVECTOR> colors{Colors::Red,    Colors::Green,     Colors::Blue,
                                  Colors::Yellow, Colors::BurlyWood, Colors::CornflowerBlue};
