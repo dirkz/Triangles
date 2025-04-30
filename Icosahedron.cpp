@@ -300,6 +300,11 @@ void Icosahedron::CreateGeometry()
     {
         triangle.Normalize(radius);
 
+        double noiseInput = static_cast<double>(counter) / 10.f;
+        float lightMod = static_cast<float>(noise(noiseInput, 1.2, 1.2));
+        XMVECTOR partColor = XMVectorScale(baseColor, 0.5);
+        XMVECTOR color = partColor + XMVectorScale(partColor, lightMod);
+
         for (const XMVECTOR vect : triangle.Vectors())
         {
             XMVECTOR texture = Texture(vect, radius);
@@ -307,11 +312,6 @@ void Icosahedron::CreateGeometry()
             XMStoreFloat4(&textureFloats, texture);
             float u = textureFloats.x;
             float v = textureFloats.y;
-
-            double noiseInput = static_cast<double>(counter) / 10.f;
-            float lightMod = static_cast<float>(noise(noiseInput, 1.2, 1.2));
-            XMVECTOR partColor = XMVectorScale(baseColor, 0.5);
-            XMVECTOR color = partColor + XMVectorScale(partColor, lightMod);
 
             PositionColorTextureVertex vertex{vect, color, u, v};
             m_vertices.Add(vertex);
