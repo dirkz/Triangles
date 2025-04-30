@@ -127,7 +127,7 @@ void Icosahedron::AppIterate()
         sdl::BindGPUVertexBuffers(renderPass, 0, &vertexBufferBinding, 1);
 
         SDL_GPUBufferBinding indexBufferBinding{.buffer = m_indexBuffer, .offset = 0};
-        sdl::BindGPUIndexBuffer(renderPass, &indexBufferBinding, SDL_GPU_INDEXELEMENTSIZE_16BIT);
+        sdl::BindGPUIndexBuffer(renderPass, &indexBufferBinding, SDL_GPU_INDEXELEMENTSIZE_32BIT);
 
         SDL_GPUTextureSamplerBinding textureBinding{.texture = m_texture, .sampler = m_sampler};
         sdl::BindGPUFragmentSamplers(renderPass, 0, &textureBinding, 1);
@@ -314,7 +314,7 @@ void Icosahedron::CreateGeometry()
 void Icosahedron::UploadBuffers()
 {
     std::vector<PositionColorTextureVertex> vertices = m_vertices.Vertices();
-    std::vector<Uint16> indices = m_vertices.Indices();
+    auto indices = m_vertices.Indices();
 
     Uploader uploader{m_device};
     m_vertexBuffer = uploader.UploadBuffer(SDL_GPU_BUFFERUSAGE_VERTEX, std::span{vertices});
