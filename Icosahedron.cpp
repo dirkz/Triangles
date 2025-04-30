@@ -310,6 +310,7 @@ void Icosahedron::CreateGeometry()
     m_vertices.Add(frontLeft);
     m_vertices.Add(backLeft);
 
+    // Wrong texture
     m_vertices.Add(midBottomRight);
     m_vertices.Add(backRight);
     m_vertices.Add(frontRight);
@@ -318,6 +319,7 @@ void Icosahedron::CreateGeometry()
     m_vertices.Add(midTopLeft);
     m_vertices.Add(backLeft);
 
+    // Wrong texture
     m_vertices.Add(frontRight);
     m_vertices.Add(backRight);
     m_vertices.Add(midTopRight);
