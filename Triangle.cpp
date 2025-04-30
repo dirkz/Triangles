@@ -10,11 +10,11 @@ Triangle::Triangle(DirectX::FXMVECTOR v0, DirectX::FXMVECTOR v1, DirectX::FXMVEC
 {
 }
 
-void Triangle::Normalize(float length)
+void Triangle::Normalize(float distance)
 {
-    m_v0 = XMVectorScale(XMVector3Normalize(m_v0), length);
-    m_v1 = XMVectorScale(XMVector3Normalize(m_v1), length);
-    m_v2 = XMVectorScale(XMVector3Normalize(m_v2), length);
+    m_v0 = XMVectorScale(XMVector3Normalize(m_v0), distance);
+    m_v1 = XMVectorScale(XMVector3Normalize(m_v1), distance);
+    m_v2 = XMVectorScale(XMVector3Normalize(m_v2), distance);
 }
 
 } // namespace triangles

@@ -9,7 +9,7 @@ struct Triangle
 {
     Triangle(DirectX::FXMVECTOR v0, DirectX::FXMVECTOR v1, DirectX::FXMVECTOR v2);
 
-    void Normalize(float length);
+    void Normalize(float distance);
 
     inline DirectX::XMVECTOR V0() const
     {
