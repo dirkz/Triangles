@@ -182,7 +182,7 @@ void Icosahedron::CreateGraphicsPipeline()
 
     SDL_GPUVertexBufferDescription vertexBufferDescription{
         .slot = 0,
-        .pitch = sizeof(PositionColorTextureVertex),
+        .pitch = sizeof(PositionColorVertex),
         .input_rate = SDL_GPU_VERTEXINPUTRATE_VERTEX,
         .instance_step_rate = 0,
     };
@@ -199,13 +199,7 @@ void Icosahedron::CreateGraphicsPipeline()
                                           .format = SDL_GPU_VERTEXELEMENTFORMAT_FLOAT4,
                                           .offset = offsetof(PositionColorTextureVertex, R)};
 
-    SDL_GPUVertexAttribute attributeTexture{.location = 2,
-                                            .buffer_slot = 0,
-                                            .format = SDL_GPU_VERTEXELEMENTFORMAT_FLOAT2,
-                                            .offset = offsetof(PositionColorTextureVertex, U)};
-
-    std::vector<SDL_GPUVertexAttribute> attributes{attributePosition, attributeColor,
-                                                   attributeTexture};
+    std::vector<SDL_GPUVertexAttribute> attributes{attributePosition, attributeColor};
 
     m_pipeline = triangles::CreateGraphicsPipeline(
         m_window, m_device, vertexShader.Get(), fragmentShader.Get(),
