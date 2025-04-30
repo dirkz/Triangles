@@ -233,29 +233,7 @@ void Icosahedron::CreateSurfaceTexture()
 
 const float G = (1.f + std::sqrt(5.f)) / 2.f;
 
-static PositionColorTextureVertex AddTexture(const PositionColorVertex &v)
-{
-    float x = v.X;
-    float y = v.Y;
-    float z = v.Z;
-
-    float tu = (x / (2.f * G) + 0.5f) / 2.f;
-    if (z < 0)
-    {
-        tu += 0.5f;
-    }
-
-    float tv = (y / (2.f * G) + 0.5f);
-
-    XMVECTOR color = XMVectorSet(v.R, v.G, v.B, v.A);
-    return PositionColorTextureVertex{v.X, v.Y, v.Z, color, tu, tv};
-}
-
-const XMVECTOR PlaneXYColor = XMVectorSet(0.61f, 0.53f, 0.88f, 1.f); // violet
-const XMVECTOR PlaneXZColor = XMVectorSet(0.77f, 0.93f, 0.65f, 1.f); // light green
-const XMVECTOR PlaneYZColor = XMVectorSet(0.18f, 0.41f, 0.33f, 1.f); // dark green
-
-XMVECTOR XM_CALLCONV Texture(FXMVECTOR vect, float radius)
+static XMVECTOR XM_CALLCONV Texture(FXMVECTOR vect, float radius)
 {
     XMFLOAT4 floats;
     XMStoreFloat4(&floats, vect);
