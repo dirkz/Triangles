@@ -8,6 +8,8 @@
 namespace triangles
 {
 
+using namespace DirectX;
+
 BasicUniform::BasicUniform()
     : m_window{CreateWindow("BasicUniform")}, m_device{CreateDevice(m_window)}
 {
@@ -72,24 +74,9 @@ void BasicUniform::AppIterate()
         double range = std::numbers::pi_v<double> * 2.0;
         float angle = static_cast<float>(factor * range);
 
-        float s = std::sin(angle);
-        float c = std::cos(angle);
-
-        // Official counterclockwise rotation around the z-axis
-        // in a right-handed coordinate system:
-        // https://en.wikipedia.org/wiki/Rotation_matrix#Basic_3D_rotations
-        glm::mat4x4 rotation{
-            c, -s, 0, 0, // row 1
-            s, c,  0, 0, // row 2
-            0, 0,  1, 0, // row 3
-            0, 0,  0, 1  // row 4
-        };
-
-        // GLM adheres to the GLSLang spec, so it expects matrices
-        // to be constructed in column-major order (e.g. see here, page 84):
-        // https://registry.khronos.org/OpenGL/specs/gl/GLSLangSpec.4.20.pdf
-        // So we have to transpose.
-        glm::mat4x4 transformation = glm::transpose(rotation);
+        XMMATRIX rotation = XMMatrixRotationZ(angle);
+        XMFLOAT4X4 transformation;
+        XMStoreFloat4x4(&transformation, rotation);
 
         sdl::PushGPUVertexUniformData(commandBuffer, 0, &transformation, sizeof(transformation));
 

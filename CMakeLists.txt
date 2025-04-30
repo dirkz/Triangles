@@ -62,10 +62,6 @@ add_subdirectory(SDL-Hpp EXCLUDE_FROM_ALL)
 target_link_libraries(triangles PUBLIC SDL-Hpp)
 target_link_libraries(samples PUBLIC SDL-Hpp)
 
-add_subdirectory(glm EXCLUDE_FROM_ALL)
-target_link_libraries(triangles PUBLIC glm::glm)
-target_link_libraries(samples PUBLIC glm::glm)
-
 target_include_directories(triangles PUBLIC ${Boost_INCLUDE_DIRS})
 target_include_directories(main PUBLIC ${Boost_INCLUDE_DIRS})
 target_include_directories(samples PUBLIC ${Boost_INCLUDE_DIRS})

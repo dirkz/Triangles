@@ -8,6 +8,8 @@
 namespace triangles
 {
 
+using namespace DirectX;
+
 IndexedQuad::IndexedQuad() : m_window{CreateWindow("IndexedQuad")}, m_device{CreateDevice(m_window)}
 {
     CreateGraphicsPipeline();
@@ -76,29 +78,14 @@ void IndexedQuad::AppIterate()
         double range = std::numbers::pi_v<double> * 2.0;
         float angle = static_cast<float>(factor * range);
 
-        float s = std::sin(angle);
-        float c = std::cos(angle);
-
-        // Official counterclockwise rotation around the z-axis
-        // in a right-handed coordinate system:
-        // https://en.wikipedia.org/wiki/Rotation_matrix#Basic_3D_rotations
-        glm::mat4x4 rotation{
-            c, -s, 0, 0, // row 1
-            s, c,  0, 0, // row 2
-            0, 0,  1, 0, // row 3
-            0, 0,  0, 1  // row 4
-        };
-
         float aspect = static_cast<float>(width) / height;
 
-        glm::mat4x4 scale{1};
-        scale = glm::scale(scale, glm::vec3{1.f / aspect, 1.f, 1.f});
+        XMMATRIX rotation = XMMatrixRotationZ(angle);
+        XMMATRIX scale = XMMatrixScaling(1.f / aspect, 1.f, 1.f);
+        XMMATRIX transformationMatrix = XMMatrixMultiply(rotation, scale);
 
-        // GLM adheres to the GLSLang spec, so it expects matrices
-        // to be constructed in column-major order (e.g. see here, page 84):
-        // https://registry.khronos.org/OpenGL/specs/gl/GLSLangSpec.4.20.pdf
-        // So we have to transpose.
-        glm::mat4x4 transformation = glm::transpose(rotation * scale);
+        XMFLOAT4X4 transformation;
+        XMStoreFloat4x4(&transformation, transformationMatrix);
 
         sdl::PushGPUVertexUniformData(commandBuffer, 0, &transformation, sizeof(transformation));
 
