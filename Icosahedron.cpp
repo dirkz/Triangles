@@ -284,20 +284,13 @@ void Icosahedron::CreateGeometry()
     triangles.push_back(Triangle{backBottom, backTop, backRight});
     triangles.push_back(Triangle{backBottom, midBottomRight, midBottomLeft});
 
-    std::vector<XMVECTOR> colors{Colors::Red,    Colors::Green,     Colors::Blue,
-                                 Colors::Yellow, Colors::BurlyWood, Colors::CornflowerBlue};
-
     triangles = Triangle::Triangulate(triangles, 3);
 
     constexpr float radius = 1;
-    int colorIndex = 0;
+    const XMVECTOR color = Colors::Beige;
     for (Triangle &triangle : triangles)
     {
         triangle.Normalize(radius);
-
-        int currentColorIndex = colorIndex % colors.size();
-        XMVECTOR color = colors[currentColorIndex];
-        colorIndex++;
 
         for (const XMVECTOR vect : triangle.Vectors())
         {
