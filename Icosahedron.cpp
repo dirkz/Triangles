@@ -230,9 +230,9 @@ void Icosahedron::CreateSurfaceTexture()
     }
 }
 
-constexpr XMVECTORF32 PlaneXColor = {{{0.61f, 0.53f, 0.88f, 1.f}}};
-constexpr XMVECTORF32 PlaneYColor = {{{0.77f, 0.93f, 0.65f, 1.f}}};
-constexpr XMVECTORF32 PlaneZColor = {{{0.18f, 0.41f, 0.33f, 1.f}}};
+const XMVECTOR PlaneXColor = XMVectorSet(0.61f, 0.53f, 0.88f, 1.f);
+const XMVECTOR PlaneYColor = XMVectorSet(0.77f, 0.93f, 0.65f, 1.f);
+const XMVECTOR PlaneZColor = XMVectorSet(0.18f, 0.41f, 0.33f, 1.f);
 
 const float G = (1.f + std::sqrt(5.f)) / 2.f;
 
@@ -243,13 +243,22 @@ void Icosahedron::CreateGeometry()
     PositionColorVertex frontLeft{-G, 0, -1, PlaneYColor};
     PositionColorVertex frontRight{G, 0, -1, PlaneYColor};
 
+    PositionColorVertex midBottomLeft{-1, -G, 0, PlaneZColor};
+    PositionColorVertex midBottomRight{1, -G, 0, PlaneZColor};
+    PositionColorVertex midTopRight{1, G, 0, PlaneZColor};
+    PositionColorVertex midTopLeft{-1, G, 0, PlaneZColor};
+
+    m_indexedVertices.Quad(midBottomLeft, midBottomRight, midTopRight, midTopLeft);
+
+    /*
     m_indexedVertices.Add(frontBottom);
     m_indexedVertices.Add(frontRight);
     m_indexedVertices.Add(frontTop);
 
-    m_indexedVertices.Add(frontLeft);
     m_indexedVertices.Add(frontBottom);
     m_indexedVertices.Add(frontTop);
+    m_indexedVertices.Add(frontLeft);
+    */
 }
 
 void Icosahedron::UploadBuffers()
