@@ -294,6 +294,10 @@ void Icosahedron::CreateGeometry()
     for (Triangle &triangle : triangles)
     {
         triangle.Normalize(radius);
+
+        int currentColorIndex = colorIndex % colors.size();
+        XMVECTOR color = colors[currentColorIndex];
+
         for (const XMVECTOR vect : triangle.Vectors())
         {
             XMVECTOR texture = Texture(vect, radius);
@@ -302,14 +306,11 @@ void Icosahedron::CreateGeometry()
             float u = textureFloats.x;
             float v = textureFloats.y;
 
-            int currentColorIndex = colorIndex % colors.size();
-
-            XMVECTOR color = colors[currentColorIndex];
             PositionColorTextureVertex vertex{vect, color, u, v};
             m_vertices.Add(vertex);
-
-            colorIndex++;
         }
+
+        colorIndex++;
     }
 }
 
