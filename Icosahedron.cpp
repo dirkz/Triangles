@@ -240,8 +240,8 @@ static XMVECTOR XM_CALLCONV Texture(FXMVECTOR vect, float radius)
     XMVECTOR vXZ = XMVectorSet(floats.x, 0, floats.z, 1);
     XMVECTOR vAngleXZ = XMVector3AngleBetweenVectors(baseXZ, vXZ);
     float angleXZ = XMVectorGetX(vAngleXZ);
-
     float u = angleXZ / XM_PI;
+
     float v = (floats.y + radius) / 2.f * radius;
 
     return XMVectorSet(u, v, 0, 0);
