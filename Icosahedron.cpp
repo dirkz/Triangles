@@ -4,6 +4,7 @@
 #include "Noise.h"
 #include "PositionColorVertex.h"
 #include "ShaderLoader.h"
+#include "Triangle.h"
 #include "Uploader.h"
 
 namespace triangles
@@ -254,105 +255,84 @@ const XMVECTOR PlaneXYColor = XMVectorSet(0.61f, 0.53f, 0.88f, 1.f); // violet
 const XMVECTOR PlaneXZColor = XMVectorSet(0.77f, 0.93f, 0.65f, 1.f); // light green
 const XMVECTOR PlaneYZColor = XMVectorSet(0.18f, 0.41f, 0.33f, 1.f); // dark green
 
+XMVECTOR XM_CALLCONV Texture(FXMVECTOR vect, float radius)
+{
+    XMFLOAT4 floats;
+    XMStoreFloat4(&floats, vect);
+
+    float u = (floats.x + radius) / 2.f * radius;
+    float v = (floats.y + radius) / 2.f * radius;
+
+    return XMVectorSet(u, v, 0, 0);
+}
+
 void Icosahedron::CreateGeometry()
 {
-    PositionColorTextureVertex frontTop = AddTexture(PositionColorVertex{0, 1, -G, PlaneYZColor});
-    PositionColorTextureVertex frontBottom =
-        AddTexture(PositionColorVertex{0, -1, -G, PlaneYZColor});
-    PositionColorTextureVertex frontLeft = AddTexture(PositionColorVertex{-G, 0, -1, PlaneXZColor});
-    PositionColorTextureVertex frontRight = AddTexture(PositionColorVertex{G, 0, -1, PlaneXZColor});
+    std::vector<Triangle> triangles{};
 
-    PositionColorTextureVertex midBottomLeft =
-        AddTexture(PositionColorVertex{-1, -G, 0, PlaneXYColor});
-    PositionColorTextureVertex midBottomRight =
-        AddTexture(PositionColorVertex{1, -G, 0, PlaneXYColor});
-    PositionColorTextureVertex midTopRight = AddTexture(PositionColorVertex{1, G, 0, PlaneXYColor});
-    PositionColorTextureVertex midTopLeft = AddTexture(PositionColorVertex{-1, G, 0, PlaneXYColor});
+    {
+        XMVECTOR frontTop = XMVectorSet(0, 1, -G, 1);
+        XMVECTOR frontBottom = XMVectorSet(0, -1, -G, 1);
+        XMVECTOR frontLeft = XMVectorSet(-G, 0, -1, 1);
+        XMVECTOR frontRight = XMVectorSet(G, 0, -1, 1);
 
-    PositionColorTextureVertex backLeft = AddTexture(PositionColorVertex{-G, 0, 1, PlaneXZColor});
-    PositionColorTextureVertex backRight = AddTexture(PositionColorVertex{G, 0, 1, PlaneXZColor});
-    PositionColorTextureVertex backTop = AddTexture(PositionColorVertex{0, 1, G, PlaneYZColor});
-    PositionColorTextureVertex backBottom = AddTexture(PositionColorVertex{0, -1, G, PlaneYZColor});
+        XMVECTOR midBottomLeft = XMVectorSet(-1, -G, 0, 1);
+        XMVECTOR midBottomRight = XMVectorSet(1, -G, 0, 1);
+        XMVECTOR midTopRight = XMVectorSet(1, G, 0, 1);
+        XMVECTOR midTopLeft = XMVectorSet(-1, G, 0, 1);
 
-    m_vertices.Add(frontBottom);
-    m_vertices.Add(frontRight);
-    m_vertices.Add(frontTop);
+        XMVECTOR backLeft = XMVectorSet(-G, 0, 1, 1);
+        XMVECTOR backRight = XMVectorSet(G, 0, 1, 1);
+        XMVECTOR backTop = XMVectorSet(0, 1, G, 1);
+        XMVECTOR backBottom = XMVectorSet(0, -1, G, 1);
 
-    m_vertices.Add(frontBottom);
-    m_vertices.Add(frontTop);
-    m_vertices.Add(frontLeft);
+        triangles.push_back(Triangle{frontBottom, frontRight, frontTop});
+        triangles.push_back(Triangle{frontBottom, frontTop, frontLeft});
+        triangles.push_back(Triangle{frontTop, midTopRight, midTopLeft});
+        triangles.push_back(Triangle{frontBottom, midBottomLeft, midBottomRight});
+        triangles.push_back(Triangle{frontBottom, midBottomRight, frontRight});
+        triangles.push_back(Triangle{frontBottom, frontLeft, midBottomLeft});
+        triangles.push_back(Triangle{frontTop, frontRight, midTopRight});
+        triangles.push_back(Triangle{frontTop, midTopLeft, frontLeft});
+        triangles.push_back(Triangle{midBottomLeft, frontLeft, backLeft});
+        triangles.push_back(Triangle{midBottomRight, backRight, frontRight});
+        triangles.push_back(Triangle{frontLeft, midTopLeft, backLeft});
+        triangles.push_back(Triangle{frontRight, backRight, midTopRight});
+        triangles.push_back(Triangle{backLeft, midTopLeft, backTop});
+        triangles.push_back(Triangle{backRight, backTop, midTopRight});
+        triangles.push_back(Triangle{backTop, midTopLeft, midTopRight});
+        triangles.push_back(Triangle{midBottomLeft, backLeft, backBottom});
+        triangles.push_back(Triangle{midBottomRight, backBottom, backRight});
+        triangles.push_back(Triangle{backBottom, backLeft, backTop});
+        triangles.push_back(Triangle{backBottom, backTop, backRight});
+        triangles.push_back(Triangle{backBottom, midBottomRight, midBottomLeft});
+    }
 
-    m_vertices.Add(frontTop);
-    m_vertices.Add(midTopRight);
-    m_vertices.Add(midTopLeft);
+    std::array<XMVECTOR, 3> colors{DirectX::Colors::Red, DirectX::Colors::Green,
+                                   DirectX::Colors::Blue};
 
-    m_vertices.Add(frontBottom);
-    m_vertices.Add(midBottomLeft);
-    m_vertices.Add(midBottomRight);
+    constexpr float radius = 1;
+    int colorIndex = 0;
+    for (Triangle &triangle : triangles)
+    {
+        triangle.Normalize(radius);
+        for (const XMVECTOR vect : triangle.Vectors())
+        {
+            XMVECTOR texture = Texture(vect, radius);
+            XMFLOAT4 textureFloats;
+            XMStoreFloat4(&textureFloats, texture);
+            float u = textureFloats.x;
+            float v = textureFloats.y;
 
-    m_vertices.Add(frontBottom);
-    m_vertices.Add(midBottomRight);
-    m_vertices.Add(frontRight);
+            int currentColorIndex = colorIndex % colors.size();
 
-    m_vertices.Add(frontBottom);
-    m_vertices.Add(frontLeft);
-    m_vertices.Add(midBottomLeft);
+            XMVECTOR color = colors[currentColorIndex];
+            PositionColorTextureVertex vertex{vect, color, u, v};
+            m_vertices.Add(vertex);
 
-    m_vertices.Add(frontTop);
-    m_vertices.Add(frontRight);
-    m_vertices.Add(midTopRight);
-
-    m_vertices.Add(frontTop);
-    m_vertices.Add(midTopLeft);
-    m_vertices.Add(frontLeft);
-
-    m_vertices.Add(midBottomLeft);
-    m_vertices.Add(frontLeft);
-    m_vertices.Add(backLeft);
-
-    m_vertices.Add(midBottomRight);
-    m_vertices.Add(backRight);
-    m_vertices.Add(frontRight);
-
-    m_vertices.Add(frontLeft);
-    m_vertices.Add(midTopLeft);
-    m_vertices.Add(backLeft);
-
-    m_vertices.Add(frontRight);
-    m_vertices.Add(backRight);
-    m_vertices.Add(midTopRight);
-
-    m_vertices.Add(backLeft);
-    m_vertices.Add(midTopLeft);
-    m_vertices.Add(backTop);
-
-    m_vertices.Add(backRight);
-    m_vertices.Add(backTop);
-    m_vertices.Add(midTopRight);
-
-    m_vertices.Add(backTop);
-    m_vertices.Add(midTopLeft);
-    m_vertices.Add(midTopRight);
-
-    m_vertices.Add(midBottomLeft);
-    m_vertices.Add(backLeft);
-    m_vertices.Add(backBottom);
-
-    m_vertices.Add(midBottomRight);
-    m_vertices.Add(backBottom);
-    m_vertices.Add(backRight);
-
-    m_vertices.Add(backBottom);
-    m_vertices.Add(backLeft);
-    m_vertices.Add(backTop);
-
-    m_vertices.Add(backBottom);
-    m_vertices.Add(backTop);
-    m_vertices.Add(backRight);
-
-    m_vertices.Add(backBottom);
-    m_vertices.Add(midBottomRight);
-    m_vertices.Add(midBottomLeft);
+            colorIndex++;
+        }
+    }
 }
 
 void Icosahedron::UploadBuffers()
