@@ -2,7 +2,6 @@
 
 #include "Common.h"
 #include "Noise.h"
-#include "PositionColorTextureVertex.h"
 #include "PositionColorVertex.h"
 #include "ShaderLoader.h"
 #include "Uploader.h"
@@ -175,7 +174,7 @@ void Icosahedron::CreateGraphicsPipeline()
 {
     ShaderLoader shaderLoader{m_device};
 
-    const char *basicTriangle = "position_color_projection.hlsl";
+    const char *basicTriangle = "position_color_texture_projection.hlsl";
     sdl::DeviceOwned vertexShader{
         m_device, shaderLoader.Load(basicTriangle, SDL_GPU_SHADERSTAGE_VERTEX, 1, 0, 0, 0)};
     sdl::DeviceOwned fragmentShader{
@@ -183,7 +182,7 @@ void Icosahedron::CreateGraphicsPipeline()
 
     SDL_GPUVertexBufferDescription vertexBufferDescription{
         .slot = 0,
-        .pitch = sizeof(PositionColorVertex),
+        .pitch = sizeof(PositionColorTextureVertex),
         .input_rate = SDL_GPU_VERTEXINPUTRATE_VERTEX,
         .instance_step_rate = 0,
     };
@@ -200,7 +199,13 @@ void Icosahedron::CreateGraphicsPipeline()
                                           .format = SDL_GPU_VERTEXELEMENTFORMAT_FLOAT4,
                                           .offset = offsetof(PositionColorTextureVertex, R)};
 
-    std::vector<SDL_GPUVertexAttribute> attributes{attributePosition, attributeColor};
+    SDL_GPUVertexAttribute attributeTexture{.location = 2,
+                                            .buffer_slot = 0,
+                                            .format = SDL_GPU_VERTEXELEMENTFORMAT_FLOAT2,
+                                            .offset = offsetof(PositionColorTextureVertex, U)};
+
+    std::vector<SDL_GPUVertexAttribute> attributes{attributePosition, attributeColor,
+                                                   attributeTexture};
 
     m_pipeline = triangles::CreateGraphicsPipeline(
         m_window, m_device, vertexShader.Get(), fragmentShader.Get(),
@@ -251,20 +256,23 @@ const float G = (1.f + std::sqrt(5.f)) / 2.f;
 
 void Icosahedron::CreateGeometry()
 {
-    PositionColorVertex frontTop{0, 1, -G, PlaneYZColor};
-    PositionColorVertex frontBottom{0, -1, -G, PlaneYZColor};
-    PositionColorVertex frontLeft{-G, 0, -1, PlaneXZColor};
-    PositionColorVertex frontRight{G, 0, -1, PlaneXZColor};
+    PositionColorTextureVertex frontTop = AddTexture(PositionColorVertex{0, 1, -G, PlaneYZColor});
+    PositionColorTextureVertex frontBottom =
+        AddTexture(PositionColorVertex{0, -1, -G, PlaneYZColor});
+    PositionColorTextureVertex frontLeft = AddTexture(PositionColorVertex{-G, 0, -1, PlaneXZColor});
+    PositionColorTextureVertex frontRight = AddTexture(PositionColorVertex{G, 0, -1, PlaneXZColor});
 
-    PositionColorVertex midBottomLeft{-1, -G, 0, PlaneXYColor};
-    PositionColorVertex midBottomRight{1, -G, 0, PlaneXYColor};
-    PositionColorVertex midTopRight{1, G, 0, PlaneXYColor};
-    PositionColorVertex midTopLeft{-1, G, 0, PlaneXYColor};
+    PositionColorTextureVertex midBottomLeft =
+        AddTexture(PositionColorVertex{-1, -G, 0, PlaneXYColor});
+    PositionColorTextureVertex midBottomRight =
+        AddTexture(PositionColorVertex{1, -G, 0, PlaneXYColor});
+    PositionColorTextureVertex midTopRight = AddTexture(PositionColorVertex{1, G, 0, PlaneXYColor});
+    PositionColorTextureVertex midTopLeft = AddTexture(PositionColorVertex{-1, G, 0, PlaneXYColor});
 
-    PositionColorVertex backLeft{-G, 0, 1, PlaneXZColor};
-    PositionColorVertex backRight{G, 0, 1, PlaneXZColor};
-    PositionColorVertex backTop{0, 1, G, PlaneYZColor};
-    PositionColorVertex backBottom{0, -1, G, PlaneYZColor};
+    PositionColorTextureVertex backLeft = AddTexture(PositionColorVertex{-G, 0, 1, PlaneXZColor});
+    PositionColorTextureVertex backRight = AddTexture(PositionColorVertex{G, 0, 1, PlaneXZColor});
+    PositionColorTextureVertex backTop = AddTexture(PositionColorVertex{0, 1, G, PlaneYZColor});
+    PositionColorTextureVertex backBottom = AddTexture(PositionColorVertex{0, -1, G, PlaneYZColor});
 
     m_vertices.Add(frontBottom);
     m_vertices.Add(frontRight);
@@ -349,7 +357,7 @@ void Icosahedron::CreateGeometry()
 
 void Icosahedron::UploadBuffers()
 {
-    std::vector<PositionColorVertex> vertices = m_vertices.Vertices();
+    std::vector<PositionColorTextureVertex> vertices = m_vertices.Vertices();
     std::vector<Uint16> indices = m_vertices.Indices();
 
     Uploader uploader{m_device};

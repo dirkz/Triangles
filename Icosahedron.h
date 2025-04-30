@@ -3,7 +3,7 @@
 #include "stdafx.h"
 
 #include "IndexedVertexBuffer.h"
-#include "PositionColorVertex.h"
+#include "PositionColorTextureVertex.h"
 #include "Surface.h"
 
 namespace triangles
@@ -33,7 +33,7 @@ struct Icosahedron
     Surface m_surface;
     SDL_GPUTexture *m_texture = nullptr;
     SDL_GPUSampler *m_sampler = nullptr;
-    IndexedVertexBuffer<PositionColorVertex> m_vertices;
+    IndexedVertexBuffer<PositionColorTextureVertex> m_vertices;
 
     float m_rotationHorizontal = 0;
     float m_rotationVertical = 0;
