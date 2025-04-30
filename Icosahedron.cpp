@@ -289,7 +289,7 @@ void Icosahedron::CreateGeometry()
     triangles.push_back(Triangle{backBottom, backTop, backRight});
     triangles.push_back(Triangle{backBottom, midBottomRight, midBottomLeft});
 
-    triangles = Triangle::Triangulate(triangles, 3);
+    triangles = Triangle::Triangulate(triangles, 5);
 
     constexpr float radius = 1;
     const XMVECTOR color = Colors::Beige;
