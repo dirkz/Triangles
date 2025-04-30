@@ -230,19 +230,21 @@ void Icosahedron::CreateSurfaceTexture()
     }
 }
 
+const float G = (1.f + std::sqrt(5.f)) / 2.f;
+
 static PositionColorTextureVertex AddTexture(const PositionColorVertex &v)
 {
-    static const XMVECTOR vBaseXZ = XMVectorSet(-1, 0, 0, 1);
-    XMVECTOR vXZ = XMVectorSet(v.X, 0, v.Z, 1);
-    XMVECTOR vAngleU = XMVector3AngleBetweenVectors(vBaseXZ, vXZ);
-    float angleU = XMVectorGetX(vAngleU);
-    float tu = angleU / XM_2PI;
+    float x = v.X;
+    float y = v.Y;
+    float z = v.Z;
 
-    static const XMVECTOR vBaseYZ = XMVectorSet(0, -1, 0, 1);
-    XMVECTOR vYZ = XMVectorSet(0, v.Y, v.Z, 1);
-    XMVECTOR vAngleV = XMVector3AngleBetweenVectors(vBaseYZ, vYZ);
-    float angleV = XMVectorGetX(vAngleV);
-    float tv = angleV / XM_PI;
+    float tu = (x / (2.f * G) + 0.5f) / 2.f;
+    if (z < 0)
+    {
+        tu += 0.5f;
+    }
+
+    float tv = (y / (2.f * G) + 0.5f);
 
     XMVECTOR color = XMVectorSet(v.R, v.G, v.B, v.A);
     return PositionColorTextureVertex{v.X, v.Y, v.Z, color, tu, tv};
@@ -251,8 +253,6 @@ static PositionColorTextureVertex AddTexture(const PositionColorVertex &v)
 const XMVECTOR PlaneXYColor = XMVectorSet(0.61f, 0.53f, 0.88f, 1.f); // violet
 const XMVECTOR PlaneXZColor = XMVectorSet(0.77f, 0.93f, 0.65f, 1.f); // light green
 const XMVECTOR PlaneYZColor = XMVectorSet(0.18f, 0.41f, 0.33f, 1.f); // dark green
-
-const float G = (1.f + std::sqrt(5.f)) / 2.f;
 
 void Icosahedron::CreateGeometry()
 {
