@@ -242,19 +242,19 @@ void Icosahedron::CreateGeometry()
     PositionColorVertex midTopRight{1, G, 0, PlaneZColor};
     PositionColorVertex midTopLeft{-1, G, 0, PlaneZColor};
 
-    m_indexedVertices.Add(frontBottom);
-    m_indexedVertices.Add(frontRight);
-    m_indexedVertices.Add(frontTop);
+    m_vertices.Add(frontBottom);
+    m_vertices.Add(frontRight);
+    m_vertices.Add(frontTop);
 
-    m_indexedVertices.Add(frontBottom);
-    m_indexedVertices.Add(frontTop);
-    m_indexedVertices.Add(frontLeft);
+    m_vertices.Add(frontBottom);
+    m_vertices.Add(frontTop);
+    m_vertices.Add(frontLeft);
 }
 
 void Icosahedron::UploadBuffers()
 {
-    std::vector<PositionColorVertex> vertices = m_indexedVertices.Vertices();
-    std::vector<Uint16> indices = m_indexedVertices.Indices();
+    std::vector<PositionColorVertex> vertices = m_vertices.Vertices();
+    std::vector<Uint16> indices = m_vertices.Indices();
 
     Uploader uploader{m_device};
     m_vertexBuffer = uploader.UploadBuffer(SDL_GPU_BUFFERUSAGE_VERTEX, std::span{vertices});

@@ -32,7 +32,7 @@ struct Cube
     Surface m_surface;
     SDL_GPUTexture *m_texture = nullptr;
     SDL_GPUSampler *m_sampler = nullptr;
-    IndexedVertexBuffer<PositionColorTextureVertex> m_indexedVertices;
+    IndexedVertexBuffer<PositionColorTextureVertex> m_vertices;
 
     float m_rotationHorizontal = 0;
     float m_rotationVertical = 0;

@@ -33,7 +33,7 @@ struct Icosahedron
     Surface m_surface;
     SDL_GPUTexture *m_texture = nullptr;
     SDL_GPUSampler *m_sampler = nullptr;
-    IndexedVertexBuffer<PositionColorVertex> m_indexedVertices;
+    IndexedVertexBuffer<PositionColorVertex> m_vertices;
 
     float m_rotationHorizontal = 0;
     float m_rotationVertical = 0;

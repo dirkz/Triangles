@@ -270,31 +270,25 @@ void Cube::UploadBuffers()
     Corner v7{-0.5, 0.5, 0.5, DirectX::Colors::Yellow};
 
     // front
-    m_indexedVertices.Quad(v0.WithTexture(t0), v1.WithTexture(t1), v2.WithTexture(t2),
-                           v3.WithTexture(t3));
+    m_vertices.Quad(v0.WithTexture(t0), v1.WithTexture(t1), v2.WithTexture(t2), v3.WithTexture(t3));
 
     // bottom
-    m_indexedVertices.Quad(v4.WithTexture(t0), v5.WithTexture(t1), v1.WithTexture(t2),
-                           v0.WithTexture(t3));
+    m_vertices.Quad(v4.WithTexture(t0), v5.WithTexture(t1), v1.WithTexture(t2), v0.WithTexture(t3));
 
     // top
-    m_indexedVertices.Quad(v3.WithTexture(t0), v2.WithTexture(t1), v6.WithTexture(t2),
-                           v7.WithTexture(t3));
+    m_vertices.Quad(v3.WithTexture(t0), v2.WithTexture(t1), v6.WithTexture(t2), v7.WithTexture(t3));
 
     // right
-    m_indexedVertices.Quad(v1.WithTexture(t0), v5.WithTexture(t1), v6.WithTexture(t2),
-                           v2.WithTexture(t3));
+    m_vertices.Quad(v1.WithTexture(t0), v5.WithTexture(t1), v6.WithTexture(t2), v2.WithTexture(t3));
 
     // left
-    m_indexedVertices.Quad(v4.WithTexture(t0), v0.WithTexture(t1), v3.WithTexture(t2),
-                           v7.WithTexture(t3));
+    m_vertices.Quad(v4.WithTexture(t0), v0.WithTexture(t1), v3.WithTexture(t2), v7.WithTexture(t3));
 
     // back
-    m_indexedVertices.Quad(v5.WithTexture(t0), v4.WithTexture(t1), v7.WithTexture(t2),
-                           v6.WithTexture(t3));
+    m_vertices.Quad(v5.WithTexture(t0), v4.WithTexture(t1), v7.WithTexture(t2), v6.WithTexture(t3));
 
-    std::vector<PositionColorTextureVertex> vertices = m_indexedVertices.Vertices();
-    std::vector<Uint16> indices = m_indexedVertices.Indices();
+    std::vector<PositionColorTextureVertex> vertices = m_vertices.Vertices();
+    std::vector<Uint16> indices = m_vertices.Indices();
 
     Uploader uploader{m_device};
     m_vertexBuffer = uploader.UploadBuffer(SDL_GPU_BUFFERUSAGE_VERTEX, std::span{vertices});
