@@ -289,17 +289,17 @@ void Icosahedron::CreateGeometry()
     std::vector<XMVECTOR> colors{Colors::Red,    Colors::Green,     Colors::Blue,
                                  Colors::Yellow, Colors::BurlyWood, Colors::CornflowerBlue};
 
-    std::vector<Triangle> triangles2 = Triangle::Triangulate(triangles);
-    std::vector<Triangle> triangles3 = Triangle::Triangulate(triangles2);
+    triangles = Triangle::Triangulate(triangles, 3);
 
     constexpr float radius = 1;
     int colorIndex = 0;
-    for (Triangle &triangle : triangles3)
+    for (Triangle &triangle : triangles)
     {
         triangle.Normalize(radius);
 
         int currentColorIndex = colorIndex % colors.size();
         XMVECTOR color = colors[currentColorIndex];
+        colorIndex++;
 
         for (const XMVECTOR vect : triangle.Vectors())
         {
@@ -312,8 +312,6 @@ void Icosahedron::CreateGeometry()
             PositionColorTextureVertex vertex{vect, color, u, v};
             m_vertices.Add(vertex);
         }
-
-        colorIndex++;
     }
 }
 

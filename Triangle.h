@@ -8,6 +8,7 @@ namespace triangles
 struct Triangle
 {
     static std::vector<Triangle> Triangulate(const std::vector<Triangle> &triangles);
+    static std::vector<Triangle> Triangulate(const std::vector<Triangle> &triangles, int count);
 
     Triangle(DirectX::FXMVECTOR v0, DirectX::FXMVECTOR v1, DirectX::FXMVECTOR v2);
 

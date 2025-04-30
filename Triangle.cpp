@@ -21,6 +21,23 @@ std::vector<Triangle> Triangle::Triangulate(const std::vector<Triangle> &triangl
     return triangulized;
 }
 
+std::vector<Triangle> Triangle::Triangulate(const std::vector<Triangle> &triangles, int count)
+{
+    std::vector<Triangle> result = Triangulate(triangles);
+
+    if (count == 1)
+    {
+        return result;
+    }
+
+    for (int i = 1; i < count; ++i)
+    {
+        result = Triangulate(result);
+    }
+
+    return result;
+}
+
 Triangle::Triangle(DirectX::FXMVECTOR v0, DirectX::FXMVECTOR v1, DirectX::FXMVECTOR v2)
     : m_v0{v0}, m_v1{v1}, m_v2{v2}
 {
