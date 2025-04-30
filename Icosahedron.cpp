@@ -286,8 +286,8 @@ void Icosahedron::CreateGeometry()
         triangles.push_back(Triangle{backBottom, midBottomRight, midBottomLeft});
     }
 
-    std::array<XMVECTOR, 3> colors{DirectX::Colors::Red, DirectX::Colors::Green,
-                                   DirectX::Colors::Blue};
+    std::vector<XMVECTOR> colors{Colors::Red,    Colors::Green,     Colors::Blue,
+                                 Colors::Yellow, Colors::BurlyWood, Colors::CornflowerBlue};
 
     constexpr float radius = 1;
     int colorIndex = 0;
