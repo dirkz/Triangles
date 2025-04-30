@@ -20,6 +20,7 @@ struct Icosahedron
   private:
     void CreateGraphicsPipeline();
     void CreateSurfaceTexture();
+    void CreateGeometry();
 
     void UploadBuffers();
 

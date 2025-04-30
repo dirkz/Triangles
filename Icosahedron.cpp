@@ -19,6 +19,7 @@ Icosahedron::Icosahedron()
 {
     CreateGraphicsPipeline();
     CreateSurfaceTexture();
+    CreateGeometry();
     UploadBuffers();
 
     SDL_GPUSamplerCreateInfo samplerCreateInfo{
@@ -227,6 +228,14 @@ void Icosahedron::CreateSurfaceTexture()
             m_surface.SetPixel(x, y, color);
         }
     }
+}
+
+constexpr XMVECTORF32 PlaneXColor = {{{0.61f, 0.53f, 0.88f, 1.f}}};
+constexpr XMVECTORF32 PlaneYColor = {{{0.77f, 0.93f, 0.65f, 1.f}}};
+constexpr XMVECTORF32 PlaneZColor = {{{0.18f, 0.41f, 0.33f, 1.f}}};
+
+void Icosahedron::CreateGeometry()
+{
 }
 
 void Icosahedron::UploadBuffers()
