@@ -98,7 +98,7 @@ void Icosahedron::AppIterate()
 
         sdl::BindGPUGraphicsPipeline(renderPass, m_pipeline);
 
-        XMMATRIX translation = XMMatrixTranslation(0.f, 0.f, 0.f);
+        XMMATRIX translation = XMMatrixTranslation(0.f, 0.f, 5.f);
         XMMATRIX rotationY = XMMatrixRotationY(m_rotationHorizontal);
         XMMATRIX rotationX = XMMatrixRotationX(m_rotationVertical);
         XMMATRIX rotation = XMMatrixMultiply(rotationX, rotationY);
@@ -106,7 +106,7 @@ void Icosahedron::AppIterate()
 
         float aspect = static_cast<float>(width) / height;
 
-        XMVECTOR eyePosition = XMVectorSet(0.f, 0.f, -4.f, 1.f);
+        XMVECTOR eyePosition = XMVectorSet(0.f, 0.f, -1.f, 1.f);
         XMVECTOR lookAt = XMVectorSet(0.f, 0.f, 0.f, 1.f);
         XMVECTOR upDirection = XMVectorSet(0, 1, 0, 0);
         XMMATRIX view = XMMatrixLookAtLH(eyePosition, lookAt, upDirection);
@@ -242,9 +242,6 @@ void Icosahedron::CreateGeometry()
     PositionColorVertex midTopRight{1, G, 0, PlaneZColor};
     PositionColorVertex midTopLeft{-1, G, 0, PlaneZColor};
 
-    m_indexedVertices.Quad(midBottomLeft, midBottomRight, midTopRight, midTopLeft);
-
-    /*
     m_indexedVertices.Add(frontBottom);
     m_indexedVertices.Add(frontRight);
     m_indexedVertices.Add(frontTop);
@@ -252,7 +249,6 @@ void Icosahedron::CreateGeometry()
     m_indexedVertices.Add(frontBottom);
     m_indexedVertices.Add(frontTop);
     m_indexedVertices.Add(frontLeft);
-    */
 }
 
 void Icosahedron::UploadBuffers()
