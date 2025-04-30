@@ -3,6 +3,7 @@
 #include "Common.h"
 #include "Noise.h"
 #include "PositionColorTextureVertex.h"
+#include "PositionColorVertex.h"
 #include "ShaderLoader.h"
 #include "Uploader.h"
 
@@ -222,6 +223,24 @@ void Icosahedron::CreateSurfaceTexture()
             m_surface.SetPixel(x, y, color);
         }
     }
+}
+
+static PositionColorTextureVertex AddTexture(const PositionColorVertex &v)
+{
+    static const XMVECTOR vBaseXZ = XMVectorSet(-1, 0, 0, 1);
+    XMVECTOR vXZ = XMVectorSet(v.X, 0, v.Z, 1);
+    XMVECTOR vAngleU = XMVector3AngleBetweenVectors(vBaseXZ, vXZ);
+    float angleU = XMVectorGetX(vAngleU);
+    float tu = angleU / XM_2PI;
+
+    static const XMVECTOR vBaseYZ = XMVectorSet(0, -1, 0, 1);
+    XMVECTOR vYZ = XMVectorSet(0, v.Y, v.Z, 1);
+    XMVECTOR vAngleV = XMVector3AngleBetweenVectors(vBaseYZ, vYZ);
+    float angleV = XMVectorGetX(vAngleU);
+    float tv = angleV / XM_PI;
+
+    XMVECTOR color = XMVectorSet(v.R, v.G, v.B, v.A);
+    return PositionColorTextureVertex{v.X, v.Y, v.Z, color, tu, tv};
 }
 
 const XMVECTOR PlaneXYColor = XMVectorSet(0.61f, 0.53f, 0.88f, 1.f); // violet
