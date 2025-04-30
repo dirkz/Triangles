@@ -31,7 +31,7 @@ add_library(triangles OBJECT
 	"Noise.h"
 	"Noise.cpp"
 	"Icosahedron.h"
-	"Icosahedron.cpp")
+	"Icosahedron.cpp" "Triangle.h" "Triangle.cpp")
 
 add_library(samples OBJECT
 	"BasicTriangle.h"
