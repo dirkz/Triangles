@@ -242,6 +242,11 @@ void Icosahedron::CreateGeometry()
     PositionColorVertex midTopRight{1, G, 0, PlaneXYColor};
     PositionColorVertex midTopLeft{-1, G, 0, PlaneXYColor};
 
+    PositionColorVertex backLeft{-G, 0, 1, PlaneXZColor};
+    PositionColorVertex backRight{G, 0, 1, PlaneXZColor};
+    PositionColorVertex backTop{0, 1, G, PlaneYZColor};
+    PositionColorVertex backBottom{0, -1, G, PlaneYZColor};
+
     m_vertices.Add(frontBottom);
     m_vertices.Add(frontRight);
     m_vertices.Add(frontTop);
@@ -253,6 +258,74 @@ void Icosahedron::CreateGeometry()
     m_vertices.Add(frontTop);
     m_vertices.Add(midTopRight);
     m_vertices.Add(midTopLeft);
+
+    m_vertices.Add(frontBottom);
+    m_vertices.Add(midBottomLeft);
+    m_vertices.Add(midBottomRight);
+
+    m_vertices.Add(frontBottom);
+    m_vertices.Add(midBottomRight);
+    m_vertices.Add(frontRight);
+
+    m_vertices.Add(frontBottom);
+    m_vertices.Add(frontLeft);
+    m_vertices.Add(midBottomLeft);
+
+    m_vertices.Add(frontTop);
+    m_vertices.Add(frontRight);
+    m_vertices.Add(midTopRight);
+
+    m_vertices.Add(frontTop);
+    m_vertices.Add(midTopLeft);
+    m_vertices.Add(frontLeft);
+
+    m_vertices.Add(midBottomLeft);
+    m_vertices.Add(frontLeft);
+    m_vertices.Add(backLeft);
+
+    m_vertices.Add(midBottomRight);
+    m_vertices.Add(backRight);
+    m_vertices.Add(frontRight);
+
+    m_vertices.Add(frontLeft);
+    m_vertices.Add(midTopLeft);
+    m_vertices.Add(backLeft);
+
+    m_vertices.Add(frontRight);
+    m_vertices.Add(backRight);
+    m_vertices.Add(midTopRight);
+
+    m_vertices.Add(backLeft);
+    m_vertices.Add(midTopLeft);
+    m_vertices.Add(backTop);
+
+    m_vertices.Add(backRight);
+    m_vertices.Add(backTop);
+    m_vertices.Add(midTopRight);
+
+    m_vertices.Add(backTop);
+    m_vertices.Add(midTopLeft);
+    m_vertices.Add(midTopRight);
+
+    m_vertices.Add(midBottomLeft);
+    m_vertices.Add(backLeft);
+    m_vertices.Add(backBottom);
+
+    m_vertices.Add(midBottomRight);
+    m_vertices.Add(backBottom);
+    m_vertices.Add(backRight);
+
+    m_vertices.Add(backBottom);
+    m_vertices.Add(backLeft);
+    m_vertices.Add(backTop);
+
+    m_vertices.Add(backBottom);
+    m_vertices.Add(backTop);
+    m_vertices.Add(backRight);
+
+    m_vertices.Add(backBottom);
+    m_vertices.Add(midBottomRight);
+    m_vertices.Add(midBottomLeft);
 }
 
 void Icosahedron::UploadBuffers()
