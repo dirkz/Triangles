@@ -241,7 +241,7 @@ static PositionColorTextureVertex AddTexture(const PositionColorVertex &v)
     static const XMVECTOR vBaseYZ = XMVectorSet(0, -1, 0, 1);
     XMVECTOR vYZ = XMVectorSet(0, v.Y, v.Z, 1);
     XMVECTOR vAngleV = XMVector3AngleBetweenVectors(vBaseYZ, vYZ);
-    float angleV = XMVectorGetX(vAngleU);
+    float angleV = XMVectorGetX(vAngleV);
     float tv = angleV / XM_PI;
 
     XMVECTOR color = XMVectorSet(v.R, v.G, v.B, v.A);
