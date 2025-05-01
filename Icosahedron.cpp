@@ -250,6 +250,7 @@ static XMVECTOR XM_CALLCONV TextureCoordinates(FXMVECTOR vect, float radius)
 static inline Triangle XM_CALLCONV TexturedTriangle(FXMVECTOR p0, FXMVECTOR p1, FXMVECTOR p2)
 {
     constexpr float radius = 1.f;
+
     XMVECTOR tc0 = TextureCoordinates(p0, radius);
     XMVECTOR tc1 = TextureCoordinates(p1, radius);
     XMVECTOR tc2 = TextureCoordinates(p2, radius);
