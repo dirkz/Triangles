@@ -16,8 +16,6 @@ find_package(Boost REQUIRED)
 cmake_path(SET DirectXMath_INCLUDE_DIRS "${CMAKE_CURRENT_SOURCE_DIR}/../DirectXMath/Inc")
 
 add_library(triangles OBJECT
-	"PositionColorVertex.h"
-	"PositionColorVertex.cpp"
 	"ShaderLoader.h"
 	"ShaderLoader.cpp"
 	"Uploader.h"
@@ -26,12 +24,16 @@ add_library(triangles OBJECT
 	"Common.cpp"
 	"Surface.h"
 	"Surface.cpp"
+	"PositionColorVertex.h"
+	"PositionColorVertex.cpp"
 	"PositionColorTextureVertex.h"
 	"PositionColorTextureVertex.cpp"
+	"IndexedVertexBuffer.h"
 	"Noise.h"
 	"Noise.cpp"
-	"Icosahedron.h"
-	"Icosahedron.cpp" "Triangle.h" "Triangle.cpp")
+	"Triangle.h"
+	"Triangle.cpp"
+)
 
 add_library(samples OBJECT
 	"BasicTriangle.h"
@@ -44,9 +46,9 @@ add_library(samples OBJECT
 	"TexturedQuad.cpp"
 	"Cube.h"
 	"Cube.cpp"
-	"IndexedVertexBuffer.h"
-	
-	)
+	"Icosahedron.h"
+	"Icosahedron.cpp"
+)
 
 if(WIN32)
 	add_executable(main WIN32 "main.cpp")
