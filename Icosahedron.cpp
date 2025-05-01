@@ -278,26 +278,26 @@ void Icosahedron::CreateGeometry()
     XMVECTOR backTop = XMVectorSet(0, 1, G, 1);
     XMVECTOR backBottom = XMVectorSet(0, -1, G, 1);
 
-    triangles.push_back(Triangle{frontBottom, frontRight, frontTop});
-    triangles.push_back(Triangle{frontBottom, frontTop, frontLeft});
-    triangles.push_back(Triangle{frontTop, midTopRight, midTopLeft});
-    triangles.push_back(Triangle{frontBottom, midBottomLeft, midBottomRight});
-    triangles.push_back(Triangle{frontBottom, midBottomRight, frontRight});
-    triangles.push_back(Triangle{frontBottom, frontLeft, midBottomLeft});
-    triangles.push_back(Triangle{frontTop, frontRight, midTopRight});
-    triangles.push_back(Triangle{frontTop, midTopLeft, frontLeft});
-    triangles.push_back(Triangle{midBottomLeft, frontLeft, backLeft});
-    triangles.push_back(Triangle{midBottomRight, backRight, frontRight});
-    triangles.push_back(Triangle{frontLeft, midTopLeft, backLeft});
-    triangles.push_back(Triangle{frontRight, backRight, midTopRight});
-    triangles.push_back(Triangle{backLeft, midTopLeft, backTop});
-    triangles.push_back(Triangle{backRight, backTop, midTopRight});
-    triangles.push_back(Triangle{backTop, midTopLeft, midTopRight});
-    triangles.push_back(Triangle{midBottomLeft, backLeft, backBottom});
-    triangles.push_back(Triangle{midBottomRight, backBottom, backRight});
-    triangles.push_back(Triangle{backBottom, backLeft, backTop});
-    triangles.push_back(Triangle{backBottom, backTop, backRight});
-    triangles.push_back(Triangle{backBottom, midBottomRight, midBottomLeft});
+    triangles.push_back(TexturedTriangle(frontBottom, frontRight, frontTop));
+    triangles.push_back(TexturedTriangle(frontBottom, frontTop, frontLeft));
+    triangles.push_back(TexturedTriangle(frontTop, midTopRight, midTopLeft));
+    triangles.push_back(TexturedTriangle(frontBottom, midBottomLeft, midBottomRight));
+    triangles.push_back(TexturedTriangle(frontBottom, midBottomRight, frontRight));
+    triangles.push_back(TexturedTriangle(frontBottom, frontLeft, midBottomLeft));
+    triangles.push_back(TexturedTriangle(frontTop, frontRight, midTopRight));
+    triangles.push_back(TexturedTriangle(frontTop, midTopLeft, frontLeft));
+    triangles.push_back(TexturedTriangle(midBottomLeft, frontLeft, backLeft));
+    triangles.push_back(TexturedTriangle(midBottomRight, backRight, frontRight));
+    triangles.push_back(TexturedTriangle(frontLeft, midTopLeft, backLeft));
+    triangles.push_back(TexturedTriangle(frontRight, backRight, midTopRight));
+    triangles.push_back(TexturedTriangle(backLeft, midTopLeft, backTop));
+    triangles.push_back(TexturedTriangle(backRight, backTop, midTopRight));
+    triangles.push_back(TexturedTriangle(backTop, midTopLeft, midTopRight));
+    triangles.push_back(TexturedTriangle(midBottomLeft, backLeft, backBottom));
+    triangles.push_back(TexturedTriangle(midBottomRight, backBottom, backRight));
+    triangles.push_back(TexturedTriangle(backBottom, backLeft, backTop));
+    triangles.push_back(TexturedTriangle(backBottom, backTop, backRight));
+    triangles.push_back(TexturedTriangle(backBottom, midBottomRight, midBottomLeft));
 
     triangles = Triangle::Triangulate(triangles, 5);
 
@@ -311,11 +311,10 @@ void Icosahedron::CreateGeometry()
     {
         triangle.Normalize(radius);
 
-        for (const XMVECTOR vect : triangle.Points())
+        for (const Triangle::PointWithTexture point : triangle.PointsWithTextures())
         {
-            XMVECTOR texture = TextureCoordinates(vect, radius);
             XMFLOAT4 textureFloats;
-            XMStoreFloat4(&textureFloats, texture);
+            XMStoreFloat4(&textureFloats, point.TC);
             float u = textureFloats.x;
             float v = textureFloats.y;
 
@@ -323,7 +322,7 @@ void Icosahedron::CreateGeometry()
             float colorMod = static_cast<float>(noise(noiseInput, 1.2, 1.2));
             XMVECTOR color = lerp(color1, color2, colorMod);
 
-            PositionColorTextureVertex vertex{vect, color, u, v};
+            PositionColorTextureVertex vertex{point.P, color, u, v};
             m_vertices.Add(vertex);
         }
 

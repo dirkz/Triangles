@@ -7,6 +7,16 @@ namespace triangles
 
 struct Triangle
 {
+    struct PointWithTexture
+    {
+        PointWithTexture(DirectX::FXMVECTOR p, DirectX::FXMVECTOR tc) : P{p}, TC{tc}
+        {
+        }
+
+        DirectX::XMVECTOR P;
+        DirectX::XMVECTOR TC;
+    };
+
     static std::vector<Triangle> Triangulate(const std::vector<Triangle> &triangles);
     static std::vector<Triangle> Triangulate(const std::vector<Triangle> &triangles, int count);
 
@@ -37,6 +47,12 @@ struct Triangle
     inline std::array<DirectX::XMVECTOR, 3> Points()
     {
         return {m_p0, m_p1, m_p2};
+    }
+
+    inline std::array<PointWithTexture, 3> PointsWithTextures()
+    {
+        return {PointWithTexture{m_p0, m_tc0}, PointWithTexture{m_p1, m_tc1},
+                PointWithTexture{m_p2, m_tc2}};
     }
 
   private:
