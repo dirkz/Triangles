@@ -60,16 +60,18 @@ void Triangle::Normalize(float distance)
 
 std::array<Triangle, 4> Triangle::Triangulate() const
 {
-    XMVECTOR m1 = lerp(m_p1, m_p0, 0.5f);
-    XMVECTOR m2 = lerp(m_p0, m_p2, 0.5f);
-    XMVECTOR m3 = lerp(m_p2, m_p1, 0.5f);
+    constexpr float halfWay = 0.5f;
 
-    XMVECTOR t1 = lerp(m_tc1, m_tc0, 0.5f);
-    XMVECTOR t2 = lerp(m_tc0, m_tc2, 0.5f);
-    XMVECTOR t3 = lerp(m_tc2, m_tc1, 0.5f);
+    XMVECTOR m1 = lerp(m_p1, m_p0, halfWay);
+    XMVECTOR m2 = lerp(m_p0, m_p2, halfWay);
+    XMVECTOR m3 = lerp(m_p2, m_p1, halfWay);
 
-    return {Triangle{m_p0, m1, m2, m_tc0, t1, t2}, Triangle{m1, m3, m2, t1, t2, t3},
-            Triangle{m1, m_p1, m3, t1, m_tc1, t3}, Triangle{m3, m_p2, m2, t3, m_tc2, t2}};
+    XMVECTOR tc1 = lerp(m_tc1, m_tc0, halfWay);
+    XMVECTOR tc2 = lerp(m_tc0, m_tc2, halfWay);
+    XMVECTOR tc3 = lerp(m_tc2, m_tc1, halfWay);
+
+    return {Triangle{m_p0, m1, m2, m_tc0, tc1, tc2}, Triangle{m1, m3, m2, tc1, tc2, tc3},
+            Triangle{m1, m_p1, m3, tc1, m_tc1, tc3}, Triangle{m3, m_p2, m2, tc3, m_tc2, tc2}};
 }
 
 } // namespace triangles

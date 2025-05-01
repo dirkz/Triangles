@@ -320,7 +320,7 @@ void Icosahedron::CreateGeometry()
 
             double noiseInput = static_cast<double>(counter) / 10.f;
             float colorMod = static_cast<float>(noise(noiseInput, 1.2, 1.2));
-            XMVECTOR color = lerp(color1, color2, colorMod);
+            XMVECTOR color = lerp(color1, color1, colorMod);
 
             PositionColorTextureVertex vertex{point.P, color, u, v};
             m_vertices.Add(vertex);
