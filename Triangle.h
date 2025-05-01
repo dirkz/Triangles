@@ -34,7 +34,7 @@ struct Triangle
         return m_p2;
     }
 
-    inline std::array<DirectX::XMVECTOR, 3> Vectors()
+    inline std::array<DirectX::XMVECTOR, 3> Points()
     {
         return {m_p0, m_p1, m_p2};
     }
@@ -44,9 +44,9 @@ struct Triangle
     DirectX::XMVECTOR m_p1;
     DirectX::XMVECTOR m_p2;
 
-    DirectX::XMVECTOR m_t0;
-    DirectX::XMVECTOR m_t1;
-    DirectX::XMVECTOR m_t2;
+    DirectX::XMVECTOR m_tc0;
+    DirectX::XMVECTOR m_tc1;
+    DirectX::XMVECTOR m_tc2;
 };
 
 } // namespace triangles
