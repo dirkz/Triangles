@@ -294,16 +294,12 @@ void Icosahedron::CreateGeometry()
     Noise noise{};
 
     constexpr float radius = 1;
-    const XMVECTOR baseColor = Colors::Beige;
+    const XMVECTOR color1 = Colors::Beige;
+    const XMVECTOR color2 = Colors::Crimson;
     int counter = 0;
     for (Triangle &triangle : triangles)
     {
         triangle.Normalize(radius);
-
-        double noiseInput = static_cast<double>(counter) / 10.f;
-        float lightMod = static_cast<float>(noise(noiseInput, 1.2, 1.2));
-        XMVECTOR partColor = XMVectorScale(baseColor, 0.5);
-        XMVECTOR color = partColor + XMVectorScale(partColor, lightMod);
 
         for (const XMVECTOR vect : triangle.Vectors())
         {
@@ -312,6 +308,10 @@ void Icosahedron::CreateGeometry()
             XMStoreFloat4(&textureFloats, texture);
             float u = textureFloats.x;
             float v = textureFloats.y;
+
+            double noiseInput = static_cast<double>(counter) / 10.f;
+            float colorMod = static_cast<float>(noise(noiseInput, 1.2, 1.2));
+            XMVECTOR color = lerp(color1, color2, colorMod);
 
             PositionColorTextureVertex vertex{vect, color, u, v};
             m_vertices.Add(vertex);
