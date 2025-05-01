@@ -46,7 +46,7 @@ struct IndexedVertexBuffer
 
         for (const I index : vertexBuffer.m_indices)
         {
-            m_indices.push_back(index + currentIndex);
+            m_indices.push_back(index + vertexIndex);
         }
 
         return currentIndex;
