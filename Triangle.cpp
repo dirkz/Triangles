@@ -64,8 +64,12 @@ std::array<Triangle, 4> Triangle::Triangulate() const
     XMVECTOR m2 = lerp(m_p0, m_p2, 0.5f);
     XMVECTOR m3 = lerp(m_p2, m_p1, 0.5f);
 
-    return {Triangle{m_p0, m1, m2}, Triangle{m1, m3, m2}, Triangle{m1, m_p1, m3},
-            Triangle{m3, m_p2, m2}};
+    XMVECTOR t1 = lerp(m_t1, m_t0, 0.5f);
+    XMVECTOR t2 = lerp(m_t0, m_t2, 0.5f);
+    XMVECTOR t3 = lerp(m_t2, m_t1, 0.5f);
+
+    return {Triangle{m_p0, m1, m2, m_t0, t1, t2}, Triangle{m1, m3, m2, t1, t2, t3},
+            Triangle{m1, m_p1, m3, t1, m_t1, t3}, Triangle{m3, m_p2, m2, t3, m_t2, t2}};
 }
 
 } // namespace triangles
