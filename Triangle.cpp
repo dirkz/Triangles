@@ -44,29 +44,29 @@ std::vector<Triangle> Triangle::Triangulate(const std::vector<Triangle> &triangl
 }
 
 Triangle::Triangle(DirectX::FXMVECTOR v0, DirectX::FXMVECTOR v1, DirectX::FXMVECTOR v2)
-    : m_v0{v0}, m_v1{v1}, m_v2{v2}
+    : m_p0{v0}, m_p1{v1}, m_p2{v2}
 {
 }
 
 void Triangle::Normalize(float distance)
 {
-    m_v0 = XMVectorScale(XMVector3Normalize(m_v0), distance);
-    m_v1 = XMVectorScale(XMVector3Normalize(m_v1), distance);
-    m_v2 = XMVectorScale(XMVector3Normalize(m_v2), distance);
+    m_p0 = XMVectorScale(XMVector3Normalize(m_p0), distance);
+    m_p1 = XMVectorScale(XMVector3Normalize(m_p1), distance);
+    m_p2 = XMVectorScale(XMVector3Normalize(m_p2), distance);
 }
 
 std::array<Triangle, 4> Triangle::Triangulate() const
 {
-    XMVECTOR e1 = XMVectorSubtract(m_v1, m_v0);
-    XMVECTOR e2 = XMVectorSubtract(m_v0, m_v2);
-    XMVECTOR e3 = XMVectorSubtract(m_v2, m_v1);
+    XMVECTOR e1 = XMVectorSubtract(m_p1, m_p0);
+    XMVECTOR e2 = XMVectorSubtract(m_p0, m_p2);
+    XMVECTOR e3 = XMVectorSubtract(m_p2, m_p1);
 
-    XMVECTOR m1 = XMVectorAdd(m_v0, XMVectorScale(e1, 0.5f));
-    XMVECTOR m2 = XMVectorAdd(m_v2, XMVectorScale(e2, 0.5f));
-    XMVECTOR m3 = XMVectorAdd(m_v1, XMVectorScale(e3, 0.5f));
+    XMVECTOR m1 = XMVectorAdd(m_p0, XMVectorScale(e1, 0.5f));
+    XMVECTOR m2 = XMVectorAdd(m_p2, XMVectorScale(e2, 0.5f));
+    XMVECTOR m3 = XMVectorAdd(m_p1, XMVectorScale(e3, 0.5f));
 
-    return {Triangle{m_v0, m1, m2}, Triangle{m1, m3, m2}, Triangle{m1, m_v1, m3},
-            Triangle{m3, m_v2, m2}};
+    return {Triangle{m_p0, m1, m2}, Triangle{m1, m3, m2}, Triangle{m1, m_p1, m3},
+            Triangle{m3, m_p2, m2}};
 }
 
 } // namespace triangles

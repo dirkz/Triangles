@@ -16,30 +16,30 @@ struct Triangle
 
     std::array<Triangle, 4> Triangulate() const;
 
-    inline DirectX::XMVECTOR V0() const
+    inline DirectX::XMVECTOR PV0() const
     {
-        return m_v0;
+        return m_p0;
     }
 
-    inline DirectX::XMVECTOR V1() const
+    inline DirectX::XMVECTOR P1() const
     {
-        return m_v1;
+        return m_p1;
     }
 
-    inline DirectX::XMVECTOR V2() const
+    inline DirectX::XMVECTOR P2() const
     {
-        return m_v2;
+        return m_p2;
     }
 
     inline std::array<DirectX::XMVECTOR, 3> Vectors()
     {
-        return {m_v0, m_v1, m_v2};
+        return {m_p0, m_p1, m_p2};
     }
 
   private:
-    DirectX::XMVECTOR m_v0;
-    DirectX::XMVECTOR m_v1;
-    DirectX::XMVECTOR m_v2;
+    DirectX::XMVECTOR m_p0;
+    DirectX::XMVECTOR m_p1;
+    DirectX::XMVECTOR m_p2;
 };
 
 } // namespace triangles
