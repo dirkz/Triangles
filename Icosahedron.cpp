@@ -72,7 +72,7 @@ Icosahedron::Icosahedron(DirectX::FXMVECTOR color1, DirectX::FXMVECTOR color2,
 
     Noise noise{};
 
-    int counter = 0;
+    int noiseCounter = 0;
     for (Triangle &triangle : triangles)
     {
         triangle.Normalize(radius);
@@ -85,7 +85,7 @@ Icosahedron::Icosahedron(DirectX::FXMVECTOR color1, DirectX::FXMVECTOR color2,
             float u = textureFloats.x;
             float v = textureFloats.y;
 
-            double noiseInput = static_cast<double>(counter) / 10.f;
+            double noiseInput = static_cast<double>(noiseCounter) / 10.f;
             float colorMod = static_cast<float>(noise(noiseInput, 1.2, 1.2));
             XMVECTOR color = lerp(color1, color2, colorMod);
 
@@ -93,7 +93,7 @@ Icosahedron::Icosahedron(DirectX::FXMVECTOR color1, DirectX::FXMVECTOR color2,
             m_vertices.Add(vertex);
         }
 
-        counter++;
+        noiseCounter++;
     }
 }
 
