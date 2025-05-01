@@ -234,7 +234,7 @@ void IcosahedronSample::CreateSurfaceTexture()
 
 void IcosahedronSample::CreateGeometry()
 {
-    Icosahedron icosahedron{};
+    Icosahedron icosahedron{Colors::Beige, Colors::Crimson};
     m_vertices = icosahedron.Vertices();
 }
 

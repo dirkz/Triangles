@@ -27,7 +27,8 @@ static XMVECTOR XM_CALLCONV TextureCoordinates(FXMVECTOR point, float radius)
     return XMVectorSet(u, v, 0, 0);
 }
 
-Icosahedron::Icosahedron(int numTriangulations, float radius)
+Icosahedron::Icosahedron(DirectX::FXMVECTOR color1, DirectX::FXMVECTOR color2,
+                         int numTriangulations, float radius)
 {
     std::vector<Triangle> triangles{};
 
@@ -71,8 +72,6 @@ Icosahedron::Icosahedron(int numTriangulations, float radius)
 
     Noise noise{};
 
-    const XMVECTOR color1 = Colors::Beige;
-    const XMVECTOR color2 = Colors::Crimson;
     int counter = 0;
     for (Triangle &triangle : triangles)
     {

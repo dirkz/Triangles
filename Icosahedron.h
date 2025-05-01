@@ -10,7 +10,8 @@ namespace triangles
 
 struct Icosahedron
 {
-    Icosahedron(int numTriangulations = 5, float radius = 1.f);
+    Icosahedron(DirectX::FXMVECTOR color1, DirectX::FXMVECTOR color2, int numTriangulations = 5,
+                float radius = 1.f);
 
     inline const IndexedVertexBuffer<PositionColorTextureVertex, Uint32> &Vertices()
     {
