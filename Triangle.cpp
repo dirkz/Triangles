@@ -23,6 +23,11 @@ std::vector<Triangle> Triangle::Triangulate(const std::vector<Triangle> &triangl
 
 std::vector<Triangle> Triangle::Triangulate(const std::vector<Triangle> &triangles, int count)
 {
+    if (count <= 0)
+    {
+        return triangles;
+    }
+
     std::vector<Triangle> result = Triangulate(triangles);
 
     if (count == 1)
