@@ -33,7 +33,8 @@ add_library(triangles OBJECT
 	"Noise.cpp"
 	"Triangle.h"
 	"Triangle.cpp"
-)
+	"Icosahedron.h"
+	"Icosahedron.cpp")
 
 add_library(samples OBJECT
 	"BasicTriangle.h"
@@ -47,8 +48,7 @@ add_library(samples OBJECT
 	"Cube.h"
 	"Cube.cpp"
 	"IcosahedronSample.h"
-	"IcosahedronSample.cpp"
-)
+	"IcosahedronSample.cpp")
 
 if(WIN32)
 	add_executable(main WIN32 "main.cpp")
