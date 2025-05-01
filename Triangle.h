@@ -10,7 +10,10 @@ struct Triangle
     static std::vector<Triangle> Triangulate(const std::vector<Triangle> &triangles);
     static std::vector<Triangle> Triangulate(const std::vector<Triangle> &triangles, int count);
 
-    Triangle(DirectX::FXMVECTOR v0, DirectX::FXMVECTOR v1, DirectX::FXMVECTOR v2);
+    Triangle(DirectX::FXMVECTOR v0, DirectX::FXMVECTOR v1, DirectX::FXMVECTOR v2,
+             DirectX::FXMVECTOR t0 = DirectX::XMVectorZero(),
+             DirectX::FXMVECTOR t1 = DirectX::XMVectorZero(),
+             DirectX::FXMVECTOR t2 = DirectX::XMVectorZero());
 
     void Normalize(float distance);
 
@@ -40,6 +43,10 @@ struct Triangle
     DirectX::XMVECTOR m_p0;
     DirectX::XMVECTOR m_p1;
     DirectX::XMVECTOR m_p2;
+
+    DirectX::XMVECTOR m_t0;
+    DirectX::XMVECTOR m_t1;
+    DirectX::XMVECTOR m_t2;
 };
 
 } // namespace triangles

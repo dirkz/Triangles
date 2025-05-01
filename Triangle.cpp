@@ -45,8 +45,9 @@ std::vector<Triangle> Triangle::Triangulate(const std::vector<Triangle> &triangl
     return result;
 }
 
-Triangle::Triangle(DirectX::FXMVECTOR v0, DirectX::FXMVECTOR v1, DirectX::FXMVECTOR v2)
-    : m_p0{v0}, m_p1{v1}, m_p2{v2}
+Triangle::Triangle(DirectX::FXMVECTOR v0, DirectX::FXMVECTOR v1, DirectX::FXMVECTOR v2,
+                   DirectX::FXMVECTOR t0, DirectX::FXMVECTOR t1, DirectX::FXMVECTOR t2)
+    : m_p0{v0}, m_p1{v1}, m_p2{v2}, m_t0{t0}, m_t1{t1}, m_t2{t2}
 {
 }
 
