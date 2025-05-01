@@ -311,7 +311,7 @@ void Icosahedron::CreateGeometry()
     {
         triangle.Normalize(radius);
 
-        for (const Triangle::PointWithTexture point : triangle.PointsWithTextures())
+        for (const Triangle::PointWithTexture &point : triangle.PointsWithTextures())
         {
             XMFLOAT4 textureFloats;
             XMStoreFloat4(&textureFloats, point.TC);
