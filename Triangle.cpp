@@ -45,9 +45,8 @@ std::vector<Triangle> Triangle::Triangulate(const std::vector<Triangle> &triangl
     return result;
 }
 
-Triangle::Triangle(DirectX::FXMVECTOR p0, DirectX::FXMVECTOR p1, DirectX::FXMVECTOR p2,
-                   DirectX::FXMVECTOR t0, DirectX::FXMVECTOR t1, DirectX::FXMVECTOR t2)
-    : m_p0{p0}, m_p1{p1}, m_p2{p2}, m_tc0{t0}, m_tc1{t1}, m_tc2{t2}
+Triangle::Triangle(DirectX::FXMVECTOR p0, DirectX::FXMVECTOR p1, DirectX::FXMVECTOR p2)
+    : m_p0{p0}, m_p1{p1}, m_p2{p2}
 {
 }
 
@@ -66,12 +65,8 @@ std::array<Triangle, 4> Triangle::Triangulate() const
     XMVECTOR m2 = lerp(m_p0, m_p2, halfWay);
     XMVECTOR m3 = lerp(m_p2, m_p1, halfWay);
 
-    XMVECTOR tc1 = lerp(m_tc1, m_tc0, halfWay);
-    XMVECTOR tc2 = lerp(m_tc0, m_tc2, halfWay);
-    XMVECTOR tc3 = lerp(m_tc2, m_tc1, halfWay);
-
-    return {Triangle{m_p0, m1, m2, m_tc0, tc1, tc2}, Triangle{m1, m3, m2, tc1, tc2, tc3},
-            Triangle{m1, m_p1, m3, tc1, m_tc1, tc3}, Triangle{m3, m_p2, m2, tc3, m_tc2, tc2}};
+    return {Triangle{m_p0, m1, m2}, Triangle{m1, m3, m2}, Triangle{m1, m_p1, m3},
+            Triangle{m3, m_p2, m2}};
 }
 
 } // namespace triangles
