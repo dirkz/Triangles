@@ -46,8 +46,8 @@ add_library(samples OBJECT
 	"TexturedQuad.cpp"
 	"Cube.h"
 	"Cube.cpp"
-	"Icosahedron.h"
-	"Icosahedron.cpp"
+	"IcosahedronSample.h"
+	"IcosahedronSample.cpp"
 )
 
 if(WIN32)

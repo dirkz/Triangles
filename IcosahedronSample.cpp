@@ -1,4 +1,4 @@
-#include "Icosahedron.h"
+#include "IcosahedronSample.h"
 
 #include "Common.h"
 #include "Noise.h"
@@ -14,7 +14,7 @@ using namespace DirectX;
 
 constexpr int TextureSize = 512;
 
-Icosahedron::Icosahedron()
+IcosahedronSample::IcosahedronSample()
     : m_window{CreateWindow("Icosahedron")}, m_device{CreateDevice(m_window)},
       m_surface{TextureSize, TextureSize}
 {
@@ -34,7 +34,7 @@ Icosahedron::Icosahedron()
     m_sampler = sdl::CreateGPUSampler(m_device, &samplerCreateInfo);
 }
 
-Icosahedron::~Icosahedron()
+IcosahedronSample::~IcosahedronSample()
 {
     if (m_device)
     {
@@ -77,7 +77,7 @@ Icosahedron::~Icosahedron()
     }
 }
 
-void Icosahedron::AppIterate()
+void IcosahedronSample::AppIterate()
 {
     SDL_GPUCommandBuffer *commandBuffer = sdl::AcquireGPUCommandBuffer(m_device);
 
@@ -140,7 +140,7 @@ void Icosahedron::AppIterate()
     sdl::SubmitGPUCommandBuffer(commandBuffer);
 }
 
-bool Icosahedron::AppEvent(SDL_Event *event)
+bool IcosahedronSample::AppEvent(SDL_Event *event)
 {
     constexpr float RotationLeftRight = XM_PI / 10.f;
     constexpr float RotationUpDown = XM_PI / 10.f;
@@ -171,7 +171,7 @@ bool Icosahedron::AppEvent(SDL_Event *event)
     }
 }
 
-void Icosahedron::CreateGraphicsPipeline()
+void IcosahedronSample::CreateGraphicsPipeline()
 {
     ShaderLoader shaderLoader{m_device};
 
@@ -213,7 +213,7 @@ void Icosahedron::CreateGraphicsPipeline()
         std::span{vertexBufferDescriptions}, std::span{attributes});
 }
 
-void Icosahedron::CreateSurfaceTexture()
+void IcosahedronSample::CreateSurfaceTexture()
 {
     Noise noise{};
 
@@ -249,7 +249,7 @@ static XMVECTOR XM_CALLCONV TextureCoordinates(FXMVECTOR point, float radius)
 
 const float G = (1.f + std::sqrt(5.f)) / 2.f;
 
-void Icosahedron::CreateGeometry()
+void IcosahedronSample::CreateGeometry()
 {
     std::vector<Triangle> triangles{};
 
@@ -321,7 +321,7 @@ void Icosahedron::CreateGeometry()
     }
 }
 
-void Icosahedron::UploadBuffers()
+void IcosahedronSample::UploadBuffers()
 {
     std::vector<PositionColorTextureVertex> vertices = m_vertices.Vertices();
     auto indices = m_vertices.Indices();

@@ -9,10 +9,10 @@
 namespace triangles
 {
 
-struct Icosahedron
+struct IcosahedronSample
 {
-    Icosahedron();
-    ~Icosahedron();
+    IcosahedronSample();
+    ~IcosahedronSample();
 
     void AppIterate();
     bool AppEvent(SDL_Event *event);
