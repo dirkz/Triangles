@@ -231,7 +231,7 @@ void Icosahedron::CreateSurfaceTexture()
     }
 }
 
-static XMVECTOR XM_CALLCONV Texture(FXMVECTOR vect, float radius)
+static XMVECTOR XM_CALLCONV TextureCoordinates(FXMVECTOR vect, float radius)
 {
     XMFLOAT4 floats;
     XMStoreFloat4(&floats, vect);
@@ -307,7 +307,7 @@ void Icosahedron::CreateGeometry()
 
         for (const XMVECTOR vect : triangle.Vectors())
         {
-            XMVECTOR texture = Texture(vect, radius);
+            XMVECTOR texture = TextureCoordinates(vect, radius);
             XMFLOAT4 textureFloats;
             XMStoreFloat4(&textureFloats, texture);
             float u = textureFloats.x;
