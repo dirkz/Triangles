@@ -247,6 +247,16 @@ static XMVECTOR XM_CALLCONV TextureCoordinates(FXMVECTOR vect, float radius)
     return XMVectorSet(u, v, 0, 0);
 }
 
+static inline Triangle XM_CALLCONV TexturedTriangle(FXMVECTOR p0, FXMVECTOR p1, FXMVECTOR p2)
+{
+    constexpr float radius = 1.f;
+    XMVECTOR tc0 = TextureCoordinates(p0, radius);
+    XMVECTOR tc1 = TextureCoordinates(p1, radius);
+    XMVECTOR tc2 = TextureCoordinates(p2, radius);
+
+    return Triangle{p0, p1, p2, tc0, tc1, tc2};
+}
+
 const float G = (1.f + std::sqrt(5.f)) / 2.f;
 
 void Icosahedron::CreateGeometry()
