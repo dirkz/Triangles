@@ -1,5 +1,7 @@
 #include "Triangle.h"
 
+#include "Common.h"
+
 namespace triangles
 {
 
@@ -57,13 +59,9 @@ void Triangle::Normalize(float distance)
 
 std::array<Triangle, 4> Triangle::Triangulate() const
 {
-    XMVECTOR e1 = XMVectorSubtract(m_p1, m_p0);
-    XMVECTOR e2 = XMVectorSubtract(m_p0, m_p2);
-    XMVECTOR e3 = XMVectorSubtract(m_p2, m_p1);
-
-    XMVECTOR m1 = XMVectorAdd(m_p0, XMVectorScale(e1, 0.5f));
-    XMVECTOR m2 = XMVectorAdd(m_p2, XMVectorScale(e2, 0.5f));
-    XMVECTOR m3 = XMVectorAdd(m_p1, XMVectorScale(e3, 0.5f));
+    XMVECTOR m1 = lerp(m_p1, m_p0, 0.5f);
+    XMVECTOR m2 = lerp(m_p0, m_p2, 0.5f);
+    XMVECTOR m3 = lerp(m_p2, m_p1, 0.5f);
 
     return {Triangle{m_p0, m1, m2}, Triangle{m1, m3, m2}, Triangle{m1, m_p1, m3},
             Triangle{m3, m_p2, m2}};
