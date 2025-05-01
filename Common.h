@@ -22,4 +22,12 @@ inline constexpr Uint32 RGB(Uint8 r, Uint8 g, Uint8 b, Uint8 a = 255)
     return r + (g << 8) + (b << 16) + (a << 24);
 }
 
+inline DirectX::XMVECTOR XM_CALLCONV lerp(DirectX::FXMVECTOR a, DirectX::FXMVECTOR b, float t)
+{
+    DirectX::XMVECTOR e = DirectX::XMVectorSubtract(b, a);
+    e = DirectX::XMVectorScale(e, t);
+    DirectX::XMVECTOR v = DirectX::XMVectorAdd(a, e);
+    return v;
+}
+
 } // namespace triangles
