@@ -14,9 +14,9 @@ using namespace std;
 
 uint64_t NumIterations = 1'000'000;
 
-static glm::mat4x4 GLMMatrixOperations()
+static glm::mat4x4 GLMMatrix()
 {
-    glm::mat4x4 m;
+    glm::mat4x4 m{1.f};
 
     for (uint64_t i = 0; i < NumIterations; ++i)
     {
@@ -30,9 +30,22 @@ static glm::mat4x4 GLMMatrixOperations()
     return m;
 }
 
-static XMMATRIX DirectXMatrixOperations()
+static glm::vec4 GLMMatrixVector()
 {
-    XMMATRIX m;
+    glm::mat4x4 m = glm::rotate(glm::mat4x4{1.f}, glm::radians(45.f), glm::vec3{1.f, 0.f, 0.f});
+    glm::vec4 v{0.f, 0.f, 0.f, 0.f};
+
+    for (uint64_t i = 0; i < NumIterations; ++i)
+    {
+        v = m * v;
+    }
+
+    return v;
+}
+
+static XMMATRIX DirectXMatrix()
+{
+    XMMATRIX m = XMMatrixIdentity();
 
     for (uint64_t i = 0; i < NumIterations; ++i)
     {
@@ -47,22 +60,47 @@ static XMMATRIX DirectXMatrixOperations()
     return m;
 }
 
+static XMVECTOR DirectXMatrixVector()
+{
+    XMMATRIX m = XMMatrixRotationAxis(XMVectorSet(1.f, 0.f, 0.f, 0.f), XMConvertToRadians(45.f));
+    XMVECTOR v = XMVectorSet(0.f, 0.f, 0.f, 0.f);
+
+    for (uint64_t i = 0; i < NumIterations; ++i)
+    {
+        v = XMVector4Transform(v, m);
+    }
+
+    return v;
+}
+
 template <class F, class T> void Time(const string &name, F fn)
 {
     auto t1 = high_resolution_clock::now();
     T t = fn();
     auto t2 = high_resolution_clock::now();
     duration<double> time = duration_cast<duration<double>>(t2 - t1);
-    cout << name << ": " << time << "\n";
+    cout << name << ":\t" << time << "\n";
 }
 
 int main()
 {
-    auto directxFn1 = [] { return DirectXMatrixOperations(); };
-    Time<decltype(directxFn1), XMMATRIX>("DirectX", directxFn1);
+    cout << "Matrix multiplication\n";
+    cout << "=====================\n\n";
 
-    auto glmFn1 = [] { return GLMMatrixOperations(); };
+    auto directxFn1 = [] { return DirectXMatrix(); };
+    Time<decltype(directxFn1), XMMATRIX>("DXMath", directxFn1);
+
+    auto glmFn1 = [] { return GLMMatrix(); };
     Time<decltype(glmFn1), glm::mat4x4>("GLM", glmFn1);
+
+    cout << "\nVector transformation\n";
+    cout << "=====================\n\n";
+
+    auto directxFn2 = [] { return DirectXMatrixVector(); };
+    Time<decltype(directxFn2), XMVECTOR>("DXMath", directxFn2);
+
+    auto glmFn2 = [] { return GLMMatrixVector(); };
+    Time<decltype(glmFn2), glm::vec4>("GLM", glmFn2);
 
     return 0;
 }
