@@ -73,7 +73,7 @@ static XMVECTOR DirectXMatrixVector()
     return v;
 }
 
-template <class F, class T> void Time(const string &name, F fn)
+template <class T, class F> void Time(const string &name, F fn)
 {
     auto t1 = high_resolution_clock::now();
     T t = fn();
@@ -88,19 +88,19 @@ int main()
     cout << "=====================\n\n";
 
     auto directxFn1 = [] { return DirectXMatrix(); };
-    Time<decltype(directxFn1), XMMATRIX>("DXMath", directxFn1);
+    Time<XMMATRIX, decltype(directxFn1)>("DXMath", directxFn1);
 
     auto glmFn1 = [] { return GLMMatrix(); };
-    Time<decltype(glmFn1), glm::mat4x4>("GLM", glmFn1);
+    Time<glm::mat4x4, decltype(glmFn1)>("GLM", glmFn1);
 
     cout << "\nVector transformation\n";
     cout << "=====================\n\n";
 
     auto directxFn2 = [] { return DirectXMatrixVector(); };
-    Time<decltype(directxFn2), XMVECTOR>("DXMath", directxFn2);
+    Time<XMVECTOR, decltype(directxFn2)>("DXMath", directxFn2);
 
     auto glmFn2 = [] { return GLMMatrixVector(); };
-    Time<decltype(glmFn2), glm::vec4>("GLM", glmFn2);
+    Time<glm::vec4, decltype(glmFn2)>("GLM", glmFn2);
 
     return 0;
 }
