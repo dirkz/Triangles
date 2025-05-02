@@ -56,6 +56,13 @@ else()
 	add_executable(main "main.cpp")
 endif()
 
+add_subdirectory(glm EXCLUDE_FROM_ALL)
+
+add_executable(benchmark "benchmark.cpp")
+target_include_directories(benchmark PUBLIC ${Boost_INCLUDE_DIRS})
+target_link_libraries(benchmark PUBLIC glm::glm)
+target_include_directories(benchmark PUBLIC ${DirectXMath_INCLUDE_DIRS})
+
 target_link_libraries(main PRIVATE triangles samples)
 
 option(SDL_STATIC "Build SDL statically, so you don't have to install" ON)
@@ -79,6 +86,7 @@ if (CMAKE_VERSION VERSION_GREATER 3.12)
   set_property(TARGET triangles PROPERTY CXX_STANDARD 20)
   set_property(TARGET samples PROPERTY CXX_STANDARD 20)
   set_property(TARGET main PROPERTY CXX_STANDARD 20)
+  set_property(TARGET benchmark PROPERTY CXX_STANDARD 20)
 endif()
 
 add_subdirectory(shaders)
